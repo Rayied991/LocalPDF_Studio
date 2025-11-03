@@ -1,20 +1,28 @@
 {
   "name": "LocalPDF_Studio",
   "version": "0.0.2",
-  "description": "Offline, open-source, privacy-first PDF toolkit",
+  "description": "Offline, open-source, privacy-first PDF toolkit.",
   "main": "src/main/main.js",
   "author": {
     "name": "Md. Alinur Hossain",
     "email": "alinur1160@gmail.com"
   },
   "license": "MPL-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Alinur1/LocalPDF_Studio.git"
+  },
+  "homepage": "https://alinur1.github.io/LocalPDF_Studio_Website/",
+  "bugs": {
+    "url": "https://github.com/Alinur1/LocalPDF_Studio/issues"
+  },
   "scripts": {
     "start": "electron .",
     "pack": "electron-builder --dir",
     "dist": "electron-builder",
     "build:win": "electron-builder --win",
     "build:linux": "electron-builder --linux",
-    "build:mac": "electron-builder --mac"
+    "build:mac": "electron-builder --mac --x64"
   },
   "devDependencies": {
     "electron": "^38.4.0",
@@ -23,7 +31,6 @@
   "dependencies": {
     "electron-updater": "^6.6.2"
   },
-  "repository": "https://github.com/Alinur1/LocalPDF_Studio",
   "build": {
     "appId": "com.localpdfstudio.app",
     "productName": "LocalPDF Studio",
@@ -77,9 +84,18 @@
       "createStartMenuShortcut": true
     },
     "mac": {
-      "target": "dmg",
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
       "category": "public.app-category.productivity",
-      "icon": "assets/icons/app_icon_mac.icns"
+      "icon": "assets/icons/app_icon_mac.icns",
+      "hardenedRuntime": false,
+      "gatekeeperAssess": false
     },
     "linux": {
       "target": [
