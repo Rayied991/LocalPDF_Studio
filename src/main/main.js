@@ -311,12 +311,15 @@ app.on('window-all-closed', () => {
     if (apiProcess) {
         try {
             apiProcess.kill();
+            apiProcess = null;
+            apiPort = null;
+            console.log('Backend process stopped.');
         } catch (err) {
             console.error('Error killing backend process:', err);
         }
     }
 
-    if (process.platform !== 'darwin') {
+    if (process.platform === 'darwin') {
         app.quit();
     }
 });
