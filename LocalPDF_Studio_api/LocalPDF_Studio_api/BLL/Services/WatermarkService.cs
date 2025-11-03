@@ -209,7 +209,7 @@ namespace LocalPDF_Studio_api.BLL.Services
             else
             {
                 exeName = "add_watermark";
-                platformFolder = "backend_macos";
+                platformFolder = "backend_mac";
             }
 
             var possiblePaths = new[]

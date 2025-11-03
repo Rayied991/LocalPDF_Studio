@@ -288,7 +288,7 @@ namespace LocalPDF_Studio_api.BLL.Services
             else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
             {
                 executableName = "compress_pdf";
-                platformFolder = "backend_macos";
+                platformFolder = "backend_mac";
             }
             else
             {

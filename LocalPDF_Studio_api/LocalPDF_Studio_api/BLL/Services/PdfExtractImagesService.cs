@@ -260,7 +260,7 @@ namespace LocalPDF_Studio_api.BLL.Services
             else
             {
                 exeName = "extract_images";
-                platformFolder = "backend_macos";
+                platformFolder = "backend_mac";
             }
 
             var possiblePaths = new[]

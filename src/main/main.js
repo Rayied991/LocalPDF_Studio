@@ -51,7 +51,7 @@ function startBackend() {
                 backendFile = 'LocalPDF_Studio_api';
                 break;
             case 'darwin':
-                backendDir = './assets/backend_macos';
+                backendDir = './assets/backend_mac';
                 backendFile = 'LocalPDF_Studio_api';
                 break;
             default:
