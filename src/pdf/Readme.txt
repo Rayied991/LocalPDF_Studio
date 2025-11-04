@@ -1,6 +1,6 @@
 Readme.txt:
 
-In viewer.mjs, change the following value after appying every PDF.js update. Current PDF.js version: 5.4.296
+In viewer.mjs, change the following value after appying every PDF.js update. Current PDF.js version: v5.4.394
 
 ===================================================================================================================================
 ===================================================================================================================================
