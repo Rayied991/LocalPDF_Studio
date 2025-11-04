@@ -53,6 +53,7 @@ function setupButtons() {
     const currentlyWorkingOnBtn = document.getElementById('currently-working-on');
     const starRepoBtn = document.getElementById('star-repo');
     const reportIssueBtn = document.getElementById('report-issue');
+    const releaseNoteBtn = document.getElementById('release-note');
 
     if (viewSourceBtn) {
         viewSourceBtn.addEventListener('click', () => openExternalLink('https://github.com/Alinur1/LocalPDF_Studio'));
@@ -65,6 +66,9 @@ function setupButtons() {
     }
     if (reportIssueBtn) {
         reportIssueBtn.addEventListener('click', () => openExternalLink('https://github.com/Alinur1/LocalPDF_Studio/issues'));
+    }
+    if (releaseNoteBtn) {
+        releaseNoteBtn.addEventListener('click', () => openExternalLink('https://alinur1.github.io/LocalPDF_Studio_Website/html/release_notes.html'));
     }
 }
 
