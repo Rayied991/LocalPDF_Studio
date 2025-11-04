@@ -3,7 +3,6 @@
  # ======================================
  # 
  # @author      Md. Alinur Hossain <alinur1160@gmail.com>
- # @version     0.0.2
  # @license     MPL-2.0 (Mozilla Public License 2.0)
  # @website     https://alinur1.github.io/LocalPDF_Studio_Website/
  # @repository  https://github.com/Alinur1/LocalPDF_Studio
