@@ -191,7 +191,7 @@ function sendUpdateStatus(status, details = '') {
 }
 
 function setupAutoUpdater() {
-    autoUpdater.autoDownload = process.platform !== 'linux';
+    autoUpdater.autoDownload = process.platform === 'win32';
 
     autoUpdater.on('checking-for-update', () => {
         sendUpdateStatus('Checking for update...');
@@ -202,13 +202,16 @@ function setupAutoUpdater() {
     });
 
     autoUpdater.on('update-available', (info) => {
-        if (process.platform === 'linux') {
+        if (process.platform === 'linux' || process.platform === 'darwin') {
             sendUpdateStatus('Update available!', `Version ${info.version} is ready to download.`);
+            const message = process.platform === 'linux'
+                ? 'Auto-update is not supported on Linux (.AppImage). Do you want to open the download page?'
+                : 'A new version is available. Automatic updates are currently disabled for macOS. Do you want to open the download page?';
             dialog.showMessageBox(mainWindow, {
                 type: 'info',
                 title: 'Update Available',
                 message: 'A new version of LocalPDF Studio is available!',
-                detail: 'Auto-update is not supported on Linux (.AppImage). Do you want to open the download page?',
+                detail: message,
                 buttons: ['Open Download Page', 'Later']
             }).then(result => {
                 if (result.response === 0) {
