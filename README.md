@@ -25,6 +25,7 @@ LocalPDF Studio is built with modern web technologies and follows open-source pr
 ### > Clone the repository
 - git clone https://github.com/Alinur1/LocalPDF_Studio.git
 - cd LocalPDF_Studio
+- For the devs who are using macOS only -> run this command after doing cd LocalPDF_Studio: chmod +x assets/backend_mac/*
 
 ### > Install dependencies
 - npm install electron --save-dev
