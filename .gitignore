@@ -588,3 +588,4 @@ FodyWeavers.xsd
 *.msm
 *.msp
 /build
+/.flatpak-builder
