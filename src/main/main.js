@@ -201,17 +201,34 @@ function setupAutoUpdater() {
         sendUpdateStatus('No new update is available.');
     });
 
-    autoUpdater.on('update-available', (info) => {
-        if (process.platform === 'linux' || process.platform === 'darwin') {
-            sendUpdateStatus('Update available!', `Version ${info.version} is ready to download.`);
-            const message = process.platform === 'linux'
-                ? 'Auto-update is not supported on Linux (.AppImage). Do you want to open the download page?'
-                : 'A new version is available. Automatic updates are currently disabled for macOS. Do you want to open the download page?';
+    autoUpdater.on('update-available', async (info) => {
+        if (process.platform === 'linux') {
+            try {
+                sendUpdateStatus('Downloading update silently...');
+                isDownloading = true;
+                await autoUpdater.downloadUpdate();
+            } catch (err) {
+                console.error('Silent auto-update failed on Linux:', err);
+                isDownloading = false;
+                sendUpdateStatus('Auto-update failed', err.message || 'Unknown error');
+                dialog.showMessageBox(mainWindow, {
+                    type: 'warning',
+                    title: 'Update Failed',
+                    message: 'Automatic update failed.',
+                    detail: 'Would you like to manually download the latest version?',
+                    buttons: ['Open Download Page', 'Ignore']
+                }).then(result => {
+                    if (result.response === 0) {
+                        shell.openExternal('https://alinur1.github.io/LocalPDF_Studio_Website/');
+                    }
+                });
+            }
+        } else if (process.platform === 'darwin') {
+            sendUpdateStatus('Update available!', `Version ${info.version} ready to download.`);
             dialog.showMessageBox(mainWindow, {
                 type: 'info',
                 title: 'Update Available',
-                message: 'A new version of LocalPDF Studio is available!',
-                detail: message,
+                message: 'A new version is available. Automatic updates are disabled for macOS. Open download page?',
                 buttons: ['Open Download Page', 'Later']
             }).then(result => {
                 if (result.response === 0) {
@@ -249,9 +266,9 @@ function setupAutoUpdater() {
         if (process.platform === 'linux') {
             dialog.showMessageBox(mainWindow, {
                 type: 'warning',
-                title: 'Update Check Failed',
-                message: 'Could not check for updates automatically.',
-                detail: 'You can check manually on the releases page.',
+                title: 'Update Error',
+                message: 'Automatic update failed.',
+                detail: 'Would you like to manually download the latest version?',
                 buttons: ['Open Download Page', 'Ignore']
             }).then(result => {
                 if (result.response === 0) {
