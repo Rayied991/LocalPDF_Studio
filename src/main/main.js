@@ -191,6 +191,12 @@ function sendUpdateStatus(status, details = '') {
 }
 
 function setupAutoUpdater() {
+    if (process.platform === 'linux' && process.env.SNAP) {
+        console.log('Snap detected — skipping manual auto-updater.');
+        sendUpdateStatus('Snap package detected — updates are handled automatically by the Snap Store.');
+        return;
+    }
+
     autoUpdater.autoDownload = process.platform === 'win32';
 
     autoUpdater.on('checking-for-update', () => {
@@ -212,11 +218,11 @@ function setupAutoUpdater() {
                 isDownloading = false;
                 sendUpdateStatus('Auto-update failed', err.message || 'Unknown error');
                 dialog.showMessageBox(mainWindow, {
-                    type: 'warning',
-                    title: 'Update Failed',
-                    message: 'Automatic update failed.',
+                    type: 'info',
+                    title: 'Manual Update Required',
+                    message: 'LocalPDF Studio could not automatically update itself. Please download the latest version manually.',
                     detail: 'Would you like to manually download the latest version?',
-                    buttons: ['Open Download Page', 'Ignore']
+                    buttons: ['Open Download Page', 'Later']
                 }).then(result => {
                     if (result.response === 0) {
                         shell.openExternal('https://alinur1.github.io/LocalPDF_Studio_Website/');
