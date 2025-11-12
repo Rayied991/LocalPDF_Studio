@@ -24,6 +24,29 @@ annotationStorage.onSetModified = () => {
       this._annotationStorageModified = true;
     };
 
+---------------------------------------------------------------
+
+enableComment: {
+  value: false,
+  kind: OptionKind.VIEWER + OptionKind.PREFERENCE
+},
+
+---------------------------------------------------------------
+
+enableHighlightFloatingButton: {
+  value: false,
+  kind: OptionKind.VIEWER + OptionKind.PREFERENCE
+},
+
+---------------------------------------------------------------
+
+class BasePreferences {
+  #defaults = Object.freeze({
+    .......
+    enableComment: false,
+    enableHighlightFloatingButton: false,
+    .......
+
 ===================================================================================================================================
 ===================================================================================================================================
 
@@ -45,6 +68,29 @@ annotationStorage.onSetModified = () => {
       //window.addEventListener("beforeunload", beforeUnload);
       this._annotationStorageModified = true;
     };
+
+---------------------------------------------------------------
+
+enableComment: {
+  value: true,
+  kind: OptionKind.VIEWER + OptionKind.PREFERENCE
+},
+
+---------------------------------------------------------------
+
+enableHighlightFloatingButton: {
+  value: true,
+  kind: OptionKind.VIEWER + OptionKind.PREFERENCE
+},
+
+---------------------------------------------------------------
+
+class BasePreferences {
+  #defaults = Object.freeze({
+    .......
+    enableComment: true,
+    enableHighlightFloatingButton: true,
+    .......
 
 ===================================================================================================================================
 ===================================================================================================================================

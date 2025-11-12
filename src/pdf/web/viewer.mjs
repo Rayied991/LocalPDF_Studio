@@ -749,7 +749,7 @@ const defaultOptions = {
     kind: OptionKind.VIEWER + OptionKind.PREFERENCE
   },
   enableComment: {
-    value: false,
+    value: true,
     kind: OptionKind.VIEWER + OptionKind.PREFERENCE
   },
   enableDetailCanvas: {
@@ -761,7 +761,7 @@ const defaultOptions = {
     kind: OptionKind.VIEWER + OptionKind.PREFERENCE + OptionKind.EVENT_DISPATCH
   },
   enableHighlightFloatingButton: {
-    value: false,
+    value: true,
     kind: OptionKind.VIEWER + OptionKind.PREFERENCE
   },
   enableNewAltTextWhenAddingImage: {
@@ -1524,9 +1524,9 @@ class BasePreferences {
     enableAltText: false,
     enableAltTextModelDownload: true,
     enableAutoLinking: true,
-    enableComment: false,
+    enableComment: true,
     enableGuessAltText: true,
-    enableHighlightFloatingButton: false,
+    enableHighlightFloatingButton: true,
     enableNewAltTextWhenAddingImage: true,
     enableOptimizedPartialRendering: false,
     enablePermissions: false,
