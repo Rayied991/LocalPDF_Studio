@@ -20,10 +20,11 @@
 **/
 
 
+// LocalPDF_Studio_api.BLL.Services/PdfCompressService.cs
+
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using LocalPDF_Studio_api.BLL.Interfaces;
 using LocalPDF_Studio_api.DAL.Enums;
 using LocalPDF_Studio_api.DAL.Models.CompressPdfModel;
@@ -32,12 +33,16 @@ namespace LocalPDF_Studio_api.BLL.Services
 {
     public class PdfCompressService : IPdfCompressInterface
     {
-        private readonly string _pythonExecutablePath;
+        private readonly IGhostscriptInterface _ghostscriptInterface;
 
-        public PdfCompressService()
+        public PdfCompressService(IGhostscriptInterface ghostscriptInterface)
         {
-            // Determine the path to the Python executable based on the OS
-            _pythonExecutablePath = GetPythonExecutablePath();
+            _ghostscriptInterface = ghostscriptInterface;
+        }
+
+        public async Task<bool> IsCompressionAvailableAsync()
+        {
+            return await _ghostscriptInterface.IsGhostscriptAvailableAsync();
         }
 
         public async Task<CompressResult> CompressPdfAsync(string filePath, CompressOptions options)
@@ -55,6 +60,16 @@ namespace LocalPDF_Studio_api.BLL.Services
                     throw new ArgumentException("Custom quality must be between 1 and 100");
             }
 
+            // Check if Ghostscript is available before proceeding
+            if (!await IsCompressionAvailableAsync())
+            {
+                return new CompressResult
+                {
+                    Success = false,
+                    Error = "Ghostscript is not available. Please install Ghostscript to use compression features."
+                };
+            }
+
             try
             {
                 // Get original file size
@@ -69,8 +84,8 @@ namespace LocalPDF_Studio_api.BLL.Services
 
                 try
                 {
-                    // Run Python compression script
-                    var compressionResult = await RunPythonCompressionAsync(
+                    // Run Ghostscript compression
+                    var compressionResult = await RunGhostscriptCompressionAsync(
                         filePath,
                         tempOutputPath,
                         options
@@ -129,191 +144,108 @@ namespace LocalPDF_Studio_api.BLL.Services
             }
         }
 
-        private async Task<PythonCompressionResult> RunPythonCompressionAsync(
+        private async Task<CompressResult> RunGhostscriptCompressionAsync(
             string inputPath,
             string outputPath,
             CompressOptions options)
         {
-            Console.WriteLine($"=== PYTHON SCRIPT DEBUG ===");
-            Console.WriteLine($"Executable path: {_pythonExecutablePath}");
-            Console.WriteLine($"Exists? {File.Exists(_pythonExecutablePath)}");
-
-            if (!File.Exists(_pythonExecutablePath))
-            {
-                var error = $"Python compression executable not found at: {_pythonExecutablePath}";
-                Console.WriteLine($"ERROR: {error}");
-                throw new FileNotFoundException(error);
-            }
-
-            // Build command-line arguments
-            var qualityValue = options.GetQualityValue();
-            var arguments = new List<string>
-            {
-                $"\"{inputPath}\"",
-                $"\"{outputPath}\"",
-                $"--quality {qualityValue}",
-                "--json"
-            };
-
-            if (options.RemoveMetadata)
-            {
-                arguments.Add("--remove-metadata");
-            }
-
-            if (options.RemoveUnusedObjects)
-            {
-                arguments.Add("--remove-unused");
-            }
-
-            var argumentString = string.Join(" ", arguments);
-            Console.WriteLine($"Arguments: {argumentString}");
-
-            // Create process start info
-            var startInfo = new ProcessStartInfo
-            {
-                FileName = _pythonExecutablePath,
-                Arguments = argumentString,
-                UseShellExecute = false,
-                RedirectStandardOutput = true,
-                RedirectStandardError = true,
-                CreateNoWindow = true,
-                WorkingDirectory = Path.GetDirectoryName(_pythonExecutablePath)
-            };
-
             try
             {
+                var ghostscriptCommand = BuildGhostscriptCommand(inputPath, outputPath, options);
+                var processName = GetGhostscriptProcessName();
+
+                var startInfo = new ProcessStartInfo
+                {
+                    FileName = processName,
+                    Arguments = ghostscriptCommand,
+                    UseShellExecute = false,
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true,
+                    CreateNoWindow = true
+                };
+
                 using var process = new Process { StartInfo = startInfo };
-
-                // Capture output
-                var outputBuilder = new System.Text.StringBuilder();
-                var errorBuilder = new System.Text.StringBuilder();
-
-                process.OutputDataReceived += (sender, e) =>
-                {
-                    if (!string.IsNullOrEmpty(e.Data))
-                    {
-                        outputBuilder.AppendLine(e.Data);
-                    }
-                };
-
-                process.ErrorDataReceived += (sender, e) =>
-                {
-                    if (!string.IsNullOrEmpty(e.Data))
-                    {
-                        errorBuilder.AppendLine(e.Data);
-                    }
-                };
-
                 process.Start();
-                process.BeginOutputReadLine();
-                process.BeginErrorReadLine();
 
-                // Wait for the process to complete with timeout (2 minutes)
+                var output = await process.StandardOutput.ReadToEndAsync();
+                var error = await process.StandardError.ReadToEndAsync();
+
                 await process.WaitForExitAsync();
 
-                // Give a bit of time for output buffers to flush
-                await Task.Delay(100);
-
-                var output = outputBuilder.ToString();
-                var errorOutput = errorBuilder.ToString();
-
-                Console.WriteLine($"Python stdout: {output}");
-                Console.WriteLine($"Python stderr: {errorOutput}");
-                Console.WriteLine($"Exit code: {process.ExitCode}");
-
-                // Parse JSON output
-                try
+                if (process.ExitCode == 0 && File.Exists(outputPath))
                 {
-                    var option = new JsonSerializerOptions
+                    return new CompressResult { Success = true };
+                }
+                else
+                {
+                    return new CompressResult
                     {
-                        PropertyNameCaseInsensitive = true,
-                        PropertyNamingPolicy = JsonNamingPolicy.CamelCase, // ← ADD THIS
-                        UnmappedMemberHandling = JsonUnmappedMemberHandling.Skip // ← ADD THIS if using .NET 7+
+                        Success = false,
+                        Error = $"Ghostscript compression failed. Exit code: {process.ExitCode}. Error: {error}"
                     };
-
-                    Console.WriteLine($"Raw Python output: '{output}'");
-
-                    var result = JsonSerializer.Deserialize<PythonCompressionResult>(output, option);
-                    Console.WriteLine($"Deserialized - Success: {result?.Success}, OriginalSize: {result?.OriginalSize}");
-                    if (result != null)
-                    {
-                        return result;
-                    }
                 }
-                catch (JsonException ex)
-                {
-                    Console.WriteLine($"JSON Parse Error: {ex.Message}");
-                    // If JSON parsing fails, treat as error
-                }
-
-                // If we get here, something went wrong
-                return new PythonCompressionResult
-                {
-                    Success = false,
-                    Error = !string.IsNullOrEmpty(errorOutput)
-                        ? errorOutput
-                        : "Unknown error during compression"
-                };
             }
             catch (Exception ex)
             {
-                return new PythonCompressionResult
+                return new CompressResult
                 {
                     Success = false,
-                    Error = $"Failed to run compression script: {ex.Message}"
+                    Error = $"Failed to run Ghostscript compression: {ex.Message}"
                 };
             }
         }
 
-        private string GetPythonExecutablePath()
+        private string BuildGhostscriptCommand(string inputPath, string outputPath, CompressOptions options)
         {
-            // Get the base directory where the API is running
-            var baseDirectory = AppContext.BaseDirectory;
+            var quality = options.GetQualityValue();
+            var dpi = quality >= 80 ? "150" : quality >= 60 ? "120" : "96";
 
-            // Determine OS-specific executable name and path
-            string executableName;
-            string platformFolder;
+            var commands = new List<string>
+            {
+                "-dNOPAUSE",
+                "-dBATCH",
+                "-dSAFER",
+                "-sDEVICE=pdfwrite",
+                $"-dPDFSETTINGS=/{GetPdfSettings(options.Quality)}",
+                $"-dEmbedAllFonts=true",
+                $"-dSubsetFonts=true",
+                $"-dAutoRotatePages=/None",
+                $"-dColorImageDownsampleType=/Bicubic",
+                $"-dColorImageResolution={dpi}",
+                $"-dGrayImageDownsampleType=/Bicubic",
+                $"-dGrayImageResolution={dpi}",
+                $"-dMonoImageDownsampleType=/Bicubic",
+                $"-dMonoImageResolution={dpi}",
+                $"-sOutputFile=\"{outputPath}\"",
+                $"\"{inputPath}\""
+            };
 
+            return string.Join(" ", commands);
+        }
+
+        private string GetPdfSettings(CompressionQuality quality)
+        {
+            return quality switch
+            {
+                CompressionQuality.High => "prepress",    // High quality, color preserving
+                CompressionQuality.Medium => "ebook",     // Medium quality
+                CompressionQuality.Low => "screen",       // Low quality, smallest size
+                CompressionQuality.Custom => "ebook",     // Default for custom
+                _ => "ebook"
+            };
+        }
+
+        private string GetGhostscriptProcessName()
+        {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                executableName = "compress_pdf.exe";
-                platformFolder = "backend_win";
-            }
-            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-            {
-                executableName = "compress_pdf";
-                platformFolder = "backend_linux";
-            }
-            else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-            {
-                executableName = "compress_pdf";
-                platformFolder = "backend_mac";
+                // Try 64-bit first, then 32-bit
+                return "gswin64c.exe";
             }
             else
             {
-                throw new PlatformNotSupportedException("Unsupported operating system");
+                return "gs";
             }
-
-            // The executable should be in the same directory as the API executable
-            // Or in a scripts/python subdirectory
-            var possiblePaths = new[]
-            {
-                Path.Combine(baseDirectory, executableName),
-                Path.Combine(baseDirectory, "scripts", executableName),
-                Path.Combine(baseDirectory, "python", executableName),
-                Path.Combine(baseDirectory, "..", "..", "assets", platformFolder, "scripts", executableName)
-            };
-
-            foreach (var path in possiblePaths)
-            {
-                if (File.Exists(path))
-                {
-                    return path;
-                }
-            }
-
-            // If not found, return the first path (will throw error later)
-            return possiblePaths[0];
         }
     }
 }

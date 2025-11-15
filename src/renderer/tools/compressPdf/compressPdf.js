@@ -44,15 +44,47 @@ document.addEventListener('DOMContentLoaded', async () => {
     let selectedFile = null;
 
     selectPdfBtn.addEventListener('click', async () => {
-        loadingUI.show("Selecting PDF files...");
-        const files = await window.electronAPI.selectPdfs();
-        if (files && files.length > 0) {
-            const filePath = files[0];
-            const fileName = filePath.split(/[\\/]/).pop();
-            const fileSize = await getFileSize(filePath);
-            handleFileSelected({ path: filePath, name: fileName, size: fileSize });
+        // First check if Ghostscript is available
+        loadingUI.show('Checking for Ghostscript...');
+
+        try {
+            const isGhostscriptAvailable = await checkGhostscriptAvailability();
+
+            if (!isGhostscriptAvailable) {
+                loadingUI.hide();
+                await customAlert.alert(
+                    'LocalPDF Studio - REQUIREMENT',
+                    'Ghostscript is required to use the Compress PDF feature.\n\n' +
+                    'Please install Ghostscript on your system to continue:\n\n' +
+                    '• Windows: Download from https://www.ghostscript.com/\n' +
+                    '• macOS: Install using Homebrew: "brew install ghostscript"\n' +
+                    '• Linux: Install using your package manager\n' +
+                    '   - Ubuntu/Debian: "sudo apt install ghostscript"\n' +
+                    '   - Fedora: "sudo dnf install ghostscript"',
+                    ['OK']
+                );
+                return;
+            }
+
+            // Ghostscript is available, continue with file selection
+            loadingUI.updateMessage('Selecting PDF files...');
+            const files = await window.electronAPI.selectPdfs();
+            if (files && files.length > 0) {
+                const filePath = files[0];
+                const fileName = filePath.split(/[\\/]/).pop();
+                const fileSize = await getFileSize(filePath);
+                handleFileSelected({ path: filePath, name: fileName, size: fileSize });
+            }
+        } catch (error) {
+            console.error('Error during Ghostscript check:', error);
+            await customAlert.alert(
+                'LocalPDF Studio - ERROR',
+                `An error occurred while checking for Ghostscript:\n${error.message}`,
+                ['OK']
+            );
+        } finally {
+            loadingUI.hide();
         }
-        loadingUI.hide();
     });
 
     removePdfBtn.addEventListener('click', () => clearAll());
@@ -64,6 +96,28 @@ document.addEventListener('DOMContentLoaded', async () => {
             clearAll();
             window.location.href = '../../index.html';
         });
+    }
+
+    async function checkGhostscriptAvailability() {
+        try {
+            console.log('Checking Ghostscript endpoint...');
+            const checkEndpoint = await API.ghostscript.check();
+            console.log('Endpoint:', checkEndpoint);
+            const response = await fetch(checkEndpoint, {
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json' }
+            });
+            console.log('Response status:', response.status);
+            if (response.ok) {
+                const result = await response.json();
+                console.log('Ghostscript check result:', result);
+                return result.available === true;
+            }
+            return false;
+        } catch (error) {
+            console.error('Error checking Ghostscript:', error);
+            return false;
+        }
     }
 
     function handleFileSelected(file) {
@@ -112,26 +166,53 @@ document.addEventListener('DOMContentLoaded', async () => {
             await customAlert.alert('LocalPDF Studio - NOTICE', 'Please select a file first.', ['OK']);
             return;
         }
+
+        // Double-check Ghostscript availability before compression
+        loadingUI.show('Verifying Ghostscript...');
+        try {
+            const isGhostscriptAvailable = await checkGhostscriptAvailability();
+            if (!isGhostscriptAvailable) {
+                loadingUI.hide();
+                await customAlert.alert(
+                    'LocalPDF Studio - REQUIREMENT',
+                    'Ghostscript is no longer available. Please ensure Ghostscript is installed and try again.',
+                    ['OK']
+                );
+                return;
+            }
+        } catch (error) {
+            loadingUI.hide();
+            await customAlert.alert(
+                'LocalPDF Studio - ERROR',
+                `Failed to verify Ghostscript:\n${error.message}`,
+                ['OK']
+            );
+            return;
+        }
+
         const quality = getSelectedQuality();
         const options = buildCompressOptions(quality);
         const requestBody = {
             filePath: selectedFile.path,
             options: options
         };
+
         try {
             loadingUI.show('Compressing PDF...This may take a while for large files.');
             compressBtn.disabled = true;
-            compressBtn.textContent = 'Compressing...';            
+            compressBtn.textContent = 'Compressing...';
             const compressEndpoint = await API.pdf.compress;
             const response = await fetch(compressEndpoint, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(requestBody)
             });
+
             if (!response.ok) {
                 const errText = await response.text();
                 throw new Error(errText || `Request failed with status ${response.status}`);
             }
+
             const originalSize = parseInt(response.headers.get('X-Original-Size') || '0');
             const compressedSize = parseInt(response.headers.get('X-Compressed-Size') || '0');
             const compressionRatio = parseFloat(response.headers.get('X-Compression-Ratio') || '0');
@@ -139,6 +220,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             const arrayBuffer = await result.arrayBuffer();
             const defaultName = `${selectedFile.name.replace('.pdf', '')}_compressed.pdf`;
             const savedPath = await window.electronAPI.savePdfFile(defaultName, arrayBuffer);
+
             if (savedPath) {
                 const message = originalSize > 0
                     ? `Success! PDF compressed successfully!\n\n` +
@@ -151,11 +233,11 @@ document.addEventListener('DOMContentLoaded', async () => {
             } else {
                 await customAlert.alert('LocalPDF Studio - WARNING', 'Operation cancelled or failed to save the file.', ['OK']);
             }
-        } catch (error) {            
+        } catch (error) {
             console.error('Error compressing PDF:', error);
             await customAlert.alert('LocalPDF Studio - ERROR', `An error occurred while compressing the PDF:\n${error.message}`, ['OK']);
         } finally {
-            loadingUI.hide();
+            loadingUI.forceHide();
             compressBtn.disabled = false;
             compressBtn.textContent = 'Compress PDF';
         }

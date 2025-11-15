@@ -52,6 +52,15 @@ class LoadingUI {
         document.body.classList.add('loading-active');
     }
 
+    updateMessage(message) {
+        if (this.overlay) {
+            const messageEl = this.overlay.querySelector('#loading-message');
+            if (messageEl) {
+                messageEl.textContent = message;
+            }
+        }
+    }
+
     hide() {
         this.loadingCount = Math.max(0, this.loadingCount - 1);
         if (this.loadingCount === 0 && this.overlay) {

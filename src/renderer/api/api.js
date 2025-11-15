@@ -120,6 +120,7 @@ async function getEndpoints() {
         metadata: `${base}/PdfMetadata/metadata`,
         extractImages: `${base}/PdfExtractImages/extract`,
         removeImages: `${base}/PdfExtractImages/extract`,
+        ghostscriptCheck: `${base}/Ghostscript/check`,
         // Add more as necessary
     };
 }
@@ -138,6 +139,12 @@ export const API = {
                 return getEndpoints().then(endpoints => endpoints[prop]);
             }
         });
+    },
+    ghostscript: {
+        async check() {
+            const endpoints = await getEndpoints();
+            return endpoints.ghostscriptCheck;
+        }
     },
     request: api,
 };
