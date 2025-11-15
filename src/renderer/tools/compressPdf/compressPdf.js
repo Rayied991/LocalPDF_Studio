@@ -60,7 +60,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                     '• macOS: Install using Homebrew: "brew install ghostscript"\n' +
                     '• Linux: Install using your package manager\n' +
                     '   - Ubuntu/Debian: "sudo apt install ghostscript"\n' +
-                    '   - Fedora: "sudo dnf install ghostscript"',
+                    '   - Fedora: "sudo dnf install ghostscript"\n' +
+                    '   - Arch: "sudo pacman -S ghostscript"\n' +
+                    'Note: Most modern linux distros have ghostscript pre-installed. Checking command=> gs -v'
                     ['OK']
                 );
                 return;
