@@ -129,7 +129,7 @@ namespace LocalPDF_Studio_api.BLL.Services
                         }
                         catch
                         {
-                            // Ignore cleanup errors
+                            // Ignoring cleanup errors
                         }
                     }
                 }

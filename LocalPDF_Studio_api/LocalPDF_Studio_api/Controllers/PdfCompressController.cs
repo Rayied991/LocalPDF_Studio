@@ -126,28 +126,5 @@ namespace LocalPDF_Studio_api.Controllers
                 return StatusCode(500, $"Error compressing PDF: {ex.Message}");
             }
         }
-
-        // Health check endpoint to verify Python compression script is available
-        [HttpGet("health")]
-        public IActionResult HealthCheck()
-        {
-            try
-            {
-                // You can add logic here to verify the Python executable exists
-                return Ok(new
-                {
-                    status = "healthy",
-                    message = "PDF compression service is running"
-                });
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new
-                {
-                    status = "unhealthy",
-                    error = ex.Message
-                });
-            }
-        }
     }
 }

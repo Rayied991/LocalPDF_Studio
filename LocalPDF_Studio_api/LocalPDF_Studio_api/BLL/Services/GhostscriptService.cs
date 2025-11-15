@@ -49,7 +49,6 @@ namespace LocalPDF_Studio_api.BLL.Services
                 }
                 catch
                 {
-                    // Continue to next process name
                     continue;
                 }
             }
