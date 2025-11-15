@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     '   - Ubuntu/Debian: "sudo apt install ghostscript"\n' +
                     '   - Fedora: "sudo dnf install ghostscript"\n' +
                     '   - Arch: "sudo pacman -S ghostscript"\n' +
-                    'Note: Most modern linux distros have ghostscript pre-installed. Checking command=> gs -v'
+                    'Note: Most modern linux distros have ghostscript pre-installed. Checking command=> gs -v',
                     ['OK']
                 );
                 return;
