@@ -52,9 +52,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             if (!isGhostscriptAvailable) {
                 loadingUI.hide();
-                await customAlert.alert(
+                const result = await customAlert.alert(
                     'LocalPDF Studio - REQUIREMENT',
-                    'Ghostscript is required to use the Compress PDF feature.\n\n' +
+                    'Ghostscript is required to use the Compress PDF feature.\n' +
                     'Please install Ghostscript on your system to continue:\n\n' +
                     '• Windows: Download from https://www.ghostscript.com/\n' +
                     '• macOS: Install using Homebrew: "brew install ghostscript"\n' +
@@ -63,8 +63,11 @@ document.addEventListener('DOMContentLoaded', async () => {
                     '   - Fedora: "sudo dnf install ghostscript"\n' +
                     '   - Arch: "sudo pacman -S ghostscript"\n' +
                     'Note: Most modern linux distros have ghostscript pre-installed. Checking command=> gs -v',
-                    ['OK']
+                    ['OK', 'Tutorial']
                 );
+                if (result === 'Tutorial') {
+                    window.electronAPI.openExternal('https://youtu.be/fKrnSytg_z4');
+                }
                 return;
             }
 
