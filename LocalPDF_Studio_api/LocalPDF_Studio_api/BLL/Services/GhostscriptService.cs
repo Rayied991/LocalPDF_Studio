@@ -28,7 +28,6 @@ namespace LocalPDF_Studio_api.BLL.Services
 
         private async Task<string> TryBundledGhostscript()
         {
-            // Only try this on Linux
             if (!RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 return null;
 
@@ -37,8 +36,11 @@ namespace LocalPDF_Studio_api.BLL.Services
                 var baseDir = AppContext.BaseDirectory;
                 var bundledPaths = new[]
                 {
+                    Path.Combine(baseDir, "assets", "backend_linux", "ghostscript", "ghostscript"),
                     Path.Combine(baseDir, "assets", "backend_linux", "ghostscript", "gs"),
+                    Path.Combine(baseDir, "..", "assets", "backend_linux", "ghostscript", "ghostscript"),
                     Path.Combine(baseDir, "..", "assets", "backend_linux", "ghostscript", "gs"),
+                    Path.Combine(baseDir, "..", "..", "assets", "backend_linux", "ghostscript", "ghostscript"),
                     Path.Combine(baseDir, "..", "..", "assets", "backend_linux", "ghostscript", "gs")
                 };
 
