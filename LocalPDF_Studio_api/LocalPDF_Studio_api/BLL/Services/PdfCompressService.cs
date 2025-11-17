@@ -237,6 +237,27 @@ namespace LocalPDF_Studio_api.BLL.Services
 
         private string GetGhostscriptProcessName()
         {
+            //Search for ghostscript only for Linux
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            {
+                var baseDir = AppContext.BaseDirectory;
+                var bundledPaths = new[]
+                {
+                    Path.Combine(baseDir, "assets", "backend_linux", "ghostscript", "gs"),
+                    Path.Combine(baseDir, "..", "assets", "backend_linux", "ghostscript", "gs"),
+                    Path.Combine(baseDir, "..", "..", "assets", "backend_linux", "ghostscript", "gs")
+                };
+
+                foreach (var path in bundledPaths)
+                {
+                    if (File.Exists(path))
+                    {
+                        Console.WriteLine($"Using Ghostscript on Linux: {path}");
+                        return path;
+                    }
+                }
+                Console.WriteLine("Ghostscript not found for Linux, falling back to system");
+            }
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
                 // Try 64-bit first, then 32-bit
