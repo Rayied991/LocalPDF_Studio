@@ -243,11 +243,8 @@ namespace LocalPDF_Studio_api.BLL.Services
                 var baseDir = AppContext.BaseDirectory;
                 var bundledPaths = new[]
                 {
-                    Path.Combine(baseDir, "assets", "backend_linux", "ghostscript", "ghostscript"),
                     Path.Combine(baseDir, "assets", "backend_linux", "ghostscript", "gs"),
-                    Path.Combine(baseDir, "..", "assets", "backend_linux", "ghostscript", "ghostscript"),
                     Path.Combine(baseDir, "..", "assets", "backend_linux", "ghostscript", "gs"),
-                    Path.Combine(baseDir, "..", "..", "assets", "backend_linux", "ghostscript", "ghostscript"),
                     Path.Combine(baseDir, "..", "..", "assets", "backend_linux", "ghostscript", "gs")
                 };
 
