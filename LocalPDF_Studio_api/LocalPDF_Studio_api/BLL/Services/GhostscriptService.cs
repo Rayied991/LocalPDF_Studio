@@ -21,67 +21,6 @@ namespace LocalPDF_Studio_api.BLL.Services
 
         public async Task<string> GetGhostscriptVersionAsync()
         {
-            var bundledResult = await TryBundledGhostscript();
-            if (!string.IsNullOrEmpty(bundledResult)) return bundledResult;
-            return await TrySystemGhostscript();
-        }
-
-        private async Task<string> TryBundledGhostscript()
-        {
-            // Only try this on Linux
-            if (!RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-                return null;
-
-            try
-            {
-                var baseDir = AppContext.BaseDirectory;
-                var bundledPaths = new[]
-                {
-                    Path.Combine(baseDir, "assets", "backend_linux", "ghostscript", "gs"),
-                    Path.Combine(baseDir, "..", "assets", "backend_linux", "ghostscript", "gs"),
-                    Path.Combine(baseDir, "..", "..", "assets", "backend_linux", "ghostscript", "gs")
-                };
-
-                foreach (var path in bundledPaths)
-                {
-                    if (File.Exists(path))
-                    {
-                        Console.WriteLine($"Found Ghostscript (on Linux) at: {path}");
-
-                        using var process = new Process();
-                        process.StartInfo = new ProcessStartInfo
-                        {
-                            FileName = path,
-                            Arguments = "--version",
-                            UseShellExecute = false,
-                            RedirectStandardOutput = true,
-                            RedirectStandardError = true,
-                            CreateNoWindow = true
-                        };
-
-                        process.Start();
-                        var output = await process.StandardOutput.ReadToEndAsync();
-                        await process.WaitForExitAsync();
-
-                        if (process.ExitCode == 0 && !string.IsNullOrWhiteSpace(output))
-                        {
-                            Console.WriteLine($"Linux's Ghostscript version: {output.Trim()}");
-                            return output.Trim();
-                        }
-                    }
-                }
-                Console.WriteLine("No Ghostscript found or it didn't work on Linux");
-                return null;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error checking Ghostscript for Linux: {ex.Message}");
-                return null;
-            }
-        }
-
-        private async Task<string> TrySystemGhostscript()
-        {
             var processNames = GetGhostscriptProcessNames();
 
             foreach (var processName in processNames)
