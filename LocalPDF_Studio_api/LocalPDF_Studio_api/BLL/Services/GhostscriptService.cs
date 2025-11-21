@@ -19,6 +19,18 @@ namespace LocalPDF_Studio_api.BLL.Services
             }
         }
 
+        private (string fileName, string arguments) GetShellCommand(string processName, string arguments)
+        {
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                return (processName, arguments);
+            }
+            else
+            {
+                return ("/bin/bash", $"-c \"{processName} {arguments}\"");
+            }
+        }
+
         public async Task<string> GetGhostscriptVersionAsync()
         {
             var processNames = GetGhostscriptProcessNames();
@@ -27,13 +39,14 @@ namespace LocalPDF_Studio_api.BLL.Services
             {
                 try
                 {
+                    var (fileName, arguments) = GetShellCommand(processName, "--version");
                     Console.WriteLine($"[GS_DEBUG] Attempting to run command: {processName} --version");
                     
                     using var process = new Process();
                     process.StartInfo = new ProcessStartInfo
                     {
-                        FileName = "/bin/sh",
-                        Arguments = $"-c \"{processName} --version\"",
+                        FileName = fileName,
+                        Arguments = arguments,
                         UseShellExecute = false,
                         RedirectStandardOutput = true,
                         RedirectStandardError = true,
