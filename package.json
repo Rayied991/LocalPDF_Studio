@@ -21,7 +21,7 @@
     "pack": "electron-builder --dir",
     "dist": "electron-builder",
     "build:win": "electron-builder --win",
-    "build:linux": "electron-builder --linux snap",
+    "build:linux": "electron-builder --linux",
     "build:mac": "electron-builder --mac --x64"
   },
   "devDependencies": {
@@ -100,8 +100,7 @@
     "afterPack": "./scripts/macos-fix-permissions.js",
     "linux": {
       "target": [
-        "AppImage",
-        "snap"
+        "AppImage"
       ],
       "category": "Office",
       "icon": "assets/icons/app_icon_linux.png",

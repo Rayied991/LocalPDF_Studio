@@ -237,15 +237,28 @@ namespace LocalPDF_Studio_api.BLL.Services
 
         private string GetGhostscriptProcessName()
         {
+            Console.WriteLine("Checking for windows ghostscript [PdfCompressService]");
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                // Try 64-bit first, then 32-bit
                 return "gswin64c.exe";
-            }
-            else
+            }                
+            Console.WriteLine("Checking finished for windows ghostscript [PdfCompressService]");
+            // Linux/macOS fallback
+            string baseDir = AppContext.BaseDirectory;
+            Console.WriteLine("Checking for bundled ghostscript base directory for snap [PdfCompressService]" + baseDir);
+            string bundledGs = Path.Combine(
+                baseDir,
+                "compiled-ghostscript/bin/gs"
+            );
+            Console.WriteLine("Searching finished for bundled ghostscript for snap [PdfCompressService]"  + bundledGs);
+            // Use bundled if present
+            if (System.IO.File.Exists(bundledGs))
             {
-                return "gs";
+                Console.WriteLine("Using bundled ghostscript" + bundledGs);
+                return bundledGs;   
             }
+            Console.WriteLine("Using system ghostscript.");
+            return "gs"; // fallback to system ghostscript
         }
     }
 }

@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=LocalPDF Studio
+Comment=Offline, open-source, privacy-first PDF toolkit.
+Exec=localpdf-studio --no-sandbox
+Terminal=false
+Type=Application
+Icon=${SNAP}/meta/gui/app_icon_linux.png
+Categories=Utility;Graphics;Office;

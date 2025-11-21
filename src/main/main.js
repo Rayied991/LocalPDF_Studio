@@ -20,6 +20,9 @@
 **/
 
 
+// dotnet publish -c Release -r linux-x64 --self-contained true
+
+
 // src/main/main.js
 
 const { app, BrowserWindow, dialog, ipcMain, shell, Menu } = require('electron/main');

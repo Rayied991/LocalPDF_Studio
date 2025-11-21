@@ -1,0 +1,84 @@
+name: localpdf-studio
+base: core22
+version: '0.0.6'
+summary: LocalPDF Studio
+description: |
+  Offline, open-source, privacy-first PDF toolkit.
+
+title: LocalPDF Studio
+contact: https://github.com/Alinur1/LocalPDF_Studio/issues
+license: MPL-2.0
+donation: https://alinur3.gumroad.com/coffee
+issues: https://github.com/Alinur1/LocalPDF_Studio/issues
+source-code: https://github.com/Alinur1/LocalPDF_Studio
+website: https://alinur1.github.io/LocalPDF_Studio_Website/
+
+grade: stable
+confinement: strict
+
+parts:
+  ghostscript-compile:
+    plugin: autotools
+    source: https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs10060/ghostscript-10.06.0.tar.gz
+    build-packages:
+      - build-essential
+      - libxt-dev
+      - libcups2-dev
+      - libpng-dev
+      - libjpeg-dev
+      - libtiff-dev
+      - libfontconfig-dev
+    prime:
+      - usr/local/bin/gs
+      - usr/local/share/
+      - -usr/share/doc
+      
+  localpdf-studio:
+    stage-packages:
+    - texlive-binaries
+    - libnss3
+    - libnspr4
+    - libxss1
+    - libasound2
+    - liblttng-ust1
+    
+    after:
+      - ghostscript-compile
+      
+    prime:
+      - -usr/lib/*/libharfbuzz*
+      - -usr/lib/*/libbrotli*
+      - -usr/lib/*/libpango*
+      - -usr/lib/*/libcairo*
+      - -usr/lib/*/libfontconfig*
+      - -usr/lib/*/libfreetype*
+    source: .
+    build-snaps:
+    - node/22/stable
+    plugin: nil
+    override-build: |
+      mkdir -p $SNAPCRAFT_PART_INSTALL/meta/gui
+      cp localpdf-studio.desktop $SNAPCRAFT_PART_INSTALL/meta/gui/
+      cp assets/icons/app_icon_linux.png $SNAPCRAFT_PART_INSTALL/meta/gui/
+      npm install
+      npx electron-builder --dir --linux
+      UNPACKED_DIR=$(ls -d build/*-unpacked | head -1)
+      cp -rv $UNPACKED_DIR/* $SNAPCRAFT_PART_INSTALL/
+      GS_TARGET=$SNAPCRAFT_PART_INSTALL/resources/assets/backend_linux/compiled-ghostscript
+      mkdir -p $GS_TARGET/bin
+      cp $SNAPCRAFT_STAGE/usr/local/bin/gs $GS_TARGET/bin/      
+      mkdir -p $GS_TARGET/share
+      cp -rv $SNAPCRAFT_STAGE/usr/local/share/* $GS_TARGET/share/
+
+apps:
+  localpdf-studio:
+    extensions:
+      - gnome
+    command: localpdf-studio --no-sandbox
+    plugs:
+      - home
+      - network
+      - browser-support
+      - removable-media
+    environment:
+      PATH: $SNAP/resources/assets/backend_linux/compiled-ghostscript/bin:$PATH
