@@ -202,22 +202,42 @@ namespace LocalPDF_Studio_api.BLL.Services
 
             var commands = new List<string>
             {
-                "-dNOPAUSE",
-                "-dBATCH",
-                "-dSAFER",
-                "-sDEVICE=pdfwrite",
-                $"-dPDFSETTINGS=/{GetPdfSettings(options.Quality)}",
-                $"-dEmbedAllFonts=true",
-                $"-dSubsetFonts=true",
-                $"-dAutoRotatePages=/None",
-                $"-dColorImageDownsampleType=/Bicubic",
-                $"-dColorImageResolution={dpi}",
-                $"-dGrayImageDownsampleType=/Bicubic",
-                $"-dGrayImageResolution={dpi}",
-                $"-dMonoImageDownsampleType=/Bicubic",
-                $"-dMonoImageResolution={dpi}",
-                $"-sOutputFile=\"{outputPath}\"",
-                $"\"{inputPath}\""
+                    "-dNOPAUSE",
+                    "-dBATCH",
+                    "-dSAFER",
+
+                    // Force PDFSharp compatibility
+                    "-dCompatibilityLevel=1.4",
+                    "-dCompressObjects=false",
+                    "-dAvoidBinarySnippets=true",
+                    "-dDetectDuplicateImages=false",
+
+                    "-sDEVICE=pdfwrite",
+
+                    // Keep quality profiles
+                    $"-dPDFSETTINGS=/{GetPdfSettings(options.Quality)}",
+
+                    // Font settings
+                    "-dEmbedAllFonts=true",
+                    "-dSubsetFonts=true",
+
+                    // Image downsampling
+                    $"-dColorImageDownsampleType=/Bicubic",
+                    $"-dColorImageResolution={dpi}",
+                    $"-dGrayImageDownsampleType=/Bicubic",
+                    $"-dGrayImageResolution={dpi}",
+                    $"-dMonoImageDownsampleType=/Bicubic",
+                    $"-dMonoImageResolution={dpi}",
+
+                    // Image filters — important for PDFSharp
+                    "-dColorImageFilter=/FlateEncode",
+                    "-dGrayImageFilter=/FlateEncode",
+                    "-dMonoImageFilter=/FlateEncode",
+
+                    // Output file
+                    $"-sOutputFile=\"{outputPath}\"",
+
+                    $"\"{inputPath}\""
             };
 
             return string.Join(" ", commands);
