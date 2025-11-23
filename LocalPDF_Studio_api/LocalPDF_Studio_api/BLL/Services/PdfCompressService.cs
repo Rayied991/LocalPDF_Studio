@@ -182,25 +182,12 @@ namespace LocalPDF_Studio_api.BLL.Services
             }
         }
 
-        private string BuildGhostscriptPathArgument(string path)
+private string BuildGhostscriptCommand(string inputPath, string outputPath, CompressOptions options)
         {
-            string fullPath = Path.GetFullPath(path);
-
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
-                return $"\"{fullPath}\"";
-            }
-            else
-            {
-                string escapedPath = fullPath.Replace("'", @"\'");
-                return $"'{escapedPath}'";
-            }
-        }
-
-        private string BuildGhostscriptCommand(string inputPath, string outputPath, CompressOptions options)
-        {
-            string quotedInputPath = BuildGhostscriptPathArgument(inputPath);
-            string quotedOutputPath = BuildGhostscriptPathArgument(outputPath);
+            string fullInputPath = Path.GetFullPath(inputPath);
+            string fullOutputPath = Path.GetFullPath(outputPath);            
+            string quotedInputPath = $"'{fullInputPath.Replace("'", @"\'")}'";
+            string quotedOutputPath = $"'{fullOutputPath.Replace("'", @"\'")}'";
             var quality = options.GetQualityValue();
             var dpi = quality >= 80 ? "150" : quality >= 60 ? "120" : "96";
 
@@ -238,10 +225,10 @@ namespace LocalPDF_Studio_api.BLL.Services
                     "-dGrayImageFilter=/FlateEncode",
                     "-dMonoImageFilter=/FlateEncode",
 
-                    // Output file (using OS-specific quotes)
+                    // Output file (using single quotes)
                     $"-sOutputFile={quotedOutputPath}",
 
-                    // Input file (using OS-specific quotes)
+                    // Input file (using single quotes)
                     quotedInputPath
             };
 
