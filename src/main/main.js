@@ -21,7 +21,6 @@
 
 
 // dotnet publish -c Release -r linux-x64 --self-contained true
-// dotnet publish -c Release -r osx-x64 --self-contained true
 
 
 // src/main/main.js
@@ -85,19 +84,7 @@ function startBackend() {
             }
 
             console.log(`Starting backend from: ${backendPath}`);
-            
-            // Ensure environment variables are inherited from parent process
-            // This is especially important for macOS DMG installations where PATH may not be set
-            const spawnOptions = {
-                stdio: ['ignore', 'pipe', 'pipe'],
-                env: {
-                    ...process.env,
-                    // Ensure common paths are available for finding Ghostscript on macOS
-                    PATH: process.env.PATH || '/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin'
-                }
-            };
-            
-            apiProcess = spawn(backendPath, [], spawnOptions);
+            apiProcess = spawn(backendPath);
 
             apiProcess.stdout.on('data', (data) => {
                 const output = data.toString();

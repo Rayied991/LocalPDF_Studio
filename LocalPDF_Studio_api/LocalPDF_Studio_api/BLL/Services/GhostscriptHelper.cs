@@ -23,23 +23,11 @@ namespace LocalPDF_Studio_api.BLL.Services
             }
             else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
             {
-                // On macOS, try to find the absolute path to gs first
-                // If not found, fall back to using it from PATH
-                var gsPaths = new[] { "/usr/local/bin/gs", "/opt/homebrew/bin/gs" };
-                foreach (var path in gsPaths)
-                {
-                    if (File.Exists(path))
-                    {
-                        // Found gs at absolute path, use it directly
-                        return (path, arguments);
-                    }
-                }
-                // Fallback: use gs from PATH via sh -c (simpler than bash -l)
-                return ("/bin/sh", $"-c \"{processName} {arguments}\"");
+                return ("/bin/bash", $"-l -c \"{processName} {arguments}\"");
             }
             else
             {
-                return ("/bin/sh", $"-c \"{processName} {arguments}\"");
+                return ("/bin/bash", $"-c \"{processName} {arguments}\"");
             }
         }
 
@@ -114,13 +102,6 @@ namespace LocalPDF_Studio_api.BLL.Services
                     if (!string.IsNullOrEmpty(pathVar))
                     {
                         process.StartInfo.EnvironmentVariables["PATH"] = pathVar;
-                    }
-                    else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-                    {
-                        // Fallback for macOS when PATH is not available
-                        // This ensures Ghostscript can be found even when launched from Finder
-                        process.StartInfo.EnvironmentVariables["PATH"] = 
-                            "/usr/local/bin:/opt/homebrew/bin:/opt/local/bin:/sw/bin:/usr/bin:/bin:/usr/sbin:/sbin";
                     }
                 }
 
