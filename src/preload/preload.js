@@ -52,6 +52,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
     saveZipFile: (filename, buffer) => ipcRenderer.invoke('save-zip-file', { filename, buffer }),
     savePdfFile: (filename, buffer) => ipcRenderer.invoke('save-pdf-file', { filename, buffer }),
     getApiPort: () => ipcRenderer.invoke('get-api-port'),
+    isSnap: () => ipcRenderer.invoke('is-snap'),
     resolveAsset: async (relativePath) => {
         try {
             const isPackaged = await ipcRenderer.invoke('is-app-packaged');

@@ -370,6 +370,11 @@ ipcMain.handle('get-api-port', () => {
     return apiPort;
 });
 
+// IPC handler to check if running as Snap
+ipcMain.handle('is-snap', () => {
+    return process.platform === 'linux' && !!process.env.SNAP;
+});
+
 ipcMain.on('open-external-link', (event, url) => {
     if (url && (url.startsWith('http://') || url.startsWith('https://'))) {
         shell.openExternal(url);
