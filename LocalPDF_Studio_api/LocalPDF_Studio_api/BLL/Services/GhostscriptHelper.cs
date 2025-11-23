@@ -21,14 +21,24 @@ namespace LocalPDF_Studio_api.BLL.Services
             {
                 return (processName, arguments);
             }
-            if (processName.StartsWith(Path.DirectorySeparatorChar.ToString()) || processName.Contains(Path.DirectorySeparatorChar))
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
             {
-                // Execute the absolute path directly
-                return (processName, arguments);
+                // On macOS, try to find the absolute path to gs first
+                // If not found, fall back to using it from PATH
+                var gsPaths = new[] { "/usr/local/bin/gs", "/opt/homebrew/bin/gs" };
+                foreach (var path in gsPaths)
+                {
+                    if (File.Exists(path))
+                    {
+                        // Found gs at absolute path, use it directly
+                        return (path, arguments);
+                    }
+                }
+                // Fallback: use gs from PATH via sh -c (simpler than bash -l)
+                return ("/bin/sh", $"-c \"{processName} {arguments}\"");
             }
-            else 
+            else
             {
-                // Simple name (like "gs" or "ghostscript"): Execute via shell to resolve using PATH
                 return ("/bin/sh", $"-c \"{processName} {arguments}\"");
             }
         }
@@ -63,9 +73,7 @@ namespace LocalPDF_Studio_api.BLL.Services
             }
             else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
             {
-                Console.WriteLine("Searching for Linux ghostscript [GhostscriptHelper]");                
-                list.Add("/usr/bin/gs"); 
-                list.Add("/usr/local/bin/gs");
+                Console.WriteLine("Searching for Linux ghostscript [GhostscriptHelper]");
                 list.Add("gs");
                 list.Add("ghostscript");
                 Console.WriteLine("Searching finished for Linux ghostscript [GhostscriptHelper]");

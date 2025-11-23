@@ -182,12 +182,8 @@ namespace LocalPDF_Studio_api.BLL.Services
             }
         }
 
-private string BuildGhostscriptCommand(string inputPath, string outputPath, CompressOptions options)
+        private string BuildGhostscriptCommand(string inputPath, string outputPath, CompressOptions options)
         {
-            string fullInputPath = Path.GetFullPath(inputPath);
-            string fullOutputPath = Path.GetFullPath(outputPath);            
-            string quotedInputPath = $"'{fullInputPath.Replace("'", @"\'")}'";
-            string quotedOutputPath = $"'{fullOutputPath.Replace("'", @"\'")}'";
             var quality = options.GetQualityValue();
             var dpi = quality >= 80 ? "150" : quality >= 60 ? "120" : "96";
 
@@ -225,11 +221,10 @@ private string BuildGhostscriptCommand(string inputPath, string outputPath, Comp
                     "-dGrayImageFilter=/FlateEncode",
                     "-dMonoImageFilter=/FlateEncode",
 
-                    // Output file (using single quotes)
-                    $"-sOutputFile={quotedOutputPath}",
+                    // Output file
+                    $"-sOutputFile=\"{outputPath}\"",
 
-                    // Input file (using single quotes)
-                    quotedInputPath
+                    $"\"{inputPath}\""
             };
 
             return string.Join(" ", commands);
