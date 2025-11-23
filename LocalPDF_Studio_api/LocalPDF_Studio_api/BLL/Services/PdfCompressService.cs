@@ -154,25 +154,12 @@ namespace LocalPDF_Studio_api.BLL.Services
                 var ghostscriptCommand = BuildGhostscriptCommand(inputPath, outputPath, options);
                 var processName = GetGhostscriptProcessName();
 
-                var startInfo = new ProcessStartInfo
-                {
-                    FileName = processName,
-                    Arguments = ghostscriptCommand,
-                    UseShellExecute = false,
-                    RedirectStandardOutput = true,
-                    RedirectStandardError = true,
-                    CreateNoWindow = true
-                };
+                var (exitCode, output, error) = await GhostscriptHelper.ExecuteGhostscriptCommandAsync(
+                    processName,
+                    ghostscriptCommand
+                );
 
-                using var process = new Process { StartInfo = startInfo };
-                process.Start();
-
-                var output = await process.StandardOutput.ReadToEndAsync();
-                var error = await process.StandardError.ReadToEndAsync();
-
-                await process.WaitForExitAsync();
-
-                if (process.ExitCode == 0 && File.Exists(outputPath))
+                if (exitCode == 0 && File.Exists(outputPath))
                 {
                     return new CompressResult { Success = true };
                 }
@@ -181,7 +168,7 @@ namespace LocalPDF_Studio_api.BLL.Services
                     return new CompressResult
                     {
                         Success = false,
-                        Error = $"Ghostscript compression failed. Exit code: {process.ExitCode}. Error: {error}"
+                        Error = $"Ghostscript compression failed. Exit code: {exitCode}. Error: {error}"
                     };
                 }
             }
@@ -257,28 +244,27 @@ namespace LocalPDF_Studio_api.BLL.Services
 
         private string GetGhostscriptProcessName()
         {
-            Console.WriteLine("Checking for windows ghostscript [PdfCompressService]");
+            Console.WriteLine("Searching for Ghostscript executable [PdfCompressService]");
+            
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
+                // Try to find the first available Ghostscript executable
+                var executables = new[] { "gswin64c.exe", "gswin32c.exe", "gs.exe" };
+                foreach (var exe in executables)
+                {
+                    if (GhostscriptHelper.ExecutableExists(exe))
+                    {
+                        Console.WriteLine($"[GS_DEBUG] Found executable: {exe}");
+                        return exe;
+                    }
+                }
+                // Return default if none found (will be resolved from PATH)
+                Console.WriteLine("[GS_DEBUG] No specific executable found, using default: gswin64c.exe");
                 return "gswin64c.exe";
-            }                
-            Console.WriteLine("Checking finished for windows ghostscript [PdfCompressService]");
-            // Linux/macOS fallback
-            string baseDir = AppContext.BaseDirectory;
-            Console.WriteLine("Checking for bundled ghostscript base directory for snap [PdfCompressService]" + baseDir);
-            string bundledGs = Path.Combine(
-                baseDir,
-                "compiled-ghostscript/bin/gs"
-            );
-            Console.WriteLine("Searching finished for bundled ghostscript for snap [PdfCompressService]"  + bundledGs);
-            // Use bundled if present
-            if (System.IO.File.Exists(bundledGs))
-            {
-                Console.WriteLine("Using bundled ghostscript" + bundledGs);
-                return bundledGs;   
             }
-            Console.WriteLine("Using system ghostscript.");
-            return "gs"; // fallback to system ghostscript
+            
+            Console.WriteLine("Using system ghostscript (gs)");
+            return "gs";
         }
     }
 }
