@@ -100,25 +100,20 @@ namespace LocalPDF_Studio_api.BLL.Services
                 list.Add("gs.exe");
                 Console.WriteLine("Searching finished for Windows ghostscript [GhostscriptService]" + list);
             }
-            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ||
-                    RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
             {
                 Console.WriteLine("Searching for Linux/macOS ghostscript [GhostscriptService]");
                 list.Add("gs");
                 list.Add("ghostscript");
                 Console.WriteLine("Searching finished-1 for Linux/macOS ghostscript [GhostscriptService]" + list);
-
-                // Console.WriteLine("Searching for bundled ghostscript for snap [GhostscriptService]");
-                // string baseDir = AppContext.BaseDirectory;
-                // Console.WriteLine("This is the base directory [GhostscriptService]: " + baseDir);
-                // string bundledGs = Path.Combine(
-                //     baseDir,
-                //     "compiled-ghostscript/bin/gs"
-                // );
-                // Console.WriteLine("Searching finished for bundled ghostscript for snap [GhostscriptService]"  + list);
-
-                // list.Add(bundledGs);
-                // Console.WriteLine("Searching finished-2 for Linux/macOS ghostscript [GhostscriptService]" + list);
+            }
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            {
+                Console.WriteLine("Searching for macOS ghostscript [GhostscriptService]");
+                list.Add("/opt/homebrew/bin/gs");
+                list.Add("/usr/local/bin/gs");
+                list.Add("gs");
+                Console.WriteLine("Searching finished for macOS ghostscript [GhostscriptService]" + list);
             }
             else
             {

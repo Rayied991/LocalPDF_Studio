@@ -277,8 +277,26 @@ namespace LocalPDF_Studio_api.BLL.Services
                 Console.WriteLine("Using bundled ghostscript" + bundledGs);
                 return bundledGs;   
             }
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            {
+                string homebrewArm = "/opt/homebrew/bin/gs";
+                string homebrewIntel = "/usr/local/bin/gs";
+
+                if (File.Exists(homebrewArm))
+                {
+                    Console.WriteLine("Using Homebrew ghostscript at (ARM) " + homebrewArm);
+                    return homebrewArm;
+                }
+
+                if (File.Exists(homebrewIntel))
+                {
+                    Console.WriteLine("Using Homebrew ghostscript at (Intel) " + homebrewIntel);
+                    return homebrewIntel;
+                }
+            }
+
             Console.WriteLine("Using system ghostscript.");
-            return "gs"; // fallback to system ghostscript
+            return "gs";
         }
     }
 }
