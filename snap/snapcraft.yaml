@@ -46,12 +46,13 @@ parts:
       - ghostscript-compile
       
     prime:
-      - -usr/lib/*/libharfbuzz*
-      - -usr/lib/*/libbrotli*
-      - -usr/lib/*/libpango*
-      - -usr/lib/*/libcairo*
-      - -usr/lib/*/libfontconfig*
-      - -usr/lib/*/libfreetype*
+      - "-usr/lib/*/libharfbuzz*"
+      - "-usr/lib/*/libbrotli*"
+      - "-usr/lib/*/libpango*"
+      - "-usr/lib/*/libcairo*"
+      - "-usr/lib/*/libfontconfig*"
+      - "-usr/lib/*/libfreetype*"
+      - -usr/share/texmf/ls-R
     source: .
     build-snaps:
     - node/22/stable
