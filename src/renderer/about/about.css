@@ -282,10 +282,6 @@ main::-webkit-scrollbar-thumb:hover {
     bottom: -10px;
 }
 
-.developer-section {
-    width: 100%;
-}
-
 .developer-card {
     background: #2c3e50;
     padding: 2rem;
