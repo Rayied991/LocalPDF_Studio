@@ -1,5 +1,5 @@
 name: localpdf-studio
-base: core22
+base: core24
 version: '0.0.7'
 summary: LocalPDF Studio
 description: |
@@ -41,6 +41,7 @@ parts:
     - libxss1
     - libasound2
     - liblttng-ust1
+    - liboss4-salsa2
     
     after:
       - ghostscript-compile
@@ -55,7 +56,7 @@ parts:
       - -usr/share/texmf/ls-R
     source: .
     build-snaps:
-    - node/22/stable
+    - node/24/stable
     plugin: nil
     override-build: |
       mkdir -p $SNAPCRAFT_PART_INSTALL/meta/gui
