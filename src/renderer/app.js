@@ -31,7 +31,7 @@ window.addEventListener('DOMContentLoaded', () => {
     const searchIndexManager = new SearchIndexManager();
     const searchBar = new SearchBar(searchIndexManager, tabManager);
     const emptyState = document.getElementById('empty-state');
-    const openPdfBtn = document.getElementById('open-pdf-btn');
+    const pdfOpenerBtn = document.getElementById('pdf-opener-btn');
     const settingsBtn = document.getElementById('settings-btn');
     const modal = document.getElementById('settings-modal');
     const saveBtn = document.getElementById('settings-save');
@@ -41,6 +41,12 @@ window.addEventListener('DOMContentLoaded', () => {
     const searchEnabledCheckbox = document.getElementById('search-enabled');
     const clearHistoryBtn = document.getElementById('clear-search-history');
     const toolsDropdown = document.querySelector('.tools-dropdown');
+
+    let tempPath = '';
+    window.electronAPI.getTempPath().then(path => {
+        tempPath = path;
+        console.log('Temp directory path:', tempPath);
+    });
 
     emptyState.classList.add('hidden');
 
@@ -78,8 +84,28 @@ window.addEventListener('DOMContentLoaded', () => {
     };
 
     const originalCloseTab = tabManager.closeTab.bind(tabManager);
-    tabManager.closeTab = function (...args) {
-        const result = originalCloseTab(...args);
+    tabManager.closeTab = function (tabId) {
+        const tab = this.tabs.get(tabId);
+        if (tab && tempPath) {
+            try {
+                // URI-decode and clean up the file path from the tab's iframe source
+                const tabFilePath = decodeURIComponent(tab.content.src.replace(/^[a-zA-Z]+:\/\//, ''));
+                
+                // On Windows, paths might start with an extra '/' which needs to be removed
+                const normalizedPath = (tabFilePath.startsWith('/') && tempPath.includes(':')) 
+                    ? tabFilePath.substring(1) 
+                    : tabFilePath;
+
+                if (normalizedPath.startsWith(tempPath)) {
+                    console.log(`Requesting deletion of temporary file: ${normalizedPath}`);
+                    window.electronAPI.deleteTempFile(normalizedPath);
+                }
+            } catch (err) {
+                console.error('Error processing tab path for deletion:', err);
+            }
+        }
+
+        const result = originalCloseTab(tabId);
         updateEmptyState();
         return result;
     };
@@ -91,30 +117,143 @@ window.addEventListener('DOMContentLoaded', () => {
 
     let isDialogOpen = false;
 
-    openPdfBtn.addEventListener('click', async () => {
+    async function openPdfFiles(filePaths) {
+        if (!filePaths || filePaths.length === 0) return;
+
+        for (const filePath of filePaths) {
+            createPdfTab(filePath, tabManager);
+            searchIndexManager.addFile(filePath);
+        }
+        saveTabs(tabManager);
+    }
+
+    pdfOpenerBtn.addEventListener('click', async () => {
         if (isDialogOpen) return;
 
         isDialogOpen = true;
-        openPdfBtn.disabled = true;
-        openPdfBtn.textContent = 'Selecting...';
+        pdfOpenerBtn.disabled = true;
+        pdfOpenerBtn.textContent = 'Selecting...';
 
         try {
             const files = await window.electronAPI.selectPdfs();
-
-            if (files && files.length > 0) {
-                for (const filePath of files) {
-                    createPdfTab(filePath, tabManager);
-                    searchIndexManager.addFile(filePath);
-                }
-                saveTabs(tabManager);
-            }
+            await openPdfFiles(files);
         } catch (error) {
             console.error('Error opening PDFs:', error);
         } finally {
             isDialogOpen = false;
-            openPdfBtn.disabled = false;
-            openPdfBtn.textContent = 'Open PDF Reader';
+            pdfOpenerBtn.disabled = false;
+            pdfOpenerBtn.textContent = 'Click or drag-drop files here to open PDF';
         }
+    });
+
+    // Drag-Drop functionality
+    pdfOpenerBtn.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        pdfOpenerBtn.classList.add('drag-over');
+    });
+
+    pdfOpenerBtn.addEventListener('dragleave', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        // Only remove class if not dragging over the button itself
+        if (!pdfOpenerBtn.contains(e.relatedTarget)) {
+            pdfOpenerBtn.classList.remove('drag-over');
+        }
+    });
+
+    pdfOpenerBtn.addEventListener('drop', async (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        pdfOpenerBtn.classList.remove('drag-over');
+
+        const files = e.dataTransfer.files;
+        if (!files || files.length === 0) {
+            return;
+        }
+
+        // Filter for PDF files by name first
+        const pdfFiles = Array.from(files).filter(file =>
+            file.name && file.name.toLowerCase().endsWith('.pdf')
+        );
+
+        if (pdfFiles.length === 0) {
+            await customAlert.alert(
+                'Invalid Files',
+                'Please drop PDF files only.',
+                ['OK']
+            );
+            return;
+        }
+
+        pdfOpenerBtn.disabled = true;
+        pdfOpenerBtn.textContent = `Processing ${pdfFiles.length} file(s)...`;
+
+        try {
+            const readFileAsBuffer = (file) => {
+                return new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onload = () => resolve(reader.result);
+                    reader.onerror = () => reject(reader.error);
+                    reader.readAsArrayBuffer(file);
+                });
+            };
+
+            const savePromises = pdfFiles.map(async (file) => {
+                try {
+                    const buffer = await readFileAsBuffer(file);
+                    const result = await window.electronAPI.saveDroppedFile({
+                        name: file.name,
+                        buffer: buffer
+                    });
+
+                    if (result.success) {
+                        return result.filePath;
+                    } else {
+                        console.error(`Failed to save ${file.name}:`, result.error);
+                        return null;
+                    }
+                } catch (error) {
+                    console.error(`Error reading file ${file.name}:`, error);
+                    return null;
+                }
+            });
+
+            const tempFilePaths = (await Promise.all(savePromises)).filter(p => p !== null);
+
+            if (tempFilePaths.length > 0) {
+                pdfOpenerBtn.textContent = `Opening ${tempFilePaths.length} file(s)...`;
+                await openPdfFiles(tempFilePaths);
+            } else {
+                 await customAlert.alert(
+                    'Error',
+                    'Could not process any of the dropped PDF files.',
+                    ['OK']
+                );
+            }
+
+        } catch (error) {
+            console.error('Error processing dropped files:', error);
+            await customAlert.alert(
+                'Error Opening Files',
+                `Failed to open PDF files: ${error.message}`,
+                ['OK']
+            );
+        } finally {
+            pdfOpenerBtn.disabled = false;
+            pdfOpenerBtn.textContent = 'Click or drag-drop files here to open PDF';
+        }
+    });
+
+    // Prevent default drag behaviors on the document
+    document.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+    });
+
+    document.addEventListener('drop', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
     });
 
     window.addEventListener('message', (event) => {

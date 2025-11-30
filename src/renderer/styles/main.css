@@ -50,6 +50,7 @@ html {
     border-bottom: 1px solid #111820;
     position: relative;
     z-index: 1000;
+    gap: 8px;
 }
 
 .top-btn {
@@ -80,6 +81,7 @@ html {
     position: relative;
     display: inline-block;
     z-index: 1001;
+    flex-shrink: 0;
 }
 
 .tools-menu {
@@ -507,4 +509,41 @@ html {
 .search-results::-webkit-scrollbar-thumb {
     background: #3498db;
     border-radius: 3px;
+}
+
+.pdf-opener-btn {
+    color: #ecf0f1;
+    border: 2px dashed #3498db;
+    border-radius: 8px;
+    padding: 10px 20px;
+    text-align: center;
+    cursor: pointer;
+    background: #2c3e50;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    margin: 0 8px;
+    flex: 1;
+    max-width: 400px;
+    min-width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.pdf-opener-btn:hover {
+    background: #34495e;
+    border-color: #2980b9;
+}
+
+.pdf-opener-btn.drag-over {
+    background: #3498db;
+    border-color: #2980b9;
+    border-style: solid;
+    color: white;
+}
+
+.pdf-opener-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
 }

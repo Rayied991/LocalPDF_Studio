@@ -472,4 +472,55 @@ ipcMain.handle('save-pdf-file', async (event, { filename, buffer }) => {
     }
 });
 
+ipcMain.handle('handle-dropped-files', async (event, files) => {
+    try {
+        // files should be an array of file paths
+        const validFiles = files.filter(filePath => {
+            try {
+                const stats = fs.statSync(filePath);
+                return stats.isFile() && filePath.toLowerCase().endsWith('.pdf');
+            } catch (err) {
+                return false;
+            }
+        });
+
+        return { success: true, filePaths: validFiles };
+    } catch (err) {
+        console.error('Error handling dropped files:', err);
+        return { success: false, error: err.message };
+    }
+});
+
 ipcMain.handle('is-app-packaged', () => app.isPackaged);
+
+ipcMain.handle('get-temp-path', () => app.getPath('temp'));
+
+ipcMain.on('delete-temp-file', (event, filePath) => {
+    try {
+        const tempDir = app.getPath('temp');
+        // Security check: ensure the file is in the temp directory
+        if (path.dirname(filePath).startsWith(tempDir)) {
+            if (fs.existsSync(filePath)) {
+                fs.unlinkSync(filePath);
+                console.log(`Deleted temporary file: ${filePath}`);
+            }
+        } else {
+            console.warn(`Attempted to delete file outside of temp directory: ${filePath}`);
+        }
+    } catch (err) {
+        console.error(`Failed to delete temporary file: ${err}`);
+    }
+});
+
+ipcMain.handle('save-dropped-file', async (event, { name, buffer }) => {
+    try {
+        const tempDir = app.getPath('temp');
+        const filePath = path.join(tempDir, name);
+        fs.writeFileSync(filePath, Buffer.from(buffer));
+        console.log(`Saved dropped file to temporary path: ${filePath}`);
+        return { success: true, filePath: filePath };
+    } catch (err) {
+        console.error('Failed to save dropped file:', err);
+        return { success: false, error: err.message };
+    }
+});
