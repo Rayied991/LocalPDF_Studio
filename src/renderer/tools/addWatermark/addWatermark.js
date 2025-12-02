@@ -22,12 +22,15 @@ import * as pdfjsLib from '../../../pdf/build/pdf.mjs';
 import { API } from '../../api/api.js';
 import customAlert from '../../utils/customAlert.js';
 import loadingUI from '../../utils/loading.js';
+import { initializeGlobalDragDrop } from '../../utils/globalDragDrop.js';
 
+window.pdfjsLib = pdfjsLib;
 pdfjsLib.GlobalWorkerOptions.workerSrc = '../../../pdf/build/pdf.worker.mjs';
 
 document.addEventListener('DOMContentLoaded', async () => {
     await API.init();
     const selectPdfBtn = document.getElementById('select-pdf-btn');
+    const fileSelectionArea = document.getElementById('file-selection-area');
     const removePdfBtn = document.getElementById('remove-pdf-btn');
     const addBtn = document.getElementById('add-btn');
     const selectedFileInfo = document.getElementById('selected-file-info');
@@ -62,10 +65,22 @@ document.addEventListener('DOMContentLoaded', async () => {
     let pdfDoc = null;
     let renderedPages = [];
 
+    let tempDirPath = '';
+    window.electronAPI.getTempPath().then(path => {
+        tempDirPath = path;
+    });
+
+    let tempFilePath = '';
+
     selectPdfBtn.addEventListener('click', async () => {
         loadingUI.show("Selecting PDF files...");
         const files = await window.electronAPI.selectPdfs();
         if (files && files.length > 0) {
+            if (files.length > 1) {
+                customAlert.alert('LocalPDF Studio - NOTICE', 'Please select only one PDF file.', ['OK']);
+                loadingUI.hide();
+                return;
+            }
             const filePath = files[0];
             const fileName = filePath.split(/[\\/]/).pop();
             const fileSize = await getFileSize(filePath);
@@ -166,6 +181,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     async function handleFileSelected(file) {
+        if (tempFilePath && tempDirPath && tempFilePath.startsWith(tempDirPath)) {
+            window.electronAPI.deleteTempFile(tempFilePath);
+        }
+
         if (pdfDoc) {
             pdfDoc.destroy();
             pdfDoc = null;
@@ -179,6 +198,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         previewGrid.innerHTML = '';
 
         selectedFile = file;
+        tempFilePath = file.path;
         pdfNameEl.textContent = file.name;
         pdfSizeEl.textContent = `(${(file.size / 1024 / 1024).toFixed(2)} MB)`;
         selectPdfBtn.style.display = 'none';
@@ -254,6 +274,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     function clearAll() {
+        if (tempFilePath && tempDirPath && tempFilePath.startsWith(tempDirPath)) {
+            window.electronAPI.deleteTempFile(tempFilePath);
+        }
+        
         if (pdfDoc) {
             pdfDoc.destroy();
             pdfDoc = null;
@@ -270,6 +294,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         selectPdfBtn.style.display = 'block';
         addBtn.disabled = true;
         imageFile.value = '';
+        tempFilePath = '';
+        selectedFile = null;
     }
 
     async function getFileSize(filePath) {
@@ -349,4 +375,34 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     });
     updateWatermarkPreview();
+
+    initializeGlobalDragDrop({
+        onFilesDropped: async (pdfFiles) => {
+            if (pdfFiles.length > 1) {
+                await customAlert.alert('LocalPDF Studio - NOTICE', 'Please drop only one PDF file.', ['OK']);
+                return;
+            }
+
+            const file = pdfFiles[0];
+            const buffer = await file.arrayBuffer();
+            const result = await window.electronAPI.saveDroppedFile({
+                name: file.name,
+                buffer: buffer
+            });
+
+            if (result.success) {
+                const fileSize = file.size || 0;
+                handleFileSelected({
+                    path: result.filePath,
+                    name: file.name,
+                    size: fileSize
+                });
+            } else {
+                await customAlert.alert('LocalPDF Studio - ERROR', `Failed to save dropped file: ${result.error}`, ['OK']);
+            }
+        },
+        onInvalidFiles: async () => {
+            await customAlert.alert('LocalPDF Studio - NOTICE', 'Please drop a PDF file.', ['OK']);
+        }
+    });
 });

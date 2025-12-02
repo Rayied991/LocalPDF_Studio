@@ -24,6 +24,7 @@ import customAlert from './utils/customAlert.js';
 import { ClockManager } from './utils/clockManager.js';
 import { SearchIndexManager } from './utils/searchIndexManager.js';
 import { SearchBar } from './utils/searchBar.js';
+import { initializeGlobalDragDrop } from './utils/globalDragDrop.js';
 
 window.addEventListener('DOMContentLoaded', () => {
     const tabManager = new TabManager('#tab-bar', '#tab-content');
@@ -146,46 +147,8 @@ window.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Drag-Drop functionality
-    pdfOpenerBtn.addEventListener('dragover', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        pdfOpenerBtn.classList.add('drag-over');
-    });
-
-    pdfOpenerBtn.addEventListener('dragleave', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        // Only remove class if not dragging over the button itself
-        if (!pdfOpenerBtn.contains(e.relatedTarget)) {
-            pdfOpenerBtn.classList.remove('drag-over');
-        }
-    });
-
-    pdfOpenerBtn.addEventListener('drop', async (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        pdfOpenerBtn.classList.remove('drag-over');
-
-        const files = e.dataTransfer.files;
-        if (!files || files.length === 0) {
-            return;
-        }
-
-        // Filter for PDF files by name first
-        const pdfFiles = Array.from(files).filter(file =>
-            file.name && file.name.toLowerCase().endsWith('.pdf')
-        );
-
-        if (pdfFiles.length === 0) {
-            await customAlert.alert(
-                'Invalid Files',
-                'Please drop PDF files only.',
-                ['OK']
-            );
-            return;
-        }
-
+    // Helper function for processing dropped PDFs
+    const handleDroppedPdfs = async (pdfFiles) => {
         pdfOpenerBtn.disabled = true;
         pdfOpenerBtn.textContent = `Processing ${pdfFiles.length} file(s)...`;
 
@@ -243,17 +206,18 @@ window.addEventListener('DOMContentLoaded', () => {
             pdfOpenerBtn.disabled = false;
             pdfOpenerBtn.textContent = 'Click or drag-drop files here to open PDF';
         }
-    });
+    };
 
-    // Prevent default drag behaviors on the document
-    document.addEventListener('dragover', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-    });
-
-    document.addEventListener('drop', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
+    // Initialize global drag-drop handler (after handleDroppedPdfs is defined)
+    initializeGlobalDragDrop({
+        onFilesDropped: handleDroppedPdfs,
+        onInvalidFiles: () => {
+            customAlert.alert(
+                'Invalid Files',
+                'Please drop PDF files only.',
+                ['OK']
+            );
+        }
     });
 
     window.addEventListener('message', (event) => {

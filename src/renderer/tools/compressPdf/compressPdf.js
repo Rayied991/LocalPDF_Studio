@@ -21,6 +21,7 @@
 import { API } from '../../api/api.js';
 import customAlert from '../../utils/customAlert.js';
 import loadingUI from '../../utils/loading.js';
+import { initializeGlobalDragDrop } from '../../utils/globalDragDrop.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
     await API.init();
@@ -292,4 +293,68 @@ document.addEventListener('DOMContentLoaded', async () => {
             return 0;
         }
     }
+
+    initializeGlobalDragDrop({
+        onFilesDropped: async (pdfFiles) => {
+            if (pdfFiles.length > 1) {
+                await customAlert.alert('LocalPDF Studio - NOTICE', 'Please drop only one PDF file.', ['OK']);
+                return;
+            }
+            loadingUI.show('Checking for Ghostscript...');
+            try {
+                const isGhostscriptAvailable = await checkGhostscriptAvailability();
+
+                if (!isGhostscriptAvailable) {
+                    loadingUI.hide();
+                    const result = await customAlert.alert(
+                        'LocalPDF Studio - REQUIREMENT',
+                        'Ghostscript is required to use the Compress PDF feature.\n' +
+                        'Please install Ghostscript on your system to continue:\n\n' +
+                        '• Windows: Download from https://www.ghostscript.com/\n' +
+                        '• macOS: Install using Homebrew: "brew install ghostscript"\n' +
+                        '• Linux: Install using your package manager\n' +
+                        '   - Ubuntu/Debian: "sudo apt install ghostscript"\n' +
+                        '   - Fedora: "sudo dnf install ghostscript"\n' +
+                        '   - Arch: "sudo pacman -S ghostscript"\n' +
+                        'Note: Most modern linux distros have ghostscript pre-installed. Checking command=> gs -v',
+                        ['OK', 'Tutorial']
+                    );
+                    if (result === 'Tutorial') {
+                        window.electronAPI.openExternal('https://youtu.be/fKrnSytg_z4');
+                    }
+                    return;
+                }
+                loadingUI.updateMessage('Processing dropped PDF file...');
+                const file = pdfFiles[0];
+                const buffer = await file.arrayBuffer();
+                const result_save = await window.electronAPI.saveDroppedFile({
+                    name: file.name,
+                    buffer: buffer
+                });
+
+                if (result_save.success) {
+                    const fileSize = file.size || 0;
+                    handleFileSelected({
+                        path: result_save.filePath,
+                        name: file.name,
+                        size: fileSize
+                    });
+                } else {
+                    await customAlert.alert('LocalPDF Studio - ERROR', `Failed to save dropped file: ${result_save.error}`, ['OK']);
+                }
+            } catch (error) {
+                console.error('Error processing dropped file:', error);
+                await customAlert.alert(
+                    'LocalPDF Studio - ERROR',
+                    `An error occurred:\n${error.message}`,
+                    ['OK']
+                );
+            } finally {
+                loadingUI.hide();
+            }
+        },
+        onInvalidFiles: async () => {
+            await customAlert.alert('LocalPDF Studio - NOTICE', 'Please drop a PDF file.', ['OK']);
+        }
+    });
 });

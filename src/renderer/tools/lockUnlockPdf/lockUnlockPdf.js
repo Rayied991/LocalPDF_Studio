@@ -22,6 +22,7 @@ import * as pdfjsLib from '../../../pdf/build/pdf.mjs';
 import { API } from '../../api/api.js';
 import customAlert from '../../utils/customAlert.js';
 import loadingUI from '../../utils/loading.js';
+import { initializeGlobalDragDrop } from '../../utils/globalDragDrop.js';
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = '../../../pdf/build/pdf.worker.mjs';
 
@@ -300,4 +301,45 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
     initializeEventListeners();
+    
+    initializeGlobalDragDrop({
+        onFilesDropped: async (pdfFiles) => {
+            if (pdfFiles.length > 1) {
+                await customAlert.alert('LocalPDF Studio - NOTICE', 'Please drop only one PDF file.', ['OK']);
+                return;
+            }
+
+            try {
+                loadingUI.show('Analyzing dropped PDF...');
+                const file = pdfFiles[0];
+                const buffer = await file.arrayBuffer();
+                const result = await window.electronAPI.saveDroppedFile({
+                    name: file.name,
+                    buffer: buffer
+                });
+
+                if (result.success) {
+                    const fileSize = file.size || 0;
+                    const securityStatus = await checkPdfSecurity(result.filePath);
+                    
+                    handleFileSelected({
+                        path: result.filePath,
+                        name: file.name,
+                        size: fileSize,
+                        securityStatus: securityStatus
+                    });
+                } else {
+                    await customAlert.alert('LocalPDF Studio - ERROR', `Failed to save dropped file: ${result.error}`, ['OK']);
+                }
+            } catch (error) {
+                console.error('Error processing dropped file:', error);
+                await customAlert.alert('LocalPDF Studio - ERROR', `Failed to process dropped file: ${error.message}`, ['OK']);
+            } finally {
+                loadingUI.hide();
+            }
+        },
+        onInvalidFiles: async () => {
+            await customAlert.alert('LocalPDF Studio - NOTICE', 'Please drop a PDF file.', ['OK']);
+        }
+    });
 });
