@@ -220,6 +220,19 @@ window.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // Handle files opened via OS "Open with LocalPDF Studio" or second-instance events
+    if (window.electronAPI && window.electronAPI.onOpenFile) {
+        window.electronAPI.onOpenFile(async (filePath) => {
+            try {
+                if (filePath) {
+                    await openPdfFiles([filePath]);
+                }
+            } catch (err) {
+                console.error('Error opening file from OS:', err);
+            }
+        });
+    }
+
     window.addEventListener('message', (event) => {
         if (event.data?.type === 'open-external') {
             if (window.electronAPI?.openExternal) {

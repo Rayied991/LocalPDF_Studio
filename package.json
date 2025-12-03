@@ -115,6 +115,16 @@
         "MimeType": "application/pdf;"
       },
       "synopsis": "Offline, open-source PDF toolkit"
-    }
+    },
+    "fileAssociations": [
+      {
+        "ext": [
+          "pdf"
+        ],
+        "name": "PDF Document",
+        "description": "Open PDF with LocalPDF Studio",
+        "role": "Viewer"
+      }
+    ]
   }
 }
