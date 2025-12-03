@@ -17,7 +17,7 @@
     "url": "https://github.com/Alinur1/LocalPDF_Studio/issues"
   },
   "scripts": {
-    "start": "electron .",
+    "start": "electron . --no-sandbox",
     "pack": "electron-builder --dir",
     "dist": "electron-builder",
     "build:win": "electron-builder --win",
@@ -104,6 +104,9 @@
       ],
       "category": "Office",
       "icon": "assets/icons/app_icon_linux.png",
+      "executableArgs": [
+        "--no-sandbox"
+      ],
       "desktop": {
         "Name": "LocalPDF Studio",
         "Comment": "Offline PDF editing suite",
