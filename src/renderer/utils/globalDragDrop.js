@@ -56,6 +56,7 @@ export function initializeGlobalDragDrop(options = {}) {
 
     let dragCounter = 0;
 
+    // Block PDF drops on form elements (they intercept drag events)
     document.addEventListener('dragover', (e) => {
         const isFormElement = e.target.matches('input, textarea, [contenteditable]');
         if (isFormElement) {
@@ -72,9 +73,13 @@ export function initializeGlobalDragDrop(options = {}) {
         }
     }, true);
 
+    // Handle PDF file drops (everywhere except tabs and form elements)
     document.addEventListener('dragenter', (e) => {
         const isFormElement = e.target.matches('input, textarea, [contenteditable]');
-        if (isFormElement) return;
+        const isTab = e.target.classList.contains('tab') || e.target.closest('.tab');
+        
+        // Skip form elements and tabs - let them handle their own drag events
+        if (isFormElement || isTab) return;
 
         dragCounter++;
         const dt = e.dataTransfer;
@@ -87,7 +92,10 @@ export function initializeGlobalDragDrop(options = {}) {
 
     document.addEventListener('dragleave', (e) => {
         const isFormElement = e.target.matches('input, textarea, [contenteditable]');
-        if (isFormElement) return;
+        const isTab = e.target.classList.contains('tab') || e.target.closest('.tab');
+        
+        // Skip form elements and tabs
+        if (isFormElement || isTab) return;
 
         dragCounter--;
         if (dragCounter === 0) {
@@ -96,9 +104,28 @@ export function initializeGlobalDragDrop(options = {}) {
         }
     });
 
+    // Show drop effect for PDF files
+    document.addEventListener('dragover', (e) => {
+        const isFormElement = e.target.matches('input, textarea, [contenteditable]');
+        const isTab = e.target.classList.contains('tab') || e.target.closest('.tab');
+        
+        // Skip form elements and tabs
+        if (isFormElement || isTab) return;
+
+        const dt = e.dataTransfer;
+        if (dt.types && (dt.types.includes('Files') || dt.types.includes('application/x-moz-file'))) {
+            e.preventDefault();
+            e.stopPropagation();
+            e.dataTransfer.dropEffect = 'copy';
+        }
+    });
+
     document.addEventListener('drop', (e) => {
         const isFormElement = e.target.matches('input, textarea, [contenteditable]');
-        if (isFormElement) return;
+        const isTab = e.target.classList.contains('tab') || e.target.closest('.tab');
+        
+        // Skip form elements and tabs
+        if (isFormElement || isTab) return;
 
         e.preventDefault();
         e.stopPropagation();
@@ -127,15 +154,6 @@ export function initializeGlobalDragDrop(options = {}) {
             if (onFilesDropped) {
                 onFilesDropped(pdfFiles);
             }
-        }
-    });
-
-    document.addEventListener('dragover', (e) => {
-        const isFormElement = e.target.matches('input, textarea, [contenteditable]');
-        if (!isFormElement) {
-            e.preventDefault();
-            e.stopPropagation();
-            e.dataTransfer.dropEffect = 'copy';
         }
     });
 }
