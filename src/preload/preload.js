@@ -22,6 +22,17 @@ const { contextBridge, ipcRenderer, app } = require('electron');
 const fs = require('fs');
 const path = require('path');
 
+// Global drag and drop prevention
+document.addEventListener('dragover', (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+});
+
+document.addEventListener('drop', (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+});
+
 contextBridge.exposeInMainWorld('electronAPI', {
     selectPdfs: () => ipcRenderer.invoke('select-pdf-files'),
     openExternal: (url) => ipcRenderer.send('open-external-link', url),
@@ -52,9 +63,5 @@ contextBridge.exposeInMainWorld('electronAPI', {
     },
     onUpdateStatus: (callback) => ipcRenderer.on('update-status', (event, ...args) => callback(...args)),
     checkForUpdates: () => ipcRenderer.send('check-for-updates'),
-    getUpdateStatus: () => ipcRenderer.invoke('get-update-status'),
-    handleDroppedFiles: (files) => ipcRenderer.invoke('handle-dropped-files', files),
-    saveDroppedFile: (fileInfo) => ipcRenderer.invoke('save-dropped-file', fileInfo),
-    getTempPath: () => ipcRenderer.invoke('get-temp-path'),
-    deleteTempFile: (filePath) => ipcRenderer.send('delete-temp-file', filePath)
+    getUpdateStatus: () => ipcRenderer.invoke('get-update-status')
 });
