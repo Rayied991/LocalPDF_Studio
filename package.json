@@ -118,7 +118,9 @@
     },
     "fileAssociations": [
       {
-        "ext": "pdf",
+        "ext": [
+          "pdf"
+        ],
         "name": "PDF Document",
         "description": "Open PDF with LocalPDF Studio",
         "role": "Viewer"
