@@ -27,6 +27,10 @@
     <title>LocalPDF Studio - Add Page Numbers</title>
     <meta http-equiv="Content-Security-Policy"
         content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' http://localhost:*;">
+    <script type="module">
+        import * as pdfjsLib from '../../pdf/build/pdf.mjs';
+        window.pdfjsLib = pdfjsLib;
+    </script>
     <link rel="stylesheet" href="../../styles/main.css">
     <link rel="stylesheet" href="./addPageNumbers.css">
 </head>
@@ -39,7 +43,7 @@
         </div>
         <main class="tool-container">
             <div class="file-selection-area">
-                <button id="select-pdf-btn" class="select-pdf-btn">Click to Select a PDF File or just drag-drop here.</button>
+                <button id="select-pdf-btn" class="select-pdf-btn">Click to Select a PDF File</button>
                 <div id="selected-file-info" class="selected-file-info" style="display: none;">
                     <div style="flex-grow: 1;">
                         <p id="pdf-name" class="pdf-name"></p>

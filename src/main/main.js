@@ -201,20 +201,6 @@ const createWindow = () => {
         event.preventDefault();
     });
 
-    //Prevent PDF files from being opened in Chrome's PDF viewer
-    mainWindow.webContents.on('will-prevent-unload', (event) => {
-        event.preventDefault();
-    });
-
-    // Block navigation to PDF files
-    mainWindow.webContents.setWindowOpenHandler(({ url }) => {
-        if (url.toLowerCase().endsWith('.pdf')) {
-            console.log('Blocked PDF navigation:', url);
-            return { action: 'deny' };
-        }
-        return { action: 'allow' };
-    });
-
     mainWindow.on('close', (event) => {
         if (isDownloading) {
             event.preventDefault();
@@ -447,7 +433,7 @@ app.on('before-quit', () => {
 });
 
 
-// IPC handlers
+// IPC handler to get the API port
 ipcMain.handle('get-api-port', () => {
     if (!mainWindow || mainWindow.isDestroyed()) {
         console.warn('get-api-port called with no active window');
@@ -455,6 +441,7 @@ ipcMain.handle('get-api-port', () => {
     return apiPort;
 });
 
+// IPC handler to check if running as Snap
 ipcMain.handle('is-snap', () => {
     return process.platform === 'linux' && !!process.env.SNAP;
 });

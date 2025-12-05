@@ -22,7 +22,6 @@ import { API } from '../../api/api.js';
 import * as pdfjsLib from '../../../pdf/build/pdf.mjs';
 import customAlert from '../../utils/customAlert.js';
 import loadingUI from '../../utils/loading.js';
-import { initializeGlobalDragDrop } from '../../utils/globalDragDrop.js';
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = '../../../pdf/build/pdf.worker.mjs';
 
@@ -71,48 +70,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     window.addEventListener('beforeunload', () => {
         destroy();
-    });
-
-    initializeGlobalDragDrop({
-        onFilesDropped: async (pdfFiles) => {
-            if (pdfFiles.length === 0) {
-                await customAlert.alert('LocalPDF Studio - NOTICE', 'Please drop PDF files.', ['OK']);
-                return;
-            }
-
-            loadingUI.show('Loading dropped PDF files...');
-            try {
-                const droppedFilePaths = [];
-                
-                for (const file of pdfFiles) {
-                    const buffer = await file.arrayBuffer();
-                    const result = await window.electronAPI.saveDroppedFile({
-                        name: file.name,
-                        buffer: buffer
-                    });
-
-                    if (result.success) {
-                        droppedFilePaths.push(result.filePath);
-                    } else {
-                        console.error(`Failed to save ${file.name}:`, result.error);
-                    }
-                }
-
-                if (droppedFilePaths.length > 0) {
-                    addFiles(droppedFilePaths);
-                } else {
-                    await customAlert.alert('LocalPDF Studio - ERROR', 'Could not process any of the dropped PDF files.', ['OK']);
-                }
-            } catch (error) {
-                console.error('Error processing dropped files:', error);
-                await customAlert.alert('LocalPDF Studio - ERROR', `Failed to process files: ${error.message}`, ['OK']);
-            } finally {
-                loadingUI.hide();
-            }
-        },
-        onInvalidFiles: async () => {
-            await customAlert.alert('LocalPDF Studio - NOTICE', 'Please drop PDF files only.', ['OK']);
-        }
     });
 });
 

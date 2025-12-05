@@ -21,7 +21,6 @@
 import { API } from '../../api/api.js';
 import customAlert from '../../utils/customAlert.js';
 import loadingUI from '../../utils/loading.js';
-import { initializeGlobalDragDrop } from '../../utils/globalDragDrop.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
     await API.init();
@@ -405,34 +404,4 @@ File: ${selectedFile?.name || 'Unknown'}
         }
     }
     initializeEventListeners();
-
-    initializeGlobalDragDrop({
-        onFilesDropped: async (pdfFiles) => {
-            if (pdfFiles.length > 1) {
-                await customAlert.alert('LocalPDF Studio - NOTICE', 'Please drop only one PDF file.', ['OK']);
-                return;
-            }
-
-            const file = pdfFiles[0];
-            const buffer = await file.arrayBuffer();
-            const result = await window.electronAPI.saveDroppedFile({
-                name: file.name,
-                buffer: buffer
-            });
-
-            if (result.success) {
-                const fileSize = file.size || 0;
-                handleFileSelected({
-                    path: result.filePath,
-                    name: file.name,
-                    size: fileSize
-                });
-            } else {
-                await customAlert.alert('LocalPDF Studio - ERROR', `Failed to save dropped file: ${result.error}`, ['OK']);
-            }
-        },
-        onInvalidFiles: async () => {
-            await customAlert.alert('LocalPDF Studio - NOTICE', 'Please drop a PDF file.', ['OK']);
-        }
-    });
 });
