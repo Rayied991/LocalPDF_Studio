@@ -56,6 +56,5 @@ contextBridge.exposeInMainWorld('electronAPI', {
     handleDroppedFiles: (files) => ipcRenderer.invoke('handle-dropped-files', files),
     saveDroppedFile: (fileInfo) => ipcRenderer.invoke('save-dropped-file', fileInfo),
     getTempPath: () => ipcRenderer.invoke('get-temp-path'),
-    deleteTempFile: (filePath) => ipcRenderer.send('delete-temp-file', filePath),
-    onOpenFile: (callback) => ipcRenderer.on('open-file', (event, filePath) => callback(filePath))
+    deleteTempFile: (filePath) => ipcRenderer.send('delete-temp-file', filePath)
 });
