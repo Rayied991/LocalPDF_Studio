@@ -163,6 +163,20 @@ const createWindow = () => {
         event.preventDefault();
     });
 
+    //Prevent PDF files from being opened in Chrome's PDF viewer
+    mainWindow.webContents.on('will-prevent-unload', (event) => {
+        event.preventDefault();
+    });
+
+    // Block navigation to PDF files
+    mainWindow.webContents.setWindowOpenHandler(({ url }) => {
+        if (url.toLowerCase().endsWith('.pdf')) {
+            console.log('Blocked PDF navigation:', url);
+            return { action: 'deny' };
+        }
+        return { action: 'allow' };
+    });
+
     mainWindow.on('close', (event) => {
         if (isDownloading) {
             event.preventDefault();
