@@ -82,7 +82,6 @@ apps:
       - network
       - browser-support
       - removable-media
-      - xdg-open
       - desktop
     environment:
       PATH: $SNAP/resources/assets/backend_linux/compiled-ghostscript/bin:$PATH
