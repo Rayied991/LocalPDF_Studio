@@ -67,7 +67,7 @@ try {
             if (typeof a === 'string' && a.toLowerCase().endsWith('.pdf')) {
                 console.log('Found PDF in argv:', a);
                 queueOrSendOpenFile(path.resolve(a));
-                break;  // Only process the first PDF
+                //break;  // Only process the first PDF
             }
         }
     }
@@ -377,7 +377,7 @@ if (!gotTheLock) {
                         const resolvedPath = path.resolve(workingDirectory, arg);
                         console.log('Opening PDF from second-instance:', resolvedPath);
                         queueOrSendOpenFile(resolvedPath);
-                        break;  // Only process the first PDF
+                        //break;  // Only process the first PDF
                     }
                 }
             }
