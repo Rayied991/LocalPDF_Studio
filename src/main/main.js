@@ -34,6 +34,46 @@ let apiPort = null;
 let mainWindow = null;
 let isDownloading = false;
 let lastUpdateStatus = { status: 'No updates checked yet.', details: '' };
+let openFileQueue = [];
+
+// Helper to send or queue file paths to renderer
+function queueOrSendOpenFile(filePath) {
+    try {
+        if (mainWindow && mainWindow.webContents) {
+            mainWindow.webContents.send('open-file', filePath);
+        } else {
+            openFileQueue.push(filePath);
+        }
+    } catch (err) {
+        console.error('Failed to send open-file to renderer:', err);
+        openFileQueue.push(filePath);
+    }
+}
+
+// Register macOS open-file handler early so events are captured before ready
+app.on('open-file', (event, filePath) => {
+    try {
+        event.preventDefault();
+    } catch (e) { }
+    if (filePath && filePath.toLowerCase().endsWith('.pdf')) {
+        queueOrSendOpenFile(filePath);
+    }
+});
+
+// If the app was launched with PDF file paths in argv (common on Windows/Linux), queue them
+try {
+    if (process && process.argv && Array.isArray(process.argv)) {
+        for (const a of process.argv) {
+            if (typeof a === 'string' && a.toLowerCase().endsWith('.pdf')) {
+                console.log('Found PDF in argv:', a);
+                queueOrSendOpenFile(path.resolve(a));
+                break;  // Only process the first PDF
+            }
+        }
+    }
+} catch (err) {
+    console.error('Error scanning initial argv for PDF files:', err);
+}
 
 function startBackend() {
     return new Promise((resolve, reject) => {
@@ -195,6 +235,12 @@ const createWindow = () => {
 
     mainWindow.maximize();
     mainWindow.loadFile(path.resolve(app.getAppPath(), 'src/renderer/index.html'));
+    
+    // Flush queued files once the renderer is ready
+    mainWindow.webContents.on('did-finish-load', () => {
+        console.log('Window content loaded, flushing open file queue...');
+        flushOpenFileQueue();
+    });
 };
 
 function sendUpdateStatus(status, details = '') {
@@ -310,17 +356,36 @@ function setupAutoUpdater() {
 }
 
 if (!gotTheLock) {
-    app.whenReady().then(() => {
-        dialog.showMessageBoxSync({
-            type: 'info',
-            buttons: ['OK'],
-            title: 'Already Running',
-            message: 'LocalPDF Studio is already running.'
-        });
-    });
+    console.log("LocalPDF Studio is already running.");
+    // app.whenReady().then(() => {
+    //     dialog.showMessageBoxSync({
+    //         type: 'info',
+    //         buttons: ['OK'],
+    //         title: 'Already Running',
+    //         message: 'LocalPDF Studio is already running.'
+    //     });
+    // });
     app.quit();
 } else {
-    app.on('second-instance', () => {
+    app.on('second-instance', (event, argv, workingDirectory) => {
+        // On Windows/Linux a second-instance event may include file paths in argv
+        try {
+            if (argv && Array.isArray(argv)) {
+                // Look for PDF files in argv
+                for (const arg of argv) {
+                    if (typeof arg === 'string' && arg.toLowerCase().endsWith('.pdf')) {
+                        const resolvedPath = path.resolve(workingDirectory, arg);
+                        console.log('Opening PDF from second-instance:', resolvedPath);
+                        queueOrSendOpenFile(resolvedPath);
+                        break;  // Only process the first PDF
+                    }
+                }
+            }
+        } catch (err) {
+            console.error('Error processing second-instance args:', err);
+        }
+
+        // Bring window to focus
         if (mainWindow) {
             if (mainWindow.isMinimized()) mainWindow.restore();
             mainWindow.focus();
@@ -345,6 +410,28 @@ if (!gotTheLock) {
         });
     });
 }
+
+// Flush any queued open-file requests once renderer is ready to receive them
+function flushOpenFileQueue() {
+    if (!mainWindow || !mainWindow.webContents) return;
+    if (openFileQueue.length === 0) return;
+    try {
+        for (const p of openFileQueue) {
+            mainWindow.webContents.send('open-file', p);
+        }
+    } catch (err) {
+        console.error('Failed to flush open file queue:', err);
+    } finally {
+        openFileQueue = [];
+    }
+}
+
+// When mainWindow finishes loading its content, flush queued files
+app.on('browser-window-created', (event, window) => {
+    window.webContents.once('did-finish-load', () => {
+        flushOpenFileQueue();
+    });
+});
 
 app.on('window-all-closed', () => {
     if (apiProcess) {

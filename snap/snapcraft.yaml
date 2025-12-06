@@ -82,6 +82,8 @@ apps:
       - network
       - browser-support
       - removable-media
+      - xdg-open
+      - desktop
     environment:
       PATH: $SNAP/resources/assets/backend_linux/compiled-ghostscript/bin:$PATH
       LD_LIBRARY_PATH: $LD_LIBRARY_PATH:$SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/libproxy:$SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR:$SNAP/usr/lib
