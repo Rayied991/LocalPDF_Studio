@@ -19,11 +19,11 @@
 // src/renderer/app.js
 
 import TabManager from './tabs/tabManager.js';
+import { ClockManager } from './utils/clockManager.js';
 import createPdfTab from './utils/createPdfTab.js';
 import customAlert from './utils/customAlert.js';
-import { ClockManager } from './utils/clockManager.js';
-import { SearchIndexManager } from './utils/searchIndexManager.js';
 import { SearchBar } from './utils/searchBar.js';
+import { SearchIndexManager } from './utils/searchIndexManager.js';
 
 window.addEventListener('DOMContentLoaded', () => {
     const tabManager = new TabManager('#tab-bar', '#tab-content');
@@ -33,6 +33,7 @@ window.addEventListener('DOMContentLoaded', () => {
     const emptyState = document.getElementById('empty-state');
     const openPdfBtn = document.getElementById('open-pdf-btn');
     const settingsBtn = document.getElementById('settings-btn');
+    const donateBtn = document.getElementById('donate-btn');
     const modal = document.getElementById('settings-modal');
     const saveBtn = document.getElementById('settings-save');
     const cancelBtn = document.getElementById('settings-cancel');
@@ -140,7 +141,14 @@ window.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
-    
+
+    setInterval(() => {
+        donateBtn.classList.add('glowing');
+        setTimeout(() => {
+            donateBtn.classList.remove('glowing');
+        }, 600);
+    }, 3600000);
+
     window.addEventListener('message', (event) => {
         if (event.data?.type === 'open-external') {
             if (window.electronAPI?.openExternal) {
