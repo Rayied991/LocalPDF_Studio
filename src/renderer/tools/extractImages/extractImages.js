@@ -23,6 +23,7 @@ import customAlert from '../../utils/customAlert.js';
 import loadingUI from '../../utils/loading.js';
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = '../../../pdf/build/pdf.worker.mjs';
+window.pdfjsLib = pdfjsLib;
 
 document.addEventListener('DOMContentLoaded', async () => {
     await API.init();
