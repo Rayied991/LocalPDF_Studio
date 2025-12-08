@@ -1,5 +1,5 @@
 name: localpdf-studio
-base: core24
+base: core22
 version: '0.0.7'
 summary: LocalPDF Studio
 description: |
@@ -54,11 +54,22 @@ parts:
       - "-usr/lib/*/libfontconfig*"
       - "-usr/lib/*/libfreetype*"
       - -usr/share/texmf/ls-R
+    build-packages:
+      - curl
+      - ca-certificates
+      - gcc
+      - g++
+      - make
     source: .
-    build-snaps:
-    - node/24/stable
     plugin: nil
     override-build: |
+      PATH=$(echo "$PATH" | tr ':' '\n' | grep -v "/snap/node" | paste -sd ':' -)
+      curl -fsSL https://deb.nodesource.com/setup_24.x | bash -
+      apt-get install -y nodejs
+      export PATH=/usr/bin:$PATH
+      hash -r
+      echo "Node version: $(node -v)"
+      echo "NPM version: $(npm -v)"
       mkdir -p $SNAPCRAFT_PART_INSTALL/meta/gui
       cp localpdf-studio.desktop $SNAPCRAFT_PART_INSTALL/meta/gui/
       cp assets/icons/app_icon_linux.png $SNAPCRAFT_PART_INSTALL/meta/gui/
