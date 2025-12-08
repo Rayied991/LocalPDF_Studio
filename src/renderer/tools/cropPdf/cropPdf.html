@@ -1,3 +1,23 @@
+<!--
+ * LocalPDF Studio - Offline PDF Toolkit
+ * ======================================
+ * 
+ * @author      Md. Alinur Hossain <alinur1160@gmail.com>
+ * @license     AGPL 3.0 (GNU Affero General Public License version 3)
+ * @website     https://alinur1.github.io/LocalPDF_Studio_Website/
+ * @repository  https://github.com/Alinur1/LocalPDF_Studio
+ * 
+ * Copyright (c) 2025 Md. Alinur Hossain. All rights reserved.
+ * 
+ * Architecture:
+ * - Frontend: Electron + HTML/CSS/JS
+ * - Backend: ASP.NET Core Web API, Python
+ * - PDF Engine: PdfSharp + Mozilla PDF.js
+-->
+
+
+<!-- src/renderer/tools/cropPdf/cropPdf.html -->
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,10 +27,10 @@
     <title>LocalPDF Studio - Crop PDF</title>
     <meta http-equiv="Content-Security-Policy"
         content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' http://localhost:*;">
-    
+
     <link rel="stylesheet" href="../../styles/main.css">
     <link rel="stylesheet" href="./cropPdf.css">
-    
+
 </head>
 
 <body>
@@ -23,7 +43,8 @@
         <main class="tool-container">
             <!-- File Selection Area -->
             <div class="file-selection-area" id="file-selection-area">
-                <button id="select-pdf-btn" class="select-pdf-btn">Click to Select a PDF File or Drag & Drop Here</button>
+                <button id="select-pdf-btn" class="select-pdf-btn">Click to Select a PDF File or Drag & Drop
+                    Here</button>
                 <div id="selected-file-info" class="selected-file-info" style="display: none;">
                     <div style="flex-grow: 1;">
                         <p id="pdf-name" class="pdf-name"></p>
@@ -39,26 +60,27 @@
                 <div id="preview-container" class="preview-container" style="display:none;">
                     <div class="preview-header">
                         <h3>PDF Preview</h3>
-                        
+
                         <div class="page-nav">
                             <input type="number" id="page-input" class="page-input" min="1">
                             <span id="page-display" class="page-display"></span>
                         </div>
-                        
+
                         <div class="zoom-controls">
                             <button id="zoom-out-btn" class="secondary-btn" title="Zoom Out (Ctrl+Scroll)">−</button>
                             <span id="zoom-level" class="zoom-level">100%</span>
                             <button id="zoom-in-btn" class="secondary-btn" title="Zoom In (Ctrl+Scroll)">+</button>
                             <button id="reset-zoom-btn" class="secondary-btn" title="Reset Zoom">Reset</button>
                             <div class="separator"></div>
-                            <button id="view-single-btn" class="secondary-btn active" title="Single Page View">▢</button>
+                            <button id="view-single-btn" class="secondary-btn active"
+                                title="Single Page View">▢</button>
                             <button id="view-double-btn" class="secondary-btn" title="Double Page View">▢▢</button>
-                           
+
                         </div>
-                        
+
                         <span id="page-count" class="page-count"></span>
                     </div>
-                    
+
                     <div id="preview-grid" class="preview-grid view-single"></div>
                 </div>
 

@@ -1,8 +1,21 @@
 /**
  * LocalPDF Studio - Offline PDF Toolkit
  * ======================================
- * Full PDF Rendering + Real-Time Cropping + Zoom + View Modes (Single, Double)
- */
+ * 
+ * @author      Md. Alinur Hossain <alinur1160@gmail.com>
+ * @license     AGPL 3.0 (GNU Affero General Public License version 3)
+ * @website     https://alinur1.github.io/LocalPDF_Studio_Website/
+ * @repository  https://github.com/Alinur1/LocalPDF_Studio
+ * 
+ * Copyright (c) 2025 Md. Alinur Hossain. All rights reserved.
+ * 
+ * Architecture:
+ * - Frontend: Electron + HTML/CSS/JS
+ * - Backend: ASP.NET Core Web API, Python
+ * - PDF Engine: PdfSharp + Mozilla PDF.js
+**/
+
+// src/renderer/tools/cropPdf/cropPdf.js
 
 import * as pdfjsLib from "../../../pdf/build/pdf.mjs";
 import { API } from "../../api/api.js";
@@ -14,7 +27,6 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = "../../../pdf/build/pdf.worker.mjs";
 document.addEventListener("DOMContentLoaded", async () => {
   await API.init();
 
-  // ================ UI ELEMENTS ================
   const selectPdfBtn = document.getElementById("select-pdf-btn");
   const removePdfBtn = document.getElementById("remove-pdf-btn");
   const cropBtn = document.getElementById("crop-btn");
@@ -22,12 +34,10 @@ document.addEventListener("DOMContentLoaded", async () => {
   const zoomInBtn = document.getElementById("zoom-in-btn");
   const zoomOutBtn = document.getElementById("zoom-out-btn");
   const resetZoomBtn = document.getElementById("reset-zoom-btn");
-  
   const viewModeBtns = {
     single: document.getElementById("view-single-btn"),
     double: document.getElementById("view-double-btn"),
   };
-
   const pdfNameEl = document.getElementById("pdf-name");
   const pdfSizeEl = document.getElementById("pdf-size");
   const previewContainer = document.getElementById("preview-container");
@@ -185,9 +195,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     pageInputEl.max = pdfDoc.numPages;
 
     for (let i = 1; i <= pdfDoc.numPages; i++) {
-        await renderPage(i);
+      await renderPage(i);
     }
-    
+
     updateViewMode();
     updateCurrentPageDisplay();
     updateCropOverlay();
@@ -225,7 +235,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     renderedPages.forEach((canvas, index) => {
       const pageNum = index + 1;
       const wrapper = document.getElementById(`page-wrapper-${pageNum}`);
-      
+
       if (!wrapper) return;
 
       if (viewMode === 'single') {
@@ -242,19 +252,19 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   function navigateToPage(pageNum) {
     if (pageNum < 1 || pageNum > pdfDoc.numPages) {
-        modal.style.display = 'block';
-        pageInputEl.value = currentPage;
-        return;
+      modal.style.display = 'block';
+      pageInputEl.value = currentPage;
+      return;
     }
     const pageWrapper = document.getElementById(`page-wrapper-${pageNum}`);
     if (pageWrapper) {
-        const isMobile = window.innerWidth <= 768;
-        pageWrapper.scrollIntoView({ 
-            behavior: isMobile ? 'auto' : 'smooth', 
-            block: 'center' 
-        });
-        currentPage = pageNum;
-        pageDisplayEl.textContent = `${String(pageNum).padStart(2, '0')}/${pdfDoc.numPages}`;
+      const isMobile = window.innerWidth <= 768;
+      pageWrapper.scrollIntoView({
+        behavior: isMobile ? 'auto' : 'smooth',
+        block: 'center'
+      });
+      currentPage = pageNum;
+      pageDisplayEl.textContent = `${String(pageNum).padStart(2, '0')}/${pdfDoc.numPages}`;
     }
   }
 
@@ -271,7 +281,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     canvas.height = viewport.height;
     canvas.id = `canvas-${pageNum}`;
     canvas.style.cursor = "crosshair";
-    
+
     const label = document.createElement('div');
     label.className = 'page-label';
     label.textContent = `Page ${pageNum}`;
@@ -296,16 +306,16 @@ document.addEventListener("DOMContentLoaded", async () => {
     let mostVisiblePage = currentPage;
 
     for (let i = 1; i <= renderedPages.length; i++) {
-        const pageWrapper = document.getElementById(`page-wrapper-${i}`);
-        if (pageWrapper && pageWrapper.style.display !== 'none') {
-            const rect = pageWrapper.getBoundingClientRect();
-            const visibleHeight = Math.min(rect.bottom, previewGrid.clientHeight) - Math.max(rect.top, 0);
+      const pageWrapper = document.getElementById(`page-wrapper-${i}`);
+      if (pageWrapper && pageWrapper.style.display !== 'none') {
+        const rect = pageWrapper.getBoundingClientRect();
+        const visibleHeight = Math.min(rect.bottom, previewGrid.clientHeight) - Math.max(rect.top, 0);
 
-            if (visibleHeight > maxVisibleHeight) {
-                maxVisibleHeight = visibleHeight;
-                mostVisiblePage = i;
-            }
+        if (visibleHeight > maxVisibleHeight) {
+          maxVisibleHeight = visibleHeight;
+          mostVisiblePage = i;
         }
+      }
     }
     currentPage = mostVisiblePage;
     pageInputEl.value = currentPage;
@@ -436,25 +446,25 @@ document.addEventListener("DOMContentLoaded", async () => {
     const ratio = 96 / 72; // PDF point → pixel
 
     renderedPages.forEach(canvas => {
-        const ctx = canvas.getContext("2d");
-        const w = canvas.width;
-        const h = canvas.height;
+      const ctx = canvas.getContext("2d");
+      const w = canvas.width;
+      const h = canvas.height;
 
-        ctx.clearRect(0, 0, w, h);
-        ctx.drawImage(canvas.original, 0, 0);
+      ctx.clearRect(0, 0, w, h);
+      ctx.drawImage(canvas.original, 0, 0);
 
-        const cropW = w - left * ratio - right * ratio;
-        const cropH = h - top * ratio - bottom * ratio;
+      const cropW = w - left * ratio - right * ratio;
+      const cropH = h - top * ratio - bottom * ratio;
 
-        ctx.fillStyle = "rgba(0,0,0,0.5)";
-        ctx.fillRect(0, 0, w, top * ratio); // Top
-        ctx.fillRect(0, top * ratio + cropH, w, h - (top * ratio + cropH)); // Bottom
-        ctx.fillRect(0, top * ratio, left * ratio, cropH); // Left
-        ctx.fillRect(left * ratio + cropW, top * ratio, right * ratio, cropH); // Right
+      ctx.fillStyle = "rgba(0,0,0,0.5)";
+      ctx.fillRect(0, 0, w, top * ratio); // Top
+      ctx.fillRect(0, top * ratio + cropH, w, h - (top * ratio + cropH)); // Bottom
+      ctx.fillRect(0, top * ratio, left * ratio, cropH); // Left
+      ctx.fillRect(left * ratio + cropW, top * ratio, right * ratio, cropH); // Right
 
-        ctx.lineWidth = 3;
-        ctx.strokeStyle = "#00ff62";
-        ctx.strokeRect(left * ratio, top * ratio, cropW, cropH);
+      ctx.lineWidth = 3;
+      ctx.strokeStyle = "#00ff62";
+      ctx.strokeRect(left * ratio, top * ratio, cropW, cropH);
     });
   }
 
@@ -579,7 +589,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     pageCountEl.textContent = '';
     pageDisplayEl.textContent = '';
     pageInputEl.value = '';
-    
+
     // Reset view mode buttons
     updateViewModeButtons();
   }
