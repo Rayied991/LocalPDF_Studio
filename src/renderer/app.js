@@ -19,11 +19,11 @@
 // src/renderer/app.js
 
 import TabManager from './tabs/tabManager.js';
-import { ClockManager } from './utils/clockManager.js';
 import createPdfTab from './utils/createPdfTab.js';
 import customAlert from './utils/customAlert.js';
-import { SearchBar } from './utils/searchBar.js';
+import { ClockManager } from './utils/clockManager.js';
 import { SearchIndexManager } from './utils/searchIndexManager.js';
+import { SearchBar } from './utils/searchBar.js';
 
 window.addEventListener('DOMContentLoaded', () => {
     const tabManager = new TabManager('#tab-bar', '#tab-content');
@@ -33,7 +33,6 @@ window.addEventListener('DOMContentLoaded', () => {
     const emptyState = document.getElementById('empty-state');
     const openPdfBtn = document.getElementById('open-pdf-btn');
     const settingsBtn = document.getElementById('settings-btn');
-    const donateBtn = document.getElementById('donate-btn');
     const modal = document.getElementById('settings-modal');
     const saveBtn = document.getElementById('settings-save');
     const cancelBtn = document.getElementById('settings-cancel');
@@ -92,6 +91,17 @@ window.addEventListener('DOMContentLoaded', () => {
 
     let isDialogOpen = false;
 
+    // Helper function to open PDF files
+    async function openPdfFiles(filePaths) {
+        if (!filePaths || filePaths.length === 0) return;
+
+        for (const filePath of filePaths) {
+            createPdfTab(filePath, tabManager);
+            searchIndexManager.addFile(filePath);
+        }
+        saveTabs(tabManager);
+    }
+
     openPdfBtn.addEventListener('click', async () => {
         if (isDialogOpen) return;
 
@@ -118,13 +128,19 @@ window.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    setInterval(() => {
-        donateBtn.classList.add('glowing');
-        setTimeout(() => {
-            donateBtn.classList.remove('glowing');
-        }, 600);
-    }, 3600000);
-
+    // Handle files opened via OS "Open with LocalPDF Studio" or second-instance events
+    if (window.electronAPI && window.electronAPI.onOpenFile) {
+        window.electronAPI.onOpenFile(async (filePath) => {
+            try {
+                if (filePath) {
+                    await openPdfFiles([filePath]);
+                }
+            } catch (err) {
+                console.error('Error opening file from OS:', err);
+            }
+        });
+    }
+    
     window.addEventListener('message', (event) => {
         if (event.data?.type === 'open-external') {
             if (window.electronAPI?.openExternal) {
