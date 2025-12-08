@@ -156,7 +156,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       if (!files || !files.length) return;
 
       const path = files[0];
-      const name = path.split(/[\/]/).pop();
+      const name = path.split(/[\\/]/).pop();
       const size = await getFileSize(path);
 
       await handleFileSelected({ path, name, size });

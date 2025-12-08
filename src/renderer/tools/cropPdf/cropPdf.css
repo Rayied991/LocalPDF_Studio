@@ -17,37 +17,10 @@
 
 /* src/renderer/tools/cropPdf/cropPdf.css */
 
-.top-bar {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  padding: 0.8rem 1rem;
-  background: #2c3e50;
-  border-bottom: 1px solid #18222e;
-  height: 58px;
-}
-
-.top-btn {
-  background: #3498db;
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  padding: 0.6rem 1.2rem;
-  cursor: pointer;
-  text-decoration: none;
-  font-weight: 500;
-  transition: background 0.2s;
-}
-
-.top-btn:hover {
-  background: #2980b9;
-}
-
 .tool-title {
   font-size: 1.2rem;
   margin: 0;
   color: #ecf0f1;
-  flex-grow: 1;
 }
 
 /* --- Main Container --- */
@@ -491,11 +464,21 @@ input.error {
   gap: 1rem;
   margin-top: auto;
   padding-top: 1rem;
-  flex-shrink: 0;
 }
 
 .action-buttons .top-btn {
   min-width: 180px;
+  background: #34495e;
+}
+
+.action-buttons .top-btn:hover {
+  min-width: 180px;
+  background: #3498db;
+}
+
+.action-buttons .top-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;    
 }
 
 /* --- Modal Styles --- */
@@ -650,7 +633,7 @@ input.error {
     font-size: 1rem;
   }
 
-  .top-btn {
+  .action-buttons .top-btn {
     padding: 0.5rem 1rem;
     font-size: 0.9rem;
   }
