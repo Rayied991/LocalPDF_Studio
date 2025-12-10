@@ -98,10 +98,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     navigateToPage(pageNum);
   });
 
-  // Zoom button listeners
-  zoomInBtn.addEventListener("click", zoomIn);
-  zoomOutBtn.addEventListener("click", zoomOut);
-  resetZoomBtn.addEventListener("click", resetZoom);
+
 
   // View mode button listeners
   viewModeBtns.single.addEventListener("click", () => setViewMode('single'));
@@ -140,13 +137,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   previewGrid.addEventListener('mouseup', () => endCrop());
   previewGrid.addEventListener('mouseleave', () => endCrop());
 
-  // Zoom event listeners
-  document.addEventListener('wheel', (e) => {
-    if (e.ctrlKey || e.metaKey) {
-      e.preventDefault();
-      handleZoom(e.deltaY > 0 ? -ZOOM_STEP : ZOOM_STEP);
-    }
-  }, { passive: false });
+  
 
   // ================ FUNCTIONS ================
   async function selectPdf() {
