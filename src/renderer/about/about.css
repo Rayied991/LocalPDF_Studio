@@ -141,13 +141,6 @@ main::-webkit-scrollbar-thumb:hover {
     border-radius: 2px;
 }
 
-.section-subtitle {
-    text-align: left;
-    color: #bdc3c7;
-    margin-bottom: 2rem;
-    font-size: 1.1rem;
-}
-
 .features-section {
     width: 100%;
 }
@@ -205,21 +198,18 @@ main::-webkit-scrollbar-thumb:hover {
     font-size: 0.95rem;
 }
 
-.tech-section,
-.ai-section {
+.tech-section {
     width: 100%;
 }
 
-.tech-grid,
-.ai-grid {
+.tech-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
     gap: 1.5rem;
     margin-top: 1.5rem;
 }
 
-.tech-item,
-.ai-item {
+.tech-item {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -233,30 +223,26 @@ main::-webkit-scrollbar-thumb:hover {
     cursor: help;
 }
 
-.tech-item:hover,
-.ai-item:hover {
+.tech-item:hover {
     transform: translateY(-3px);
     border-color: #3498db;
     box-shadow: 0 5px 20px rgba(52, 152, 219, 0.2);
 }
 
-.tech-icon,
-.ai-icon {
+.tech-icon {
     width: 56px;
     height: 56px;
     object-fit: contain;
 }
 
-.tech-name,
-.ai-name {
+.tech-name {
     color: #ecf0f1;
     font-weight: 600;
     text-align: center;
     font-size: 0.9rem;
 }
 
-.tech-item::after,
-.ai-item::after {
+.tech-item::after {
     content: attr(data-tooltip);
     position: absolute;
     bottom: -40px;
@@ -275,8 +261,7 @@ main::-webkit-scrollbar-thumb:hover {
     border: 1px solid #34495e;
 }
 
-.tech-item:hover::after,
-.ai-item:hover::after {
+.tech-item:hover::after {
     opacity: 1;
     visibility: visible;
     bottom: -10px;
@@ -412,8 +397,7 @@ main::-webkit-scrollbar-thumb:hover {
         gap: 1.25rem;
     }
 
-    .tech-grid,
-    .ai-grid {
+    .tech-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 1rem;
     }
@@ -472,8 +456,7 @@ main::-webkit-scrollbar-thumb:hover {
         font-size: 1.5rem;
     }
 
-    .tech-grid,
-    .ai-grid {
+    .tech-grid {
         grid-template-columns: repeat(2, 1fr);
     }
 
@@ -483,8 +466,7 @@ main::-webkit-scrollbar-thumb:hover {
         padding: 1.5rem;
     }
 
-    .tech-icon,
-    .ai-icon {
+    .tech-icon {
         width: 48px;
         height: 48px;
     }
