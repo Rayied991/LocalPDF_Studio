@@ -189,6 +189,7 @@ const createWindow = () => {
         minWidth: 700,
         minHeight: 600,
         icon: getIcon(),
+        backgroundColor: '#2c3e50',
         webPreferences: {
             preload: path.resolve(app.getAppPath(), 'src/preload/preload.js'),
             contextIsolation: true,
