@@ -1,6 +1,6 @@
 name: localpdf-studio
 base: core22
-version: '0.0.7'
+version: '0.0.8'
 summary: LocalPDF Studio
 description: |
   Offline, open-source, privacy-first PDF toolkit.
