@@ -20,7 +20,7 @@ LocalPDF Studio is built with modern web technologies and follows open-source pr
 ### > Development Setup
 - Node.JS v22 or later
 - Git
-- .NET Core SDK and Python (For backend development)
+- .NET Core SDK (.NET 8 is recommended) and Python (For backend development)
 
 ### > Clone the repository
 - git clone https://github.com/Alinur1/LocalPDF_Studio.git
@@ -28,9 +28,7 @@ LocalPDF Studio is built with modern web technologies and follows open-source pr
 - For the devs who are using macOS only -> run this command after doing cd LocalPDF_Studio: chmod +x assets/backend_mac/*
 
 ### > Install dependencies
-- npm install electron --save-dev
-- npm install --save-dev electron-builder
-- npm install electron-updater
+- npm install
 - npm run start
 
 ### > How to build one for yourself
@@ -42,6 +40,7 @@ LocalPDF Studio is built with modern web technologies and follows open-source pr
 - npm run build-linux (Only for linux)
 - npm run build-mac (Only for macOS)
 - npm run pack (Create unpacked app for testing)
+- NOTE: Please see the "docs" folder for building snap package for linux and python executables for all platforms.
 
 ### > Quick Contribution Guide:
 - Fork the repository on GitHub
