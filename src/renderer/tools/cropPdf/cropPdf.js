@@ -80,12 +80,15 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // Zoom state
   let zoomLevel = 1;
-  const MIN_ZOOM = 0.5;
+  const MIN_ZOOM = 1; // Start at 100%, no zoom out
   const MAX_ZOOM = 3;
-  const ZOOM_STEP = 0.1;
+  const ZOOM_STEP = 0.25;
 
   // Ratio for converting pixels to PDF points
   const PIXEL_TO_POINT = 72 / 96;
+
+  // Store original dimensions for each page
+  let pageDimensions = [];
 
   // ================ EVENT LISTENERS ================
   selectPdfBtn.addEventListener("click", selectPdf);
@@ -98,7 +101,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     navigateToPage(pageNum);
   });
 
-
+  // Zoom button listeners (if they exist in your HTML)
+  if (zoomInBtn) zoomInBtn.addEventListener("click", zoomIn);
+  if (zoomOutBtn) zoomOutBtn.addEventListener("click", zoomOut);
+  if (resetZoomBtn) resetZoomBtn.addEventListener("click", resetZoom);
 
   // View mode button listeners
   viewModeBtns.single.addEventListener("click", () => setViewMode('single'));
@@ -136,8 +142,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   previewGrid.addEventListener('mousemove', (e) => drawCrop(e));
   previewGrid.addEventListener('mouseup', () => endCrop());
   previewGrid.addEventListener('mouseleave', () => endCrop());
-
-  
 
   // ================ FUNCTIONS ================
   async function selectPdf() {
@@ -177,9 +181,16 @@ document.addEventListener("DOMContentLoaded", async () => {
     previewContainer.style.flexDirection = "column";
     previewGrid.innerHTML = "";
     renderedPages = [];
+    pageDimensions = [];
     currentPage = 1;
     zoomLevel = 1;
     viewMode = 'single';
+
+    // Initialize zoom display
+    const zoomDisplay = document.getElementById('zoom-level');
+    if (zoomDisplay) {
+      zoomDisplay.textContent = '100%';
+    }
 
     pdfDoc = await pdfjsLib.getDocument(`file://${path}`).promise;
     pageCountEl.textContent = `Total Pages: ${pdfDoc.numPages}`;
@@ -237,6 +248,9 @@ document.addEventListener("DOMContentLoaded", async () => {
         wrapper.style.display = 'flex';
       }
     });
+
+    // Reapply zoom to adjust spacing
+    applyZoom();
   }
 
   // ==================== END VIEW MODE FUNCTIONS ====================
@@ -262,6 +276,12 @@ document.addEventListener("DOMContentLoaded", async () => {
   async function renderPage(pageNum) {
     const page = await pdfDoc.getPage(pageNum);
     const viewport = page.getViewport({ scale });
+
+    // Store original dimensions
+    pageDimensions.push({
+      width: viewport.width,
+      height: viewport.height
+    });
 
     const wrapper = document.createElement("div");
     wrapper.className = "page-thumbnail";
@@ -539,16 +559,63 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   function applyZoom() {
-    renderedPages.forEach((canvas) => {
+    renderedPages.forEach((canvas, index) => {
       const wrapper = canvas.parentElement;
+      const pageNum = index + 1;
+      const dimensions = pageDimensions[index];
+      
+      if (!dimensions) return;
+
+      // Apply transform for zoom
       wrapper.style.transform = `scale(${zoomLevel})`;
       wrapper.style.transformOrigin = 'center top';
+      
+      // Calculate the extra space needed due to zoom
+      // When zoomed, the element takes more visual space
+      const scaledHeight = dimensions.height * zoomLevel;
+      const originalHeight = dimensions.height;
+      const extraHeight = scaledHeight - originalHeight;
+      
+      // Add margin to prevent overlap - only bottom margin to push next page down
+      wrapper.style.marginBottom = `${extraHeight}px`;
+      
+      // For double view mode, also adjust horizontal spacing
+      if (viewMode === 'double') {
+        const scaledWidth = dimensions.width * zoomLevel;
+        const originalWidth = dimensions.width;
+        const extraWidth = scaledWidth - originalWidth;
+        
+        // Add horizontal margin for double page view
+        wrapper.style.marginRight = `${extraWidth / 2}px`;
+        wrapper.style.marginLeft = `${extraWidth / 2}px`;
+      } else {
+        // Reset horizontal margins for single view
+        wrapper.style.marginRight = '0';
+        wrapper.style.marginLeft = '0';
+      }
     });
 
     // Update zoom level display
     const zoomDisplay = document.getElementById('zoom-level');
     if (zoomDisplay) {
       zoomDisplay.textContent = `${Math.round(zoomLevel * 100)}%`;
+    }
+
+    // Update button states
+    if (zoomOutBtn) {
+      zoomOutBtn.disabled = zoomLevel <= MIN_ZOOM;
+      zoomOutBtn.style.opacity = zoomLevel <= MIN_ZOOM ? '0.5' : '1';
+      zoomOutBtn.style.cursor = zoomLevel <= MIN_ZOOM ? 'not-allowed' : 'pointer';
+    }
+    if (zoomInBtn) {
+      zoomInBtn.disabled = zoomLevel >= MAX_ZOOM;
+      zoomInBtn.style.opacity = zoomLevel >= MAX_ZOOM ? '0.5' : '1';
+      zoomInBtn.style.cursor = zoomLevel >= MAX_ZOOM ? 'not-allowed' : 'pointer';
+    }
+    if (resetZoomBtn) {
+      resetZoomBtn.disabled = zoomLevel === 1;
+      resetZoomBtn.style.opacity = zoomLevel === 1 ? '0.5' : '1';
+      resetZoomBtn.style.cursor = zoomLevel === 1 ? 'not-allowed' : 'pointer';
     }
   }
 
@@ -565,6 +632,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   function clearAll() {
     renderedPages = [];
+    pageDimensions = [];
     previewGrid.innerHTML = "";
     previewContainer.style.display = "none";
 
@@ -581,7 +649,30 @@ document.addEventListener("DOMContentLoaded", async () => {
     pageDisplayEl.textContent = '';
     pageInputEl.value = '';
 
+    // Reset zoom display
+    const zoomDisplay = document.getElementById('zoom-level');
+    if (zoomDisplay) {
+      zoomDisplay.textContent = '100%';
+    }
+
     // Reset view mode buttons
     updateViewModeButtons();
+    
+    // Ensure zoom buttons are enabled
+    if (zoomOutBtn) {
+      zoomOutBtn.disabled = false;
+      zoomOutBtn.style.opacity = '1';
+      zoomOutBtn.style.cursor = 'pointer';
+    }
+    if (zoomInBtn) {
+      zoomInBtn.disabled = false;
+      zoomInBtn.style.opacity = '1';
+      zoomInBtn.style.cursor = 'pointer';
+    }
+    if (resetZoomBtn) {
+      resetZoomBtn.disabled = true;
+      resetZoomBtn.style.opacity = '0.5';
+      resetZoomBtn.style.cursor = 'not-allowed';
+    }
   }
 });
