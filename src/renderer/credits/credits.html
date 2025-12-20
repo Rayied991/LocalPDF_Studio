@@ -1,0 +1,164 @@
+<!--
+ * LocalPDF Studio - Offline PDF Toolkit
+ * ======================================
+ * 
+ * @author      Md. Alinur Hossain <alinur1160@gmail.com>
+ * @license     AGPL 3.0 (GNU Affero General Public License version 3)
+ * @website     https://alinur1.github.io/LocalPDF_Studio_Website/
+ * @repository  https://github.com/Alinur1/LocalPDF_Studio
+ * 
+ * Copyright (c) 2025 Md. Alinur Hossain. All rights reserved.
+ * 
+ * Architecture:
+ * - Frontend: Electron + HTML/CSS/JS
+ * - Backend: ASP.NET Core Web API, Python
+ * - PDF Engine: PdfSharp + Mozilla PDF.js
+-->
+<!-- src/renderer/credits/credits.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Credits - LocalPDF Studio</title>
+    <meta http-equiv="Content-Security-Policy" content="
+        default-src 'self';
+        script-src 'self';
+        style-src 'self' 'unsafe-inline';
+        img-src 'self' data: file:;
+        connect-src 'self' http://localhost:*;
+    ">
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../about.css">
+    <link rel="stylesheet" href="./credits.css">
+</head>
+<body>
+
+    <div id="app">
+        <div class="top-bar">
+            <a href="../about/about.html" class="top-btn">← Back to About</a>
+            <h1 class="page-title">Credits & Dependencies</h1>
+        </div>
+        <main class="credits-container">
+            <section class="hero-section">
+                <div class="app-icon">
+                    <div class="icon-placeholder">📄</div>
+                </div>
+                <h1 class="app-name">LocalPDF Studio</h1>
+                <p class="app-tagline">is made possible thanks to these incredible open-source projects and libraries.</p>
+            </section>
+
+              <section class="credits-section">
+                <h2 class="section-title">Core Technologies</h2>
+                <div class="credits-grid">
+                    <div class="credit-card">
+                        <div class="credit-icon">⚛️</div>
+                        <h3>Node.js</h3>
+                        <p>JavaScript runtime built on Chrome's V8 JavaScript engine</p>
+
+                        <button class="redirect-btn" id="nodejs-link" >
+                            <span>Visit Website</span>
+                            <span class="redirect-icon">↗️</span>
+                        </button> 
+                    </div>
+                    <div class="credit-card">
+                        <div class="credit-icon">📱</div>
+                        <h3>Electron</h3>
+                        <p>Framework for building cross-platform desktop apps with web technologies</p>
+                        <button class="redirect-btn" id="electron-link" >
+                            <span>Visit Website</span>
+                            <span class="redirect-icon">↗️</span>
+                        </button>
+                    </div>
+                    <div class="credit-card">
+                        <div class="credit-icon">🏗️</div>
+                        <h3>Electron Builder</h3>
+                        <p>Complete solution to package and build ready for distribution Electron apps</p>
+                        <button class="redirect-btn" id="electron-builder-link" >
+                            <span>Visit Website</span>
+                            <span class="redirect-icon">↗️</span>
+                        </button>
+                    </div>
+                    <div class="credit-card">
+                        <div class="credit-icon">🔄</div>
+                        <h3>Electron Updater</h3>
+                        <p>Auto-updater for Electron applications</p>
+                        <button class="redirect-btn" id="electron-updater-link" >
+                            <span>Visit Website</span>
+                            <span class="redirect-icon">↗️</span>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="credits-section">
+                <h2 class="section-title">PDF & Image Processing</h2>
+                <div class="credits-grid">
+                    <div class="credit-card">
+                        <div class="credit-icon">👻</div>
+                        <h3>Ghostscript</h3>
+                        <p>Interpreter for the PostScript language and PDF files</p>
+                        <button class="redirect-btn" id="ghostscript-link" >
+                            <span>Visit Website</span>
+                            <span class="redirect-icon">↗️</span>
+                        </button>
+                        
+                    </div>
+                    <div class="credit-card">
+                        <div class="credit-icon">🔤</div>
+                        <h3>PdfSharpCore</h3>
+                        <p>Open source .NET library for processing PDF files</p>
+                        <button class="redirect-btn" id="pdfsharpcore-link" >
+                            <span>Visit Website</span>
+                            <span class="redirect-icon">↗️</span>
+                        </button>
+                    </div>
+                    <div class="credit-card">
+                        <div class="credit-icon">🖼️</div>
+                        <h3>SixLabors.ImageSharp</h3>
+                        <p>Modern, cross-platform, 2D graphics API for .NET</p>
+                        <button class="redirect-btn" id="imagesharp-link" >
+                            <span>Visit Website</span>
+                            <span class="redirect-icon">↗️</span>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="credits-section">
+                <h2 class="section-title">.NET Ecosystem</h2>
+                <div class="credits-grid">
+                    <div class="credit-card">
+                        <div class="credit-icon">🎯</div>
+                        <h3>.NET 8</h3>
+                        <p>Free, cross-platform, open-source developer platform</p>
+                        <button class="redirect-btn" id="dotnet-link" >
+                            <span>Visit Website</span>
+                            <span class="redirect-icon">↗️</span>
+                        </button>
+                    </div>
+                    <div class="credit-card">
+                        <div class="credit-icon">📦</div>
+                        <h3>CliWrap</h3>
+                        <p>Library for interacting with external command line interfaces</p>
+                        <button class="redirect-btn" id="cliwrap-link" >
+                            <span>Visit Website</span>
+                            <span class="redirect-icon">↗️</span>
+                        </button>
+                    </div>
+                    <div class="credit-card">
+                        <div class="credit-icon">🔐</div>
+                        <h3>Portable.BouncyCastle</h3>
+                        <p>Cryptography library for .NET</p>
+                        <button class="redirect-btn" id="bouncycastle-link" >
+                            <span>Visit Website</span>
+                            <span class="redirect-icon">↗️</span>
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script type="module" src="./credits.js"></script>
+</body>
+</html>

@@ -15,10 +15,9 @@
  * - PDF Engine: PdfSharp + Mozilla PDF.js
 **/
 
+/* src/renderer/credits/credits.css */
 
-/* src/renderer/about/about.css */
-
-.about-container {
+.credits-container {
     max-width: 1920px;
     margin: 0 auto;
     padding: 1rem;
@@ -58,6 +57,8 @@ main::-webkit-scrollbar-thumb:hover {
     background: #2980b9;
 }
 
+
+
 .page-title {
     color: #ecf0f1;
     font-size: 1.5rem;
@@ -81,12 +82,12 @@ main::-webkit-scrollbar-thumb:hover {
     font-size: 4rem;
     width: 120px;
     height: 120px;
-    background: linear-gradient(135deg, #3498db, #2980b9);
+    background: linear-gradient(135deg, #3498db, #2ecc71);
     border-radius: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 8px 25px rgba(52, 152, 219, 0.3);
+    box-shadow: 0 8px 25px rgba(155, 89, 182, 0.3);
 }
 
 .app-name {
@@ -137,137 +138,92 @@ main::-webkit-scrollbar-thumb:hover {
     left: 0;
     width: 60px;
     height: 3px;
-    background: linear-gradient(90deg, #3498db, #2ecc71);
+    background: linear-gradient(90deg, #9b59b6, #3498db);
     border-radius: 2px;
 }
 
-.features-section {
+.credits-section {
     width: 100%;
 }
 
-.features-grid {
+.credits-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 1.5rem;
     margin-top: 1.5rem;
 }
 
-.feature-card {
+.credit-card {
     background: #2c3e50;
-    padding: 2rem 1.5rem;
+    padding: 2rem;
     border-radius: 12px;
-    text-align: left;
     border: 1px solid #34495e;
+    text-align: left;
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
 }
 
-.feature-card::before {
+.credit-card::before {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     height: 3px;
-    background: linear-gradient(90deg, #3498db, #2ecc71);
+    background: linear-gradient(90deg, #9b59b6, #3498db);
 }
 
-.feature-card:hover {
+.credit-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-    border-color: #3498db;
+    border-color: #9b59b6;
 }
 
-.feature-icon {
+.credit-icon {
     font-size: 2.5rem;
     margin-bottom: 1rem;
     display: inline-block;
 }
 
-.feature-card h3 {
+.credit-card h3 {
     color: #ecf0f1;
     margin: 0 0 0.75rem 0;
     font-size: 1.2rem;
 }
 
-.feature-card p {
+.credit-card p {
     color: #bdc3c7;
     line-height: 1.5;
-    margin: 0;
+    margin: 0 0 1rem 0;
     font-size: 0.95rem;
+    flex-grow: 1; 
 }
 
-.tech-section {
+.credit-link {
+    display: inline-block;
+    color: #3498db;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+    border: 1px solid #3498db;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+.credit-link:hover {
+    background: #3498db;
+    color: white;
+}
+
+.acknowledgment-section {
     width: 100%;
 }
 
-.tech-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    gap: 1.5rem;
-    margin-top: 1.5rem;
-}
-
-.tech-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.875rem;
-    padding: 1.5rem 1rem;
-    background: #2c3e50;
-    border-radius: 12px;
-    border: 1px solid #34495e;
-    transition: all 0.3s ease;
-    position: relative;
-    cursor: help;
-}
-
-.tech-item:hover {
-    transform: translateY(-3px);
-    border-color: #3498db;
-    box-shadow: 0 5px 20px rgba(52, 152, 219, 0.2);
-}
-
-.tech-icon {
-    width: 56px;
-    height: 56px;
-    object-fit: contain;
-}
-
-.tech-name {
-    color: #ecf0f1;
-    font-weight: 600;
-    text-align: center;
-    font-size: 0.9rem;
-}
-
-.tech-item::after {
-    content: attr(data-tooltip);
-    position: absolute;
-    bottom: -40px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: #2c3e50;
-    color: #ecf0f1;
-    padding: 0.5rem 1rem;
-    border-radius: 6px;
-    font-size: 0.8rem;
-    white-space: nowrap;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.3s ease;
-    z-index: 1000;
-    border: 1px solid #34495e;
-}
-
-.tech-item:hover::after {
-    opacity: 1;
-    visibility: visible;
-    bottom: -10px;
-}
-
-.developer-card {
+.acknowledgment-card {
     background: #2c3e50;
     padding: 2rem;
     border-radius: 12px;
@@ -275,24 +231,22 @@ main::-webkit-scrollbar-thumb:hover {
     text-align: left;
 }
 
-.developer-info h3 {
-    color: #ecf0f1;
-    font-size: 1.5rem;
-    margin: 0 0 1rem 0;
-}
-
-.developer-bio {
+.acknowledgment-card p {
     color: #bdc3c7;
     line-height: 1.6;
-    margin-bottom: 1.5rem;
+    margin: 0 0 1rem 0;
     font-size: 1rem;
+}
+
+.acknowledgment-card p:last-child {
+    margin-bottom: 0;
 }
 
 .love-message {
     color: #e74c3c;
     font-style: italic;
     font-size: 1.1rem;
-    margin: 0;
+    margin-top: 1.5rem !important;
 }
 
 .license-section {
@@ -318,77 +272,40 @@ main::-webkit-scrollbar-thumb:hover {
     margin-bottom: 0;
 }
 
-
-.primary-actions{
-    display: flex;
-    gap: 1rem;
-    align-items: center;
-}
-
-.support-section {
-    width: 100%;
-}
-
-.support-actions {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    align-items: flex-start;
-}
-
-.support-btn {
+.redirect-btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-    padding: 1rem 2rem;
+    padding: 0.75rem 1.5rem;
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    color: white;
     border: none;
     border-radius: 8px;
-    font-size: 1rem;
+    font-size: 0.9rem;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
     text-decoration: none;
+    margin-top: 0.5rem;
+    width: 100%;
 }
 
-.support-btn.primary {
-    background: linear-gradient(135deg, #e74c3c, #c0392b);
-    color: white;
-    font-size: 1.1rem;
-    justify-content: center;
-    min-width: 200px;
-}
-
-.support-btn.primary:hover {
+.redirect-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(231, 76, 60, 0.3);
+    box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+    background: linear-gradient(135deg, #2980b9, #2573a7);
 }
 
-.support-btn.secondary {
-    background: #34495e;
-    color: #ecf0f1;
-    border: 1px solid #4a6572;
+.redirect-icon {
+    font-size: 1rem;
+    margin-left: 0.25rem;
 }
 
-.support-btn.secondary:hover {
-    background: #3d566e;
-    border-color: #3498db;
-    transform: translateY(-1px);
-}
 
-.support-btn img {
-    width: 20px;
-    height: 20px;
-}
-
-.secondary-actions {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-}
-
+/* Responsive Design */
 @media (max-width: 768px) {
-    .about-container {
+    .credits-container {
         padding: 1.5rem 1rem;
         gap: 2.5rem;
     }
@@ -401,42 +318,33 @@ main::-webkit-scrollbar-thumb:hover {
         font-size: 1.3rem;
     }
 
-    .features-grid {
+    .credits-grid {
         grid-template-columns: 1fr;
         gap: 1.25rem;
-    }
-
-    .tech-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 1rem;
     }
 
     .section-title {
         font-size: 1.75rem;
     }
 
-    .primary-actions{
-        flex-direction: column;
-        width: 100%;
-        gap: 1rem;
+    .credit-card {
+        padding: 1.5rem;
     }
 
-    .secondary-actions {
-        flex-direction: column;
-        width: 100%;
+    .acknowledgment-card,
+    .license-card {
+        padding: 1.5rem;
+    }
+    
+    .redirect-btn {
+        padding: 0.65rem 1.25rem;
+        font-size: 0.85rem;
     }
 
-    .support-btn {
-        width: 100%;
-    }
-
-    .support-actions {
-        align-items: stretch;
-    }
 }
 
 @media (max-width: 480px) {
-    .about-container {
+    .credits-container {
         padding: 1rem;
         gap: 2rem;
     }
@@ -471,26 +379,20 @@ main::-webkit-scrollbar-thumb:hover {
         font-size: 1.5rem;
     }
 
-    .tech-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .feature-card,
-    .developer-card,
-    .license-card {
-        padding: 1.5rem;
-    }
-
-    .tech-icon {
-        width: 48px;
-        height: 48px;
-    }
-
-    .feature-icon {
+    .credit-icon {
         font-size: 2rem;
     }
 
-    .primary-actions{
-        gap: 0.75rem;
+    .top-bar {
+        padding: 1rem;
+    }
+
+    .page-title {
+        font-size: 1.2rem;
+    }
+
+    .redirect-btn {
+        padding: 0.6rem 1rem;
+        font-size: 0.8rem;
     }
 }
