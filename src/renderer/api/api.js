@@ -113,7 +113,6 @@ async function getEndpoints() {
         crop: `${base}/PdfCrop/crop`,
         lock: `${base}/PdfLockUnlock/lock`,
         unlock: `${base}/PdfLockUnlock/unlock`,
-        metadata: `${base}/PdfMetadata/metadata`,
         extractImages: `${base}/PdfExtractImages/extract`,
         removeImages: `${base}/PdfExtractImages/extract`,
         ghostscriptCheck: `${base}/Ghostscript/check`,

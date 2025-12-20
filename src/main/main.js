@@ -27,6 +27,7 @@ const path = require('path');
 const fs = require('fs');
 const { spawn } = require('child_process');
 const { autoUpdater } = require('electron-updater');
+const { PDFDocument } = require('pdf-lib');
 const gotTheLock = app.requestSingleInstanceLock();
 
 let apiProcess = null;
@@ -571,6 +572,41 @@ ipcMain.handle('save-pdf-file', async (event, { filename, buffer }) => {
     } catch (err) {
         console.error("Failed to save file:", err);
         return null;
+    }
+});
+
+ipcMain.handle('save-pdf-with-metadata', async (event, { filePath, metadata }) => {
+    try {
+        // Show save dialog
+        const { filePath: savedPath, canceled } = await dialog.showSaveDialog({
+            defaultPath: path.basename(filePath),
+            filters: [{ name: 'PDF Files', extensions: ['pdf'] }]
+        });
+
+        if (canceled || !savedPath) {
+            return { success: false, error: 'Save dialog was cancelled' };
+        }
+
+        // Read the original PDF
+        const pdfBytes = fs.readFileSync(filePath);
+        const pdfDoc = await PDFDocument.load(pdfBytes);
+
+        // Set metadata
+        if (metadata.title) pdfDoc.setTitle(metadata.title);
+        if (metadata.author) pdfDoc.setAuthor(metadata.author);
+        if (metadata.subject) pdfDoc.setSubject(metadata.subject);
+        if (metadata.keywords) pdfDoc.setKeywords(metadata.keywords.split(',').map(k => k.trim()));
+        if (metadata.creator) pdfDoc.setCreator(metadata.creator);
+        if (metadata.producer) pdfDoc.setProducer(metadata.producer);
+
+        // Save the modified PDF
+        const modifiedPdfBytes = await pdfDoc.save();
+        fs.writeFileSync(savedPath, modifiedPdfBytes);
+
+        return { success: true, path: savedPath };
+    } catch (err) {
+        console.error("Failed to save metadata:", err);
+        return { success: false, error: err.message };
     }
 });
 

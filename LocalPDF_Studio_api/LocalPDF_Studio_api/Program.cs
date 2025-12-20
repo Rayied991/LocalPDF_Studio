@@ -36,7 +36,6 @@ builder.Services.AddScoped<IAddPageNumbersInterface, AddPageNumbersService>();
 builder.Services.AddScoped<IWatermarkInterface, WatermarkService>();
 builder.Services.AddScoped<ICropPdfInterface, CropPdfService>();
 builder.Services.AddScoped<ILockUnlockPdfInterface, LockUnlockPdfService>();
-builder.Services.AddScoped<IEditMetadataInterface, EditMetadataService>();
 builder.Services.AddScoped<IPdfExtractImagesInterface, PdfExtractImagesService>();
 builder.Services.AddScoped<IGhostscriptInterface, GhostscriptService>();
 
