@@ -118,7 +118,6 @@ function addButtonTooltips() {
 
 // Then call it in DOMContentLoaded:
 document.addEventListener('DOMContentLoaded', () => {
-    setupCreditLinks();
     fixImagePaths();
     addButtonTooltips(); // Add this line
 });
