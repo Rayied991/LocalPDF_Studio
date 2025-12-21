@@ -185,7 +185,7 @@ const getIcon = () => {
 };
 
 const createWindow = () => {
-    Menu.setApplicationMenu(null);
+    //Menu.setApplicationMenu(null);
     mainWindow = new BrowserWindow({
         minWidth: 700,
         minHeight: 600,
@@ -396,6 +396,7 @@ if (!gotTheLock) {
 
     app.whenReady().then(async () => {
         try {
+            cleanupTaskFolder(); // Clean up any orphaned files from previous session
             await startBackend();
             createWindow();
             setupAutoUpdater();
@@ -611,3 +612,82 @@ ipcMain.handle('save-pdf-with-metadata', async (event, { filePath, metadata }) =
 });
 
 ipcMain.handle('is-app-packaged', () => app.isPackaged);
+
+// Helper function to get the LocalPDF_Studio_Task folder path in Downloads
+function getTaskFolderPath() {
+    let basePath;
+    
+    // Handle Snap with strict confinement
+    if (process.platform === 'linux' && process.env.SNAP) {
+        // Use snap-specific path for confined snaps
+        basePath = process.env.SNAP_USER_DATA || process.env.HOME;
+        console.log('Snap detected: using SNAP_USER_DATA for task folder');
+    } else {
+        // Use Downloads folder for Windows, macOS, and unconfined Linux
+        basePath = app.getPath('downloads');
+    }
+    
+    return path.join(basePath, 'LocalPDF_Studio_Task');
+}
+
+// Helper function to ensure LocalPDF_Studio_Task folder exists
+function ensureTaskFolderExists() {
+    const taskFolder = getTaskFolderPath();
+    if (!fs.existsSync(taskFolder)) {
+        try {
+            fs.mkdirSync(taskFolder, { recursive: true });
+            console.log(`Created LocalPDF_Studio_Task folder at: ${taskFolder}`);
+        } catch (err) {
+            console.error(`Failed to create LocalPDF_Studio_Task folder:`, err);
+            throw err;
+        }
+    }
+    return taskFolder;
+}
+
+// Helper function to clean up all files in the LocalPDF_Studio_Task folder
+function cleanupTaskFolder() {
+    try {
+        const taskFolder = getTaskFolderPath();
+        if (fs.existsSync(taskFolder)) {
+            const files = fs.readdirSync(taskFolder);
+            files.forEach(file => {
+                const filePath = path.join(taskFolder, file);
+                const stats = fs.statSync(filePath);
+                if (stats.isFile()) {
+                    fs.unlinkSync(filePath);
+                    console.log(`Cleaned up orphaned file: ${filePath}`);
+                }
+            });
+        }
+    } catch (err) {
+        console.error('Error cleaning up task folder:', err);
+    }
+}
+
+ipcMain.handle('save-dropped-file', async (event, { name, buffer }) => {
+    try {
+        const taskFolder = ensureTaskFolderExists();
+        const filePath = path.join(taskFolder, name);
+        fs.writeFileSync(filePath, Buffer.from(buffer));
+        console.log(`Saved dropped file to: ${filePath}`);
+        return { success: true, filePath: filePath };
+    } catch (err) {
+        console.error('Failed to save dropped file:', err);
+        return { success: false, error: err.message };
+    }
+});
+
+ipcMain.handle('delete-file', async (event, filePath) => {
+    try {
+        if (filePath && fs.existsSync(filePath)) {
+            fs.unlinkSync(filePath);
+            console.log(`Deleted file: ${filePath}`);
+            return { success: true };
+        }
+        return { success: true }; // File doesn't exist, consider it success
+    } catch (err) {
+        console.error('Failed to delete file:', err);
+        return { success: false, error: err.message };
+    }
+});

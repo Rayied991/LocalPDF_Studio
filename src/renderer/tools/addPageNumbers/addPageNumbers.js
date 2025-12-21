@@ -22,6 +22,7 @@ import * as pdfjsLib from '../../../pdf/build/pdf.mjs';
 import { API } from '../../api/api.js';
 import customAlert from '../../utils/customAlert.js';
 import loadingUI from '../../utils/loading.js';
+import { initializeGlobalDragDrop } from '../../utils/globalDragDrop.js';
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = '../../../pdf/build/pdf.worker.mjs';
 window.pdfjsLib = pdfjsLib;
@@ -40,6 +41,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const pageCountEl = document.getElementById('page-count');
 
     let selectedFile = null;
+    let droppedFilePath = null; // Track dropped file path for cleanup
     let pdfDoc = null;
     let renderedPages = [];
 
@@ -55,16 +57,20 @@ document.addEventListener('DOMContentLoaded', async () => {
         loadingUI.hide();
     });
 
-    removePdfBtn.addEventListener('click', () => clearAll());
+    removePdfBtn.addEventListener('click', async () => {
+        await cleanupDroppedFile();
+        clearAll();
+    });
 
-    document.querySelector('a[href="../../index.html"]')?.addEventListener('click', (e) => {
+    document.querySelector('a[href="../../index.html"]')?.addEventListener('click', async (e) => {
         e.preventDefault();
+        await cleanupDroppedFile();
         clearAll();
         window.location.href = '../../index.html';
     });
 
     async function handleFileSelected(file) {
-        clearAll();
+        clearAll(true); // true = preserve droppedFilePath
         selectedFile = file;
         pdfNameEl.textContent = file.name;
         pdfSizeEl.textContent = `(${(file.size / 1024 / 1024).toFixed(2)} MB)`;
@@ -120,13 +126,31 @@ document.addEventListener('DOMContentLoaded', async () => {
         renderedPages.push(canvas);
     }
 
-    function clearAll() {
+    async function cleanupDroppedFile() {
+        if (droppedFilePath) {
+            try {
+                console.log(`Attempting to cleanup file: ${droppedFilePath}`);
+                const result = await window.electronAPI.deleteFile(droppedFilePath);
+                console.log(`Cleanup result:`, result);
+                droppedFilePath = null;
+            } catch (error) {
+                console.error('Error cleaning up dropped file:', error);
+            }
+        } else {
+            console.log('No dropped file to cleanup (droppedFilePath is null)');
+        }
+    }
+
+    function clearAll(preserveDroppedFilePath = false) {
         if (pdfDoc) { pdfDoc.destroy(); pdfDoc = null; }
         renderedPages.forEach(c => c.getContext('2d').clearRect(0, 0, c.width, c.height));
         renderedPages = [];
         previewGrid.innerHTML = '';
         previewContainer.style.display = 'none';
         selectedFile = null;
+        if (!preserveDroppedFilePath) {
+            droppedFilePath = null;
+        }
         selectedFileInfo.style.display = 'none';
         selectPdfBtn.style.display = 'block';
         addBtn.disabled = true;
@@ -178,14 +202,52 @@ document.addEventListener('DOMContentLoaded', async () => {
             } else {
                 console.error("API returned JSON:", result);
                 await customAlert.alert('LocalPDF Studio - ERROR', `Error: ${JSON.stringify(result)}`, ['OK']);
-            }            
-        } catch (error) {            
+            }
+        } catch (error) {
             console.error('Error:', error);
             await customAlert.alert('LocalPDF Studio - ERROR', `An error occurred:\n${error.message}`, ['OK']);
         } finally {
             loadingUI.hide();
             addBtn.disabled = false;
             addBtn.textContent = 'Add Page Numbers';
+        }
+    });
+
+    initializeGlobalDragDrop({
+        onFilesDropped: async (pdfFiles) => {
+            console.log(`Files dropped: ${pdfFiles.length} file(s), current droppedFilePath: ${droppedFilePath}`);
+
+            if (pdfFiles.length > 1) {
+                await customAlert.alert('LocalPDF Studio - NOTICE', 'Please drop only one PDF file.', ['OK']);
+                return;
+            }
+
+            // Clean up previous dropped file before saving new one
+            console.log('Calling cleanupDroppedFile before processing new drop');
+            await cleanupDroppedFile();
+
+            const file = pdfFiles[0];
+            const buffer = await file.arrayBuffer();
+            const result = await window.electronAPI.saveDroppedFile({
+                name: file.name,
+                buffer: buffer
+            });
+
+            if (result.success) {
+                const fileSize = file.size || 0;
+                droppedFilePath = result.filePath; // Track the dropped file for cleanup
+                console.log(`New file dropped and saved: ${droppedFilePath}`);
+                handleFileSelected({
+                    path: result.filePath,
+                    name: file.name,
+                    size: fileSize
+                });
+            } else {
+                await customAlert.alert('LocalPDF Studio - ERROR', `Failed to save dropped file: ${result.error}`, ['OK']);
+            }
+        },
+        onInvalidFiles: async () => {
+            await customAlert.alert('LocalPDF Studio - NOTICE', 'Please drop a PDF file.', ['OK']);
         }
     });
 });
