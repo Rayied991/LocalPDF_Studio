@@ -21,6 +21,7 @@
 import * as pdfjsLib from '../../../pdf/build/pdf.mjs';
 import customAlert from '../../utils/customAlert.js';
 import loadingUI from '../../utils/loading.js';
+import { initializeGlobalDragDrop } from '../../utils/globalDragDrop.js';
 
  pdfjsLib.GlobalWorkerOptions.workerSrc = '../../../pdf/build/pdf.worker.mjs';
  window.pdfjsLib = pdfjsLib;
@@ -63,6 +64,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     };
     
     let selectedFile = null;
+    let droppedFilePath = null;
     let currentFilePath = null;
     let currentMetadata = null;
     let isEditMode = false;
@@ -71,7 +73,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Initialize event listeners
     function initializeEventListeners() {
         selectPdfBtn.addEventListener('click', handleFileSelection);
-        removePdfBtn.addEventListener('click', clearAll);
+        removePdfBtn.addEventListener('click', async () => {
+            await cleanupDroppedFile();
+            clearAll();
+        });
         editToggleBtn.addEventListener('click', toggleEditMode);
         cancelEditBtn.addEventListener('click', cancelEdit);
         saveMetadataBtn.addEventListener('click', saveMetadata);
@@ -120,7 +125,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     async function handleFileSelected(fileInfo) {
         try {
             loadingUI.show('Loading PDF...');
-            clearAll();
+            clearAll(true);
             
             selectedFile = fileInfo;
             currentFilePath = fileInfo.path;
@@ -459,8 +464,11 @@ File: ${selectedFile?.name || 'Unknown'}
     }
 
     // Clear all data
-    function clearAll() {
+    function clearAll(preserveDroppedFilePath = false) {
         selectedFile = null;
+        if (!preserveDroppedFilePath) {
+            droppedFilePath = null;
+        }
         currentFilePath = null;
         currentMetadata = null;
         isEditMode = false;
@@ -496,6 +504,60 @@ File: ${selectedFile?.name || 'Unknown'}
         } catch {
             return 0;
         }
+    }
+
+    async function cleanupDroppedFile() {
+        if (droppedFilePath) {
+            try {
+                await window.electronAPI.deleteFile(droppedFilePath);
+                droppedFilePath = null;
+            } catch (error) {
+                console.error('Error cleaning up dropped file:', error);
+            }
+        }
+    }
+
+    initializeGlobalDragDrop({
+        onFilesDropped: async (pdfFiles) => {
+            if (pdfFiles.length > 1) {
+                await customAlert.alert('LocalPDF Studio - NOTICE', 'Please drop only one PDF file.', ['OK']);
+                return;
+            }
+
+            await cleanupDroppedFile();
+
+            const file = pdfFiles[0];
+            const buffer = await file.arrayBuffer();
+            const result = await window.electronAPI.saveDroppedFile({
+                name: file.name,
+                buffer: buffer
+            });
+
+            if (result.success) {
+                const fileSize = file.size || 0;
+                droppedFilePath = result.filePath;
+                await handleFileSelected({
+                    path: result.filePath,
+                    name: file.name,
+                    size: fileSize
+                });
+            } else {
+                await customAlert.alert('LocalPDF Studio - ERROR', `Failed to save dropped file: ${result.error}`, ['OK']);
+            }
+        },
+        onInvalidFiles: async () => {
+            await customAlert.alert('LocalPDF Studio - NOTICE', 'Please drop a PDF file.', ['OK']);
+        }
+    });
+
+    const backBtn = document.querySelector('a[href="../../index.html"]');
+    if (backBtn) {
+        backBtn.addEventListener('click', async (e) => {
+            e.preventDefault();
+            await cleanupDroppedFile();
+            clearAll();
+            window.location.href = '../../index.html';
+        });
     }
 
     // Initialize
