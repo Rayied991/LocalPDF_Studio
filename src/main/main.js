@@ -27,7 +27,7 @@ const path = require('path');
 const fs = require('fs');
 const { spawn } = require('child_process');
 const { autoUpdater } = require('electron-updater');
-const { PDFDocument } = require('pdf-lib');
+const { PDFDocument, PDFName, PDFRawStream } = require('pdf-lib');
 const gotTheLock = app.requestSingleInstanceLock();
 
 let apiProcess = null;
@@ -429,6 +429,58 @@ function flushOpenFileQueue() {
     }
 }
 
+// Helper function to ensure LocalPDF_Studio_Task folder exists
+function ensureTaskFolderExists() {
+    const taskFolder = getTaskFolderPath();
+    if (!fs.existsSync(taskFolder)) {
+        try {
+            fs.mkdirSync(taskFolder, { recursive: true });
+            console.log(`Created LocalPDF_Studio_Task folder at: ${taskFolder}`);
+        } catch (err) {
+            console.error(`Failed to create LocalPDF_Studio_Task folder:`, err);
+            throw err;
+        }
+    }
+    return taskFolder;
+}
+
+// Helper function to clean up all files in the LocalPDF_Studio_Task folder
+function cleanupTaskFolder() {
+    try {
+        const taskFolder = getTaskFolderPath();
+        if (fs.existsSync(taskFolder)) {
+            const files = fs.readdirSync(taskFolder);
+            files.forEach(file => {
+                const filePath = path.join(taskFolder, file);
+                const stats = fs.statSync(filePath);
+                if (stats.isFile()) {
+                    fs.unlinkSync(filePath);
+                    console.log(`Cleaned up orphaned file: ${filePath}`);
+                }
+            });
+        }
+    } catch (err) {
+        console.error('Error cleaning up task folder:', err);
+    }
+}
+
+// Helper function to get the LocalPDF_Studio_Task folder path in Downloads
+function getTaskFolderPath() {
+    let basePath;
+    
+    // Handle Snap with strict confinement
+    if (process.platform === 'linux' && process.env.SNAP) {
+        // Use snap-specific path for confined snaps
+        basePath = process.env.SNAP_USER_DATA || process.env.HOME;
+        console.log('Snap detected: using SNAP_USER_DATA for task folder');
+    } else {
+        // Use Downloads folder for Windows, macOS, and unconfined Linux
+        basePath = app.getPath('downloads');
+    }
+
+    return path.join(basePath, 'LocalPDF_Studio_Task');
+}
+
 // When mainWindow finishes loading its content, flush queued files
 app.on('browser-window-created', (event, window) => {
     window.webContents.once('did-finish-load', () => {
@@ -578,29 +630,41 @@ ipcMain.handle('save-pdf-file', async (event, { filename, buffer }) => {
 
 ipcMain.handle('save-pdf-with-metadata', async (event, { filePath, metadata }) => {
     try {
-        // Show save dialog
         const { filePath: savedPath, canceled } = await dialog.showSaveDialog({
             defaultPath: path.basename(filePath),
             filters: [{ name: 'PDF Files', extensions: ['pdf'] }]
         });
 
-        if (canceled || !savedPath) {
-            return { success: false, error: 'Save dialog was cancelled' };
-        }
+        if (canceled || !savedPath) return { success: false, error: 'Cancelled' };
 
-        // Read the original PDF
         const pdfBytes = fs.readFileSync(filePath);
         const pdfDoc = await PDFDocument.load(pdfBytes);
 
-        // Set metadata
+        const entries = pdfDoc.context.enumerateIndirectObjects();
+        for (const [ref, obj] of entries) {
+            if (obj instanceof PDFRawStream) {
+                const type = obj.dict.get(PDFName.of('Type'));
+                const subtype = obj.dict.get(PDFName.of('Subtype'));
+                if (subtype === PDFName.of('XML') && type === PDFName.of('Metadata')) {
+                    pdfDoc.context.delete(ref);
+                }
+            }
+        }
+
+        // Set standard metadata
         if (metadata.title) pdfDoc.setTitle(metadata.title);
         if (metadata.author) pdfDoc.setAuthor(metadata.author);
         if (metadata.subject) pdfDoc.setSubject(metadata.subject);
-        if (metadata.keywords) pdfDoc.setKeywords(metadata.keywords.split(',').map(k => k.trim()));
         if (metadata.creator) pdfDoc.setCreator(metadata.creator);
         if (metadata.producer) pdfDoc.setProducer(metadata.producer);
 
-        // Save the modified PDF
+        if (metadata.keywords) {
+            pdfDoc.setKeywords(metadata.keywords.split(',').map(k => k.trim()));
+        }
+
+        //Set Modification Date to now
+        pdfDoc.setModificationDate(new Date());
+
         const modifiedPdfBytes = await pdfDoc.save();
         fs.writeFileSync(savedPath, modifiedPdfBytes);
 
@@ -612,58 +676,6 @@ ipcMain.handle('save-pdf-with-metadata', async (event, { filePath, metadata }) =
 });
 
 ipcMain.handle('is-app-packaged', () => app.isPackaged);
-
-// Helper function to get the LocalPDF_Studio_Task folder path in Downloads
-function getTaskFolderPath() {
-    let basePath;
-    
-    // Handle Snap with strict confinement
-    if (process.platform === 'linux' && process.env.SNAP) {
-        // Use snap-specific path for confined snaps
-        basePath = process.env.SNAP_USER_DATA || process.env.HOME;
-        console.log('Snap detected: using SNAP_USER_DATA for task folder');
-    } else {
-        // Use Downloads folder for Windows, macOS, and unconfined Linux
-        basePath = app.getPath('downloads');
-    }
-    
-    return path.join(basePath, 'LocalPDF_Studio_Task');
-}
-
-// Helper function to ensure LocalPDF_Studio_Task folder exists
-function ensureTaskFolderExists() {
-    const taskFolder = getTaskFolderPath();
-    if (!fs.existsSync(taskFolder)) {
-        try {
-            fs.mkdirSync(taskFolder, { recursive: true });
-            console.log(`Created LocalPDF_Studio_Task folder at: ${taskFolder}`);
-        } catch (err) {
-            console.error(`Failed to create LocalPDF_Studio_Task folder:`, err);
-            throw err;
-        }
-    }
-    return taskFolder;
-}
-
-// Helper function to clean up all files in the LocalPDF_Studio_Task folder
-function cleanupTaskFolder() {
-    try {
-        const taskFolder = getTaskFolderPath();
-        if (fs.existsSync(taskFolder)) {
-            const files = fs.readdirSync(taskFolder);
-            files.forEach(file => {
-                const filePath = path.join(taskFolder, file);
-                const stats = fs.statSync(filePath);
-                if (stats.isFile()) {
-                    fs.unlinkSync(filePath);
-                    console.log(`Cleaned up orphaned file: ${filePath}`);
-                }
-            });
-        }
-    } catch (err) {
-        console.error('Error cleaning up task folder:', err);
-    }
-}
 
 ipcMain.handle('save-dropped-file', async (event, { name, buffer }) => {
     try {
