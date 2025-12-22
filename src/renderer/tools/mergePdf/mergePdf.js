@@ -22,6 +22,7 @@ import { API } from '../../api/api.js';
 import * as pdfjsLib from '../../../pdf/build/pdf.mjs';
 import customAlert from '../../utils/customAlert.js';
 import loadingUI from '../../utils/loading.js';
+import { initializeGlobalDragDrop } from '../../utils/globalDragDrop.js';
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = '../../../pdf/build/pdf.worker.mjs';
 
@@ -32,6 +33,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const listContainer = document.getElementById('pdf-list');
     const { addFiles, clearAll, getFiles, destroy } = createPdfList(listContainer);
 
+    let droppedFilePaths = [];
+
     selectBtn.addEventListener('click', async () => {
         loadingUI.show("Selecting PDF files...");
         const selected = await window.electronAPI.selectPdfs();
@@ -39,9 +42,23 @@ document.addEventListener('DOMContentLoaded', () => {
         loadingUI.hide();
     });
 
-    clearBtn.addEventListener('click', () => {
+    clearBtn.addEventListener('click', async () => {
+        await cleanupDroppedFiles();
         clearAll();
     });
+
+    async function cleanupDroppedFiles() {
+        if (droppedFilePaths.length > 0) {
+            try {
+                for (const filePath of droppedFilePaths) {
+                    await window.electronAPI.deleteFile(filePath);
+                }
+                droppedFilePaths = [];
+            } catch (error) {
+                console.error('Error cleaning up dropped files:', error);
+            }
+        }
+    }
 
     mergeBtn.addEventListener('click', async () => {
         const files = getFiles();
@@ -68,7 +85,55 @@ document.addEventListener('DOMContentLoaded', () => {
             loadingUI.hide();
         }
     });
-    window.addEventListener('beforeunload', () => {
+
+    initializeGlobalDragDrop({
+        onFilesDropped: async (pdfFiles) => {
+            if (pdfFiles.length === 0) {
+                await customAlert.alert('LocalPDF Studio - NOTICE', 'Please drop at least one PDF file.', ['OK']);
+                return;
+            }
+
+            // Save all dropped files and track them for cleanup
+            const droppedPaths = [];
+            for (const file of pdfFiles) {
+                const buffer = await file.arrayBuffer();
+                const result = await window.electronAPI.saveDroppedFile({
+                    name: file.name,
+                    buffer: buffer
+                });
+
+                if (result.success) {
+                    droppedPaths.push(result.filePath);
+                } else {
+                    await customAlert.alert('LocalPDF Studio - ERROR', `Failed to save dropped file: ${result.error}`, ['OK']);
+                    return;
+                }
+            }
+
+            // Track the dropped files for cleanup
+            droppedFilePaths.push(...droppedPaths);
+
+            // Add all dropped files to the merge list
+            if (droppedPaths.length > 0) {
+                await addFiles(droppedPaths);
+            }
+        },
+        onInvalidFiles: async () => {
+            await customAlert.alert('LocalPDF Studio - NOTICE', 'Please drop PDF files.', ['OK']);
+        }
+    });
+
+    const backBtn = document.querySelector('a[href="../../index.html"]');
+    if (backBtn) {
+        backBtn.addEventListener('click', async (e) => {
+            e.preventDefault();
+            await cleanupDroppedFiles();
+            window.location.href = '../../index.html';
+        });
+    }
+
+    window.addEventListener('beforeunload', async () => {
+        await cleanupDroppedFiles();
         destroy();
     });
 });

@@ -21,7 +21,7 @@ import * as pdfjsLib from "../../../pdf/build/pdf.mjs";
 import { API } from "../../api/api.js";
 import customAlert from "../../utils/customAlert.js";
 import loadingUI from "../../utils/loading.js";
-
+import { initializeGlobalDragDrop } from '../../utils/globalDragDrop.js';
 pdfjsLib.GlobalWorkerOptions.workerSrc = "../../../pdf/build/pdf.worker.mjs";
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -63,6 +63,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // ================ INTERNAL STATE ================
   let selectedFile = null;
+  let droppedFilePath = null;
   let pdfDoc = null;
   let renderedPages = [];
   let currentPage = 1;
@@ -92,7 +93,10 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // ================ EVENT LISTENERS ================
   selectPdfBtn.addEventListener("click", selectPdf);
-  removePdfBtn.addEventListener("click", clearAll);
+  removePdfBtn.addEventListener("click", async () => {
+    await cleanupDroppedFile();
+    clearAll();
+  });
   resetBtn.addEventListener("click", resetMargins);
   cropBtn.addEventListener("click", cropPdf);
 
@@ -124,6 +128,17 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   });
 
+  // Back button with cleanup
+  const backButton = document.querySelector('a[href="../../index.html"]');
+  if (backButton) {
+    backButton.addEventListener('click', async (e) => {
+      e.preventDefault();
+      await cleanupDroppedFile();
+      clearAll();
+      window.location.href = '../../index.html';
+    });
+  }
+
   pagesRangeRadios.forEach((r) => {
     r.addEventListener("change", () => {
       customPagesGroup.style.display = r.value === "custom" ? "block" : "none";
@@ -143,6 +158,36 @@ document.addEventListener("DOMContentLoaded", async () => {
   previewGrid.addEventListener('mouseup', () => endCrop());
   previewGrid.addEventListener('mouseleave', () => endCrop());
 
+  initializeGlobalDragDrop({
+    onFilesDropped: async (pdfFiles) => {
+      if (pdfFiles.length > 1) {
+        await customAlert.alert('LocalPDF Studio - NOTICE', 'Please drop only one PDF file.', ['OK']);
+        return;
+      }
+      await cleanupDroppedFile();
+      const file = pdfFiles[0];
+      const buffer = await file.arrayBuffer();
+      const result = await window.electronAPI.saveDroppedFile({
+        name: file.name,
+        buffer: buffer
+      });
+      if (result.success) {
+        const fileSize = file.size || 0;
+        droppedFilePath = result.filePath;
+        handleFileSelected({
+          path: result.filePath,
+          name: file.name,
+          size: fileSize
+        });
+      } else {
+        await customAlert.alert('LocalPDF Studio - ERROR', `Failed to save dropped file: ${result.error}`, ['OK']);
+      }
+    },
+    onInvalidFiles: async () => {
+      await customAlert.alert('LocalPDF Studio - NOTICE', 'Please drop a PDF file.', ['OK']);
+    }
+  });
+
   // ================ FUNCTIONS ================
   async function selectPdf() {
     loadingUI.show("Selecting PDF...");
@@ -161,7 +206,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   async function handleFileSelected(file) {
-    clearAll();
+    clearAll(true);
 
     selectedFile = file;
     pdfNameEl.textContent = file.name;
@@ -630,7 +675,18 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   }
 
-  function clearAll() {
+  async function cleanupDroppedFile() {
+    if (droppedFilePath) {
+      try {
+        await window.electronAPI.deleteFile(droppedFilePath);
+        droppedFilePath = null;
+      } catch (error) {
+        console.error('Error cleaning up dropped file:', error);
+      }
+    }
+  }
+
+  function clearAll(preserveDroppedFilePath = false) {
     renderedPages = [];
     pageDimensions = [];
     previewGrid.innerHTML = "";
@@ -641,6 +697,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     cropBtn.disabled = true;
     selectedFile = null;
+    if (!preserveDroppedFilePath) {
+      droppedFilePath = null;
+    }
     pdfDoc = null;
     currentPage = 1;
     zoomLevel = 1;

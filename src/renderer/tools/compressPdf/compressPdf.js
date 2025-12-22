@@ -21,6 +21,7 @@
 import { API } from '../../api/api.js';
 import customAlert from '../../utils/customAlert.js';
 import loadingUI from '../../utils/loading.js';
+import { initializeGlobalDragDrop } from '../../utils/globalDragDrop.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
     await API.init();
@@ -38,6 +39,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const removeMetadataCheckbox = document.getElementById('remove-metadata');
     const removeUnusedCheckbox = document.getElementById('remove-unused');
     let selectedFile = null;
+    let droppedFilePath = null;
 
     selectPdfBtn.addEventListener('click', async () => {
         // First check if Ghostscript is available
@@ -88,12 +90,16 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     });
 
-    removePdfBtn.addEventListener('click', () => clearAll());
+    removePdfBtn.addEventListener('click', async () =>{
+        await cleanupDroppedFile();
+        clearAll();
+    });
 
     const backBtn = document.querySelector('a[href="../../index.html"]');
     if (backBtn) {
-        backBtn.addEventListener('click', (e) => {
+        backBtn.addEventListener('click', async (e) => {
             e.preventDefault();
+            await cleanupDroppedFile();
             clearAll();
             window.location.href = '../../index.html';
         });
@@ -123,6 +129,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     function handleFileSelected(file) {
         selectedFile = file;
+        clearAll(true);
         pdfNameEl.textContent = file.name;
         pdfSizeEl.textContent = `(${formatFileSize(file.size)})`;
         selectPdfBtn.style.display = 'none';
@@ -130,8 +137,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         compressBtn.disabled = false;
     }
 
-    function clearAll() {
+    function clearAll(preserveDroppedFilePath = false) {
         selectedFile = null;
+        if (!preserveDroppedFilePath) {
+            droppedFilePath = null;
+        }
         selectedFileInfo.style.display = 'none';
         selectPdfBtn.style.display = 'block';
         compressBtn.disabled = true;
@@ -292,4 +302,84 @@ document.addEventListener('DOMContentLoaded', async () => {
             return 0;
         }
     }
+
+    async function cleanupDroppedFile() {
+        if (droppedFilePath) {
+            try {
+                await window.electronAPI.deleteFile(droppedFilePath);
+                droppedFilePath = null;
+            } catch (error) {
+                console.error('Error cleaning up dropped file:', error);
+            }
+        }
+    }
+
+    initializeGlobalDragDrop({
+        onFilesDropped: async (pdfFiles) => {
+            if (pdfFiles.length > 1) {
+                await customAlert.alert('LocalPDF Studio - NOTICE', 'Please drop only one PDF file.', ['OK']);
+                return;
+            }
+
+            // Check if Ghostscript is available
+            loadingUI.show('Checking for Ghostscript...');
+            try {
+                const isGhostscriptAvailable = await checkGhostscriptAvailability();
+
+                if (!isGhostscriptAvailable) {
+                    loadingUI.hide();
+                    const result = await customAlert.alert(
+                        'LocalPDF Studio - REQUIREMENT',
+                        'Ghostscript is required to use the Compress PDF feature.\n' +
+                        'Please install Ghostscript on your system to continue:\n\n' +
+                        '• Windows: Download from https://www.ghostscript.com/\n' +
+                        '• macOS: Install using Homebrew: "brew install ghostscript"\n' +
+                        '• Linux: Install using your package manager\n' +
+                        '   - Ubuntu/Debian: "sudo apt install ghostscript"\n' +
+                        '   - Fedora: "sudo dnf install ghostscript"\n' +
+                        '   - Arch: "sudo pacman -S ghostscript"\n' +
+                        'Note: Most modern linux distros have ghostscript pre-installed. Checking command=> gs -v',
+                        ['OK', 'Tutorial']
+                    );
+                    if (result === 'Tutorial') {
+                        window.electronAPI.openExternal('https://youtu.be/fKrnSytg_z4');
+                    }
+                    return;
+                }
+
+                // Ghostscript is available, proceed with file processing
+                loadingUI.updateMessage('Processing dropped file...');
+                await cleanupDroppedFile();
+                const file = pdfFiles[0];
+                const buffer = await file.arrayBuffer();
+                const saveResult = await window.electronAPI.saveDroppedFile({
+                    name: file.name,
+                    buffer: buffer
+                });
+                if (saveResult.success) {
+                    const fileSize = file.size || 0;
+                    droppedFilePath = saveResult.filePath;
+                    handleFileSelected({
+                        path: saveResult.filePath,
+                        name: file.name,
+                        size: fileSize
+                    });
+                } else {
+                    await customAlert.alert('LocalPDF Studio - ERROR', `Failed to save dropped file: ${saveResult.error}`, ['OK']);
+                }
+            } catch (error) {
+                console.error('Error during Ghostscript check:', error);
+                await customAlert.alert(
+                    'LocalPDF Studio - ERROR',
+                    `An error occurred while checking for Ghostscript:\n${error.message}`,
+                    ['OK']
+                );
+            } finally {
+                loadingUI.hide();
+            }
+        },
+        onInvalidFiles: async () => {
+            await customAlert.alert('LocalPDF Studio - NOTICE', 'Please drop a PDF file.', ['OK']);
+        }
+    });
 });

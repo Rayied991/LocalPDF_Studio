@@ -21,6 +21,7 @@ import * as pdfjsLib from '../../../pdf/build/pdf.mjs';
 import { API } from '../../api/api.js';
 import customAlert from '../../utils/customAlert.js';
 import loadingUI from '../../utils/loading.js';
+import { initializeGlobalDragDrop } from '../../utils/globalDragDrop.js';
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = '../../../pdf/build/pdf.worker.mjs';
 window.pdfjsLib = pdfjsLib;
@@ -54,6 +55,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const preserveFormatCheckbox = document.getElementById('preserve-format');
     const preserveMetadataCheckbox = document.getElementById('preserve-metadata');
     let selectedFile = null;
+    let droppedFilePath = null;
     let pdfDoc = null;
     let renderedPages = [];
     let selectedPages = new Set();
@@ -72,19 +74,23 @@ document.addEventListener('DOMContentLoaded', async () => {
         loadingUI.hide();
     });
 
-    removePdfBtn.addEventListener('click', () => clearAll());
+    removePdfBtn.addEventListener('click', async () => {
+        await cleanupDroppedFile();
+        clearAll();
+    });
 
     const backBtn = document.querySelector('a[href="../../index.html"]');
     if (backBtn) {
-        backBtn.addEventListener('click', (e) => {
+        backBtn.addEventListener('click', async (e) => {
             e.preventDefault();
+            await cleanupDroppedFile();
             clearAll();
             window.location.href = '../../index.html';
         });
     }
 
     async function handleFileSelected(file) {
-        clearAll();
+        clearAll(true);
         selectedFile = file;
         pdfNameEl.textContent = file.name;
         pdfSizeEl.textContent = `(${(file.size / 1024 / 1024).toFixed(2)} MB)`;
@@ -252,6 +258,36 @@ document.addEventListener('DOMContentLoaded', async () => {
     [manualPagesInput, pageRangesInput].forEach(input => {
         input.addEventListener('input', updateButtonStates);
         input.addEventListener('change', updateButtonStates);
+    });
+
+    initializeGlobalDragDrop({
+        onFilesDropped: async (pdfFiles) => {
+            if (pdfFiles.length > 1) {
+                await customAlert.alert('LocalPDF Studio - NOTICE', 'Please drop only one PDF file.', ['OK']);
+                return;
+            }
+            await cleanupDroppedFile();
+            const file = pdfFiles[0];
+            const buffer = await file.arrayBuffer();
+            const result = await window.electronAPI.saveDroppedFile({
+                name: file.name,
+                buffer: buffer
+            });
+            if (result.success) {
+                const fileSize = file.size || 0;
+                droppedFilePath = result.filePath;
+                handleFileSelected({
+                    path: result.filePath,
+                    name: file.name,
+                    size: fileSize
+                });
+            } else {
+                await customAlert.alert('LocalPDF Studio - ERROR', `Failed to save dropped file: ${result.error}`, ['OK']);
+            }
+        },
+        onInvalidFiles: async () => {
+            await customAlert.alert('LocalPDF Studio - NOTICE', 'Please drop a PDF file.', ['OK']);
+        }
     });
 
     function updateButtonStates() {
@@ -435,7 +471,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         return options;
     }
 
-    function clearAll() {
+    function clearAll(preserveDroppedFilePath = false) {
         if (pdfDoc) {
             pdfDoc.destroy();
             pdfDoc = null;
@@ -448,6 +484,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         previewGrid.innerHTML = '';
         previewContainer.style.display = 'none';
         selectedFile = null;
+        if (!preserveDroppedFilePath) {
+            droppedFilePath = null;
+        }
         selectedPages.clear();
         totalPages = 0;
         selectedFileInfo.style.display = 'none';
@@ -469,6 +508,17 @@ document.addEventListener('DOMContentLoaded', async () => {
             return 0;
         } catch {
             return 0;
+        }
+    }
+
+    async function cleanupDroppedFile() {
+        if (droppedFilePath) {
+            try {
+                await window.electronAPI.deleteFile(droppedFilePath);
+                droppedFilePath = null;
+            } catch (error) {
+                console.error('Error cleaning up dropped file:', error);
+            }
         }
     }
     updateModeUI();
