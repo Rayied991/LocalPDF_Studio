@@ -92,11 +92,9 @@ document.addEventListener('DOMContentLoaded', async () => {
             pdfDoc = await loadingTask.promise;
             pageCountEl.textContent = `Total Pages: ${pdfDoc.numPages}`;
             previewGrid.innerHTML = '';
-            const thumbnailPromises = [];
             for (let pageNum = 1; pageNum <= pdfDoc.numPages; pageNum++) {
-                thumbnailPromises.push(renderPageThumbnail(pageNum));
+                await renderPageThumbnail(pageNum);
             }
-            await Promise.all(thumbnailPromises);
         } catch (error) {
             console.error('Error loading PDF:', error);
             previewGrid.innerHTML = '<p style="color: #e74c3c; text-align: center;">Failed to load PDF preview</p>';
