@@ -47,8 +47,6 @@ namespace LocalPDF_Studio_api.Controllers
             {
                 Console.WriteLine($"Quality: {request.Options.Quality}");
                 Console.WriteLine($"CustomQuality: {request.Options.CustomQuality}");
-                Console.WriteLine($"RemoveMetadata: {request.Options.RemoveMetadata}");
-                Console.WriteLine($"RemoveUnusedObjects: {request.Options.RemoveUnusedObjects}");
             }
 
             // Validate request

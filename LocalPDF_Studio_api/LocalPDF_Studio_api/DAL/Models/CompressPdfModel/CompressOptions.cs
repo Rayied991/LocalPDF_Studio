@@ -24,8 +24,6 @@ namespace LocalPDF_Studio_api.DAL.Models.CompressPdfModel
     {
         public CompressionQuality Quality { get; set; } = CompressionQuality.Medium;
         public int? CustomQuality { get; set; }
-        public bool RemoveMetadata { get; set; } = false;
-        public bool RemoveUnusedObjects { get; set; } = true;
         public int GetQualityValue()
         {
             return Quality switch

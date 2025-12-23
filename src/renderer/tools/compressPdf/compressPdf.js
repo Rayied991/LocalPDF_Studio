@@ -36,8 +36,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     const customQualitySection = document.getElementById('custom-quality-section');
     const customQualitySlider = document.getElementById('custom-quality-slider');
     const qualityValue = document.getElementById('quality-value');
-    const removeMetadataCheckbox = document.getElementById('remove-metadata');
-    const removeUnusedCheckbox = document.getElementById('remove-unused');
     let selectedFile = null;
     let droppedFilePath = null;
 
@@ -278,8 +276,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         return {
             quality: qualityEnum,
             customQuality: customQuality,
-            removeMetadata: removeMetadataCheckbox.checked,
-            removeUnusedObjects: removeUnusedCheckbox.checked
         };
     }
 
