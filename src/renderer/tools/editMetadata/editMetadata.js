@@ -286,10 +286,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Save metadata changes (in memory)
     async function saveMetadata() {
-        if (!validateForm()) {
-            await customAlert.alert('LocalPDF Studio - NOTICE', 'Please fill in all required fields correctly.', ['OK']);
-            return;
-        }
+        // if (!validateForm()) {
+        //     await customAlert.alert('LocalPDF Studio - NOTICE', 'Please fill in all required fields correctly.', ['OK']);
+        //     return;
+        // }
 
         try {
             saveMetadataBtn.disabled = true;
@@ -302,8 +302,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                 author: formElements.author.value.trim(),
                 subject: formElements.subject.value.trim(),
                 keywords: formElements.keywords.value.trim(),
-                creator: formElements.creator.value.trim(),
-                producer: formElements.producer.value.trim(),
+                creator: formElements.creator.value.trim() || 'LocalPDF-Studio',
+                producer: formElements.producer.value.trim() || 'LocalPDF-Studio',
                 description: formElements.description.value.trim()
             };
             

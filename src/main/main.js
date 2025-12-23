@@ -634,9 +634,8 @@ ipcMain.handle('save-pdf-with-metadata', async (event, { filePath, metadata }) =
         const base = path.basename(filePath, ext);
         const defaultName = `${base}_edited_metadata${ext}`;
 
-
         const { filePath: savedPath, canceled } = await dialog.showSaveDialog({
-            defaultPath: path.join(path.dirname(filePath), defaultName),
+            defaultPath: defaultName,
             filters: [{ name: 'PDF Files', extensions: ['pdf'] }]
         });
 
