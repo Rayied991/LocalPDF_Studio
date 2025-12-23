@@ -128,8 +128,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     function handleFileSelected(file) {
-        selectedFile = file;
         clearAll(true);
+        selectedFile = file;
         pdfNameEl.textContent = file.name;
         pdfSizeEl.textContent = `(${formatFileSize(file.size)})`;
         selectPdfBtn.style.display = 'none';
