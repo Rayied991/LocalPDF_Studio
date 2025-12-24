@@ -286,10 +286,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Save metadata changes (in memory)
     async function saveMetadata() {
-        // if (!validateForm()) {
-        //     await customAlert.alert('LocalPDF Studio - NOTICE', 'Please fill in all required fields correctly.', ['OK']);
-        //     return;
-        // }
+        if (!validateForm()) {
+            await customAlert.alert('LocalPDF Studio - NOTICE', 'Please fill in all required fields correctly.', ['OK']);
+            return;
+        }
 
         try {
             saveMetadataBtn.disabled = true;
@@ -424,7 +424,7 @@ File: ${selectedFile?.name || 'Unknown'}
     // Validation
     function validateForm() {
         let isValid = true;
-        const requiredFields = ['title', 'author'];
+        const requiredFields = ['author'];
         
         requiredFields.forEach(field => {
             const input = formElements[field];
