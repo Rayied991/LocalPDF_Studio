@@ -241,22 +241,31 @@ document.addEventListener('DOMContentLoaded', async () => {
         draggedElement = e.currentTarget;
         e.currentTarget.classList.add('dragging');
         e.dataTransfer.effectAllowed = 'move';
+        // Set a specific data type for internal page dragging
+        e.dataTransfer.setData('application/x-page-item', e.currentTarget.dataset.pageId);
     }
 
     function handleDragEnd(e) {
-        e.currentTarget.classList.remove('dragging');
+        const element = e.currentTarget;
+        element.classList.remove('dragging');
         document.querySelectorAll('.page-item').forEach(item => {
             item.classList.remove('drag-over');
         });
     }
 
     function handleDragOver(e) {
-        e.preventDefault();
-        e.dataTransfer.dropEffect = 'move';
+        // Check if this is an internal page drag (not a file drop)
+        const isPageDrag = e.dataTransfer.types.includes('application/x-page-item');
 
-        const target = e.currentTarget;
-        if (target !== draggedElement) {
-            target.classList.add('drag-over');
+        if (isPageDrag && draggedElement) {
+            e.preventDefault();
+            e.stopPropagation();
+            e.dataTransfer.dropEffect = 'move';
+
+            const target = e.currentTarget;
+            if (target !== draggedElement) {
+                target.classList.add('drag-over');
+            }
         }
     }
 
@@ -265,25 +274,30 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     function handleDrop(e) {
-        e.preventDefault();
-        e.stopPropagation();
+        // Check if this is an internal page drag (not a file drop)
+        const isPageDrag = e.dataTransfer.types.includes('application/x-page-item');
 
-        const target = e.currentTarget;
-        target.classList.remove('drag-over');
+        if (isPageDrag && draggedElement) {
+            e.preventDefault();
+            e.stopPropagation();
 
-        if (draggedElement && target !== draggedElement) {
-            const draggedId = parseInt(draggedElement.dataset.pageId);
-            const targetId = parseInt(target.dataset.pageId);
+            const target = e.currentTarget;
+            target.classList.remove('drag-over');
 
-            const draggedIndex = pages.findIndex(p => p.id === draggedId);
-            const targetIndex = pages.findIndex(p => p.id === targetId);
+            if (target !== draggedElement && draggedElement.classList.contains('page-item')) {
+                const draggedId = parseInt(draggedElement.dataset.pageId);
+                const targetId = parseInt(target.dataset.pageId);
 
-            if (draggedIndex !== -1 && targetIndex !== -1) {
-                const [removed] = pages.splice(draggedIndex, 1);
-                pages.splice(targetIndex, 0, removed);
+                const draggedIndex = pages.findIndex(p => p.id === draggedId);
+                const targetIndex = pages.findIndex(p => p.id === targetId);
 
-                renderPagesGrid();
-                updatePageCountInfo();
+                if (draggedIndex !== -1 && targetIndex !== -1) {
+                    const [removed] = pages.splice(draggedIndex, 1);
+                    pages.splice(targetIndex, 0, removed);
+
+                    renderPagesGrid();
+                    updatePageCountInfo();
+                }
             }
         }
     }
@@ -393,7 +407,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 console.error("Organize API returned JSON:", result);
                 await customAlert.alert('LocalPDF Studio - ERROR', `Error: ${JSON.stringify(result)}`, ['OK']);
             }
-        } catch (error) {            
+        } catch (error) {
             console.error('Error organizing PDF:', error);
             await customAlert.alert('LocalPDF Studio - ERROR', `An error occurred while organizing the PDF:\n${error.message}`, ['OK']);
         } finally {
