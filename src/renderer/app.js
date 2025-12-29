@@ -42,6 +42,7 @@ window.addEventListener('DOMContentLoaded', () => {
     const searchEnabledCheckbox = document.getElementById('search-enabled');
     const clearHistoryBtn = document.getElementById('clear-search-history');
     const toolsDropdown = document.querySelector('.tools-dropdown');
+    const languageSelect = document.getElementById('language-select');
 
     emptyState.classList.add('hidden');
 
@@ -237,6 +238,10 @@ window.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // Initialize language from localStorage or default to 'en'
+    const savedLanguage = localStorage.getItem('language') || 'en';
+    languageSelect.value = savedLanguage;
+    
     const savedSetting = localStorage.getItem('restoreTabs') || 'restore';
     radios.forEach(r => {
         r.checked = (r.value === savedSetting);
@@ -261,11 +266,13 @@ window.addEventListener('DOMContentLoaded', () => {
         originalSettings = {
             restoreTabs: localStorage.getItem('restoreTabs') || 'restore',
             clockEnabled: localStorage.getItem('clockEnabled') !== 'false',
-            searchEnabled: searchIndexManager.isEnabled()
+            searchEnabled: searchIndexManager.isEnabled(),
+            language: localStorage.getItem('language') || 'en'
         };
         document.querySelector(`input[name="restore-tabs"][value="${originalSettings.restoreTabs}"]`).checked = true;
         document.getElementById('clock-enabled').checked = originalSettings.clockEnabled;
         document.getElementById('search-enabled').checked = originalSettings.searchEnabled;
+        languageSelect.value = originalSettings.language;
 
         updateStatusUI(); // Fetch current status when modal opens
 
@@ -298,6 +305,8 @@ window.addEventListener('DOMContentLoaded', () => {
         const selectedRestore = document.querySelector('input[name="restore-tabs"]:checked').value;
         const clockEnabled = document.getElementById('clock-enabled').checked;
         const searchEnabled = document.getElementById('search-enabled').checked;
+        const selectedLanguage = languageSelect.value;
+        localStorage.setItem('language', selectedLanguage);
         localStorage.setItem('restoreTabs', selectedRestore);
         localStorage.setItem('clockEnabled', clockEnabled.toString());
         clockManager.setEnabled(clockEnabled);
@@ -308,6 +317,7 @@ window.addEventListener('DOMContentLoaded', () => {
     });
 
     function restoreOriginalSettings() {
+        localStorage.setItem('language', originalSettings.language || 'en');
         localStorage.setItem('restoreTabs', originalSettings.restoreTabs);
         localStorage.setItem('clockEnabled', originalSettings.clockEnabled.toString());
         searchIndexManager.setEnabled(originalSettings.searchEnabled);
@@ -316,6 +326,7 @@ window.addEventListener('DOMContentLoaded', () => {
         document.querySelector(`input[name="restore-tabs"][value="${originalSettings.restoreTabs}"]`).checked = true;
         document.getElementById('clock-enabled').checked = originalSettings.clockEnabled;
         document.getElementById('search-enabled').checked = originalSettings.searchEnabled;
+        languageSelect.value = originalSettings.language;
     }
 
     if (clearHistoryBtn) {
