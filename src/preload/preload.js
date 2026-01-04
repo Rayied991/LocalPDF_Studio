@@ -24,6 +24,7 @@ const path = require('path');
 
 contextBridge.exposeInMainWorld('electronAPI', {
     selectPdfs: () => ipcRenderer.invoke('select-pdf-files'),
+    selectPdfsAndImages: () => ipcRenderer.invoke('select-pdf-and-image-files'),
     openExternal: (url) => ipcRenderer.send('open-external-link', url),
     getFileInfo: (path) => {
         try {
@@ -36,6 +37,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
     saveMergedPdf: (buffer) => ipcRenderer.invoke('save-merged-pdf', buffer),
     saveZipFile: (filename, buffer) => ipcRenderer.invoke('save-zip-file', { filename, buffer }),
     savePdfFile: (filename, buffer) => ipcRenderer.invoke('save-pdf-file', { filename, buffer }),
+    saveTextFile: (filename, text) => ipcRenderer.invoke('save-text-file', { filename, text }),
     savePdfWithMetadata: (filePath, metadata) => ipcRenderer.invoke('save-pdf-with-metadata', { filePath, metadata }),
     getApiPort: () => ipcRenderer.invoke('get-api-port'),
     isSnap: () => ipcRenderer.invoke('is-snap'),
@@ -57,4 +59,8 @@ contextBridge.exposeInMainWorld('electronAPI', {
     onOpenFile: (callback) => ipcRenderer.on('open-file', (event, filePath) => callback(filePath)),
     saveDroppedFile: (fileInfo) => ipcRenderer.invoke('save-dropped-file', fileInfo),
     deleteFile: (filePath) => ipcRenderer.invoke('delete-file', filePath),
+    performTesseractOCR: (imagePath, language, options) => ipcRenderer.invoke('perform-tesseract-ocr', { imagePath, language, options }),  
+    performTesseractPDFOCR: (pages, language, options) => ipcRenderer.invoke('perform-tesseract-pdf-ocr', { pages, language, options }),    
+    getTesseractLanguages: () => ipcRenderer.invoke('get-tesseract-languages'),    
+    onTesseractProgress: (callback) => ipcRenderer.on('tesseract-progress', (event, progress) => callback(progress))
 });

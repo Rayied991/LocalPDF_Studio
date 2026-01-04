@@ -1,0 +1,460 @@
+<!--
+ * LocalPDF Studio - Offline PDF Toolkit
+ * ======================================
+ * 
+ * @author      Md. Alinur Hossain <alinur1160@gmail.com>
+ * @license     AGPL 3.0 (GNU Affero General Public License version 3)
+ * @website     https://alinur1.github.io/LocalPDF_Studio_Website/
+ * @repository  https://github.com/Alinur1/LocalPDF_Studio
+ * 
+ * Copyright (c) 2025 Md. Alinur Hossain. All rights reserved.
+ * 
+ * Architecture:
+ * - Frontend: Electron + HTML/CSS/JS
+ * - Backend: ASP.NET Core Web API, Python
+ * - PDF Engine: PdfSharp + Mozilla PDF.js
+-->
+
+
+<!-- src/renderer/tools/ocrPdf/ocrPdf.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LocalPDF Studio - OCR PDF</title>
+    <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
+    script-src 'self';
+    style-src 'self' 'unsafe-inline';
+    img-src 'self' data:;
+    connect-src 'self' http://localhost:*;">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <link rel="stylesheet" href="./ocrPdf.css">
+</head>
+
+<body>
+    <div id="app">
+        <div class="top-bar">
+            <a href="../../index.html" class="top-btn">← Back</a>
+            <h1 class="tool-title">OCR PDF</h1>
+        </div>
+        <main class="tool-container">
+            <div class="file-selection-area">
+                <button id="select-pdf-btn" class="select-pdf-btn">Click to Select a PDF or Image File or drop files
+                    here</button>
+                <div id="selected-file-info" class="selected-file-info" style="display: none;">
+                    <div style="flex-grow: 1;">
+                        <p id="pdf-name" class="pdf-name"></p>
+                        <p id="pdf-size" class="pdf-size"></p>
+                    </div>
+                    <button id="remove-pdf-btn" class="remove-btn">×</button>
+                </div>
+            </div>
+            <div id="preview-container" class="preview-container" style="display: none;">
+                <div class="preview-header">
+                    <div>
+                        <h3 id="preview-title">PDF Preview - Select Pages</h3>
+                        <p class="selection-info" id="selection-info" style="display: none;">No pages selected</p>
+                    </div>
+                    <span id="page-count" class="page-count"></span>
+                </div>
+                <div id="preview-grid" class="preview-grid">
+                </div>
+            </div>
+            <div class="page-options-container" id="page-options-container" style="display: none;">
+                <h2>Page Selection Options</h2>
+                <div class="option-group">
+                    <h3>Quick Actions</h3>
+                    <div class="quick-actions">
+                        <button class="quick-action-btn" id="select-all-pages">Select All Pages</button>
+                        <button class="quick-action-btn" id="select-even-pages">Select Even Pages</button>
+                        <button class="quick-action-btn" id="select-odd-pages">Select Odd Pages</button>
+                        <button class="quick-action-btn" id="invert-selection">Invert Selection</button>
+                    </div>
+                </div>
+                <div class="option-group">
+                    <h3>Specify Pages Manually</h3>
+                    <label for="manual-pages">Individual Pages:</label>
+                    <input type="text" id="manual-pages" class="options-input" placeholder="e.g., 1, 3, 5, 10">
+                    <small class="help-text">Enter page numbers separated by commas</small>
+                </div>
+                <div class="option-group">
+                    <h3>Page Ranges</h3>
+                    <label for="page-ranges">Page Ranges:</label>
+                    <input type="text" id="page-ranges" class="options-input" placeholder="e.g., 1-3, 7-9, 15-20">
+                    <small class="help-text">Enter ranges like "1-5, 10-15" or mix both: "1, 3-5, 8"</small>
+                </div>
+                <div class="option-group">
+                    <button id="clear-selection-btn" class="action-btn secondary">Clear Selection</button>
+                </div>
+            </div>
+            <div class="ocr-options-container">
+                <h2>OCR Language Options</h2>
+                <div class="option-group">
+                    <label for="languageDropdown">Select OCR Languages:</label>
+                    <div class="custom-dropdown">
+                        <div class="dropdown-header" id="languageDropdown">
+                            <div class="language-tags" id="languageTags">
+                                <span class="language-tag">
+                                    English
+                                    <button class="tag-remove" data-value="eng">×</button>
+                                </span>
+                            </div>
+                            <span class="dropdown-arrow">▼</span>
+                        </div>
+                        <div class="dropdown-menu">
+                            <input type="text" class="dropdown-search" placeholder="Search language...">
+                            <div class="dropdown-options">
+                                <div class="dropdown-option" data-value="eng">
+                                    <input type="checkbox" class="option-checkbox" checked> English
+                                </div>
+                                <div class="dropdown-option" data-value="por">
+                                    <input type="checkbox" class="option-checkbox"> Portuguese
+                                </div>
+                                <div class="dropdown-option" data-value="afr">
+                                    <input type="checkbox" class="option-checkbox"> Afrikaans
+                                </div>
+                                <div class="dropdown-option" data-value="sqi">
+                                    <input type="checkbox" class="option-checkbox"> Albanian
+                                </div>
+                                <div class="dropdown-option" data-value="amh">
+                                    <input type="checkbox" class="option-checkbox"> Amharic
+                                </div>
+                                <div class="dropdown-option" data-value="ara">
+                                    <input type="checkbox" class="option-checkbox"> Arabic
+                                </div>
+                                <div class="dropdown-option" data-value="asm">
+                                    <input type="checkbox" class="option-checkbox"> Assamese
+                                </div>
+                                <div class="dropdown-option" data-value="aze">
+                                    <input type="checkbox" class="option-checkbox"> Azerbaijani
+                                </div>
+                                <div class="dropdown-option" data-value="aze_cyrl">
+                                    <input type="checkbox" class="option-checkbox"> Azerbaijani - Cyrillic
+                                </div>
+                                <div class="dropdown-option" data-value="eus">
+                                    <input type="checkbox" class="option-checkbox"> Basque
+                                </div>
+                                <div class="dropdown-option" data-value="bel">
+                                    <input type="checkbox" class="option-checkbox"> Belarusian
+                                </div>
+                                <div class="dropdown-option" data-value="ben">
+                                    <input type="checkbox" class="option-checkbox"> Bengali
+                                </div>
+                                <div class="dropdown-option" data-value="bos">
+                                    <input type="checkbox" class="option-checkbox"> Bosnian
+                                </div>
+                                <div class="dropdown-option" data-value="bul">
+                                    <input type="checkbox" class="option-checkbox"> Bulgarian
+                                </div>
+                                <div class="dropdown-option" data-value="mya">
+                                    <input type="checkbox" class="option-checkbox"> Burmese
+                                </div>
+                                <div class="dropdown-option" data-value="cat">
+                                    <input type="checkbox" class="option-checkbox"> Catalan; Valencian
+                                </div>
+                                <div class="dropdown-option" data-value="ceb">
+                                    <input type="checkbox" class="option-checkbox"> Cebuano
+                                </div>
+                                <div class="dropdown-option" data-value="khm">
+                                    <input type="checkbox" class="option-checkbox"> Central Khmer
+                                </div>
+                                <div class="dropdown-option" data-value="chr">
+                                    <input type="checkbox" class="option-checkbox"> Cherokee
+                                </div>
+                                <div class="dropdown-option" data-value="chi_sim">
+                                    <input type="checkbox" class="option-checkbox"> Chinese - Simplified
+                                </div>
+                                <div class="dropdown-option" data-value="chi_tra">
+                                    <input type="checkbox" class="option-checkbox"> Chinese - Traditional
+                                </div>
+                                <div class="dropdown-option" data-value="hrv">
+                                    <input type="checkbox" class="option-checkbox"> Croatian
+                                </div>
+                                <div class="dropdown-option" data-value="ces">
+                                    <input type="checkbox" class="option-checkbox"> Czech
+                                </div>
+                                <div class="dropdown-option" data-value="dan">
+                                    <input type="checkbox" class="option-checkbox"> Danish
+                                </div>
+                                <div class="dropdown-option" data-value="nld">
+                                    <input type="checkbox" class="option-checkbox"> Dutch; Flemish
+                                </div>
+                                <div class="dropdown-option" data-value="dzo">
+                                    <input type="checkbox" class="option-checkbox"> Dzongkha
+                                </div>
+                                <div class="dropdown-option" data-value="enm">
+                                    <input type="checkbox" class="option-checkbox"> English, Middle (1100-1500)
+                                </div>
+                                <div class="dropdown-option" data-value="epo">
+                                    <input type="checkbox" class="option-checkbox"> Esperanto
+                                </div>
+                                <div class="dropdown-option" data-value="est">
+                                    <input type="checkbox" class="option-checkbox"> Estonian
+                                </div>
+                                <div class="dropdown-option" data-value="fin">
+                                    <input type="checkbox" class="option-checkbox"> Finnish
+                                </div>
+                                <div class="dropdown-option" data-value="fra">
+                                    <input type="checkbox" class="option-checkbox"> French
+                                </div>
+                                <div class="dropdown-option" data-value="frm">
+                                    <input type="checkbox" class="option-checkbox"> French, Middle (ca. 1400-1600)
+                                </div>
+                                <div class="dropdown-option" data-value="glg">
+                                    <input type="checkbox" class="option-checkbox"> Galician
+                                </div>
+                                <div class="dropdown-option" data-value="kat">
+                                    <input type="checkbox" class="option-checkbox"> Georgian
+                                </div>
+                                <div class="dropdown-option" data-value="deu">
+                                    <input type="checkbox" class="option-checkbox"> German
+                                </div>
+                                <div class="dropdown-option" data-value="frk">
+                                    <input type="checkbox" class="option-checkbox"> German Fraktur
+                                </div>
+                                <div class="dropdown-option" data-value="ell">
+                                    <input type="checkbox" class="option-checkbox"> Greek, Modern (1453-)
+                                </div>
+                                <div class="dropdown-option" data-value="grc">
+                                    <input type="checkbox" class="option-checkbox"> Greek, Ancient (-1453)
+                                </div>
+                                <div class="dropdown-option" data-value="guj">
+                                    <input type="checkbox" class="option-checkbox"> Gujarati
+                                </div>
+                                <div class="dropdown-option" data-value="hat">
+                                    <input type="checkbox" class="option-checkbox"> Haitian; Haitian Creole
+                                </div>
+                                <div class="dropdown-option" data-value="heb">
+                                    <input type="checkbox" class="option-checkbox"> Hebrew
+                                </div>
+                                <div class="dropdown-option" data-value="hin">
+                                    <input type="checkbox" class="option-checkbox"> Hindi
+                                </div>
+                                <div class="dropdown-option" data-value="hun">
+                                    <input type="checkbox" class="option-checkbox"> Hungarian
+                                </div>
+                                <div class="dropdown-option" data-value="isl">
+                                    <input type="checkbox" class="option-checkbox"> Icelandic
+                                </div>
+                                <div class="dropdown-option" data-value="ind">
+                                    <input type="checkbox" class="option-checkbox"> Indonesian
+                                </div>
+                                <div class="dropdown-option" data-value="iku">
+                                    <input type="checkbox" class="option-checkbox"> Inuktitut
+                                </div>
+                                <div class="dropdown-option" data-value="gle">
+                                    <input type="checkbox" class="option-checkbox"> Irish
+                                </div>
+                                <div class="dropdown-option" data-value="ita">
+                                    <input type="checkbox" class="option-checkbox"> Italian
+                                </div>
+                                <div class="dropdown-option" data-value="jpn">
+                                    <input type="checkbox" class="option-checkbox"> Japanese
+                                </div>
+                                <div class="dropdown-option" data-value="jav">
+                                    <input type="checkbox" class="option-checkbox"> Javanese
+                                </div>
+                                <div class="dropdown-option" data-value="kan">
+                                    <input type="checkbox" class="option-checkbox"> Kannada
+                                </div>
+                                <div class="dropdown-option" data-value="kaz">
+                                    <input type="checkbox" class="option-checkbox"> Kazakh
+                                </div>
+                                <div class="dropdown-option" data-value="kir">
+                                    <input type="checkbox" class="option-checkbox"> Kirghiz; Kyrgyz
+                                </div>
+                                <div class="dropdown-option" data-value="kor">
+                                    <input type="checkbox" class="option-checkbox"> Korean
+                                </div>
+                                <div class="dropdown-option" data-value="kur">
+                                    <input type="checkbox" class="option-checkbox"> Kurdish
+                                </div>
+                                <div class="dropdown-option" data-value="lao">
+                                    <input type="checkbox" class="option-checkbox"> Lao
+                                </div>
+                                <div class="dropdown-option" data-value="lat">
+                                    <input type="checkbox" class="option-checkbox"> Latin
+                                </div>
+                                <div class="dropdown-option" data-value="lav">
+                                    <input type="checkbox" class="option-checkbox"> Latvian
+                                </div>
+                                <div class="dropdown-option" data-value="lit">
+                                    <input type="checkbox" class="option-checkbox"> Lithuanian
+                                </div>
+                                <div class="dropdown-option" data-value="mkd">
+                                    <input type="checkbox" class="option-checkbox"> Macedonian
+                                </div>
+                                <div class="dropdown-option" data-value="msa">
+                                    <input type="checkbox" class="option-checkbox"> Malay
+                                </div>
+                                <div class="dropdown-option" data-value="mal">
+                                    <input type="checkbox" class="option-checkbox"> Malayalam
+                                </div>
+                                <div class="dropdown-option" data-value="mlt">
+                                    <input type="checkbox" class="option-checkbox"> Maltese
+                                </div>
+                                <div class="dropdown-option" data-value="mar">
+                                    <input type="checkbox" class="option-checkbox"> Marathi
+                                </div>
+                                <div class="dropdown-option" data-value="nep">
+                                    <input type="checkbox" class="option-checkbox"> Nepali
+                                </div>
+                                <div class="dropdown-option" data-value="nor">
+                                    <input type="checkbox" class="option-checkbox"> Norwegian
+                                </div>
+                                <div class="dropdown-option" data-value="ori">
+                                    <input type="checkbox" class="option-checkbox"> Oriya
+                                </div>
+                                <div class="dropdown-option" data-value="pan">
+                                    <input type="checkbox" class="option-checkbox"> Panjabi; Punjabi
+                                </div>
+                                <div class="dropdown-option" data-value="fas">
+                                    <input type="checkbox" class="option-checkbox"> Persian
+                                </div>
+                                <div class="dropdown-option" data-value="pol">
+                                    <input type="checkbox" class="option-checkbox"> Polish
+                                </div>
+                                <div class="dropdown-option" data-value="pus">
+                                    <input type="checkbox" class="option-checkbox"> Pushto; Pashto
+                                </div>
+                                <div class="dropdown-option" data-value="ron">
+                                    <input type="checkbox" class="option-checkbox"> Romanian; Moldavian; Moldovan
+                                </div>
+                                <div class="dropdown-option" data-value="rus">
+                                    <input type="checkbox" class="option-checkbox"> Russian
+                                </div>
+                                <div class="dropdown-option" data-value="san">
+                                    <input type="checkbox" class="option-checkbox"> Sanskrit
+                                </div>
+                                <div class="dropdown-option" data-value="srp">
+                                    <input type="checkbox" class="option-checkbox"> Serbian
+                                </div>
+                                <div class="dropdown-option" data-value="srp_latn">
+                                    <input type="checkbox" class="option-checkbox"> Serbian - Latin
+                                </div>
+                                <div class="dropdown-option" data-value="sin">
+                                    <input type="checkbox" class="option-checkbox"> Sinhala; Sinhalese
+                                </div>
+                                <div class="dropdown-option" data-value="slk">
+                                    <input type="checkbox" class="option-checkbox"> Slovak
+                                </div>
+                                <div class="dropdown-option" data-value="slv">
+                                    <input type="checkbox" class="option-checkbox"> Slovenian
+                                </div>
+                                <div class="dropdown-option" data-value="spa">
+                                    <input type="checkbox" class="option-checkbox"> Spanish; Castilian
+                                </div>
+                                <div class="dropdown-option" data-value="swa">
+                                    <input type="checkbox" class="option-checkbox"> Swahili
+                                </div>
+                                <div class="dropdown-option" data-value="swe">
+                                    <input type="checkbox" class="option-checkbox"> Swedish
+                                </div>
+                                <div class="dropdown-option" data-value="syr">
+                                    <input type="checkbox" class="option-checkbox"> Syriac
+                                </div>
+                                <div class="dropdown-option" data-value="tgl">
+                                    <input type="checkbox" class="option-checkbox"> Tagalog
+                                </div>
+                                <div class="dropdown-option" data-value="tgk">
+                                    <input type="checkbox" class="option-checkbox"> Tajik
+                                </div>
+                                <div class="dropdown-option" data-value="tam">
+                                    <input type="checkbox" class="option-checkbox"> Tamil
+                                </div>
+                                <div class="dropdown-option" data-value="tel">
+                                    <input type="checkbox" class="option-checkbox"> Telugu
+                                </div>
+                                <div class="dropdown-option" data-value="tha">
+                                    <input type="checkbox" class="option-checkbox"> Thai
+                                </div>
+                                <div class="dropdown-option" data-value="bod">
+                                    <input type="checkbox" class="option-checkbox"> Tibetan
+                                </div>
+                                <div class="dropdown-option" data-value="tir">
+                                    <input type="checkbox" class="option-checkbox"> Tigrinya
+                                </div>
+                                <div class="dropdown-option" data-value="tur">
+                                    <input type="checkbox" class="option-checkbox"> Turkish
+                                </div>
+                                <div class="dropdown-option" data-value="uig">
+                                    <input type="checkbox" class="option-checkbox"> Uighur; Uyghur
+                                </div>
+                                <div class="dropdown-option" data-value="ukr">
+                                    <input type="checkbox" class="option-checkbox"> Ukrainian
+                                </div>
+                                <div class="dropdown-option" data-value="urd">
+                                    <input type="checkbox" class="option-checkbox"> Urdu
+                                </div>
+                                <div class="dropdown-option" data-value="uzb">
+                                    <input type="checkbox" class="option-checkbox"> Uzbek
+                                </div>
+                                <div class="dropdown-option" data-value="uzb_cyrl">
+                                    <input type="checkbox" class="option-checkbox"> Uzbek - Cyrillic
+                                </div>
+                                <div class="dropdown-option" data-value="vie">
+                                    <input type="checkbox" class="option-checkbox"> Vietnamese
+                                </div>
+                                <div class="dropdown-option" data-value="cym">
+                                    <input type="checkbox" class="option-checkbox"> Welsh
+                                </div>
+                                <div class="dropdown-option" data-value="yid">
+                                    <input type="checkbox" class="option-checkbox"> Yiddish
+                                </div>
+                            </div>
+                        </div>
+                        <input type="hidden" id="languageSelect" value="eng">
+                    </div>
+                    <small class="help-text">Select one or more languages for text recognition</small>
+                    <p style="color: cyan;">Note: Tesseract needs internet connection only once per language to
+                        download the model.</p>
+                </div>
+            </div>
+            <div class="action-buttons">
+                <button id="process-btn" class="top-btn" disabled>Process with OCR</button>
+            </div>
+        </main>
+    </div>
+    <!-- Batch Processing Progress Modal -->
+    <div id="batch-progress-modal" class="progress-overlay" style="display: none;">
+        <div class="progress-content">
+            <h3 class="progress-title" id="batch-progress-title">Processing PDF with OCR</h3>
+
+            <div class="progress-bar-container">
+                <div class="progress-bar-fill" id="batch-progress-fill"></div>
+            </div>
+
+            <div class="progress-info" id="batch-current-action">Initializing...</div>
+
+            <div class="page-counter">
+                Processing page <span class="current-page" id="batch-current-page">0</span>
+                of <span class="total-pages" id="batch-total-pages">0</span>
+            </div>
+
+            <div class="batch-status" id="batch-status-dots">
+                <!-- Dots will be added dynamically -->
+            </div>
+
+            <div class="time-tracking">
+                <div class="time-elapsed">
+                    Time: <span class="time-value" id="batch-time-elapsed">0s</span>
+                </div>
+            </div>
+
+            <div class="performance-warning" id="batch-performance-warning" style="display: none;">
+                <span class="warning-icon">⚠</span>
+                <span class="warning-text">Large file detected - Processing in batches for better performance</span>
+            </div>
+
+            <button class="progress-cancel-btn" id="batch-cancel-btn">Cancel OCR Processing</button>
+        </div>
+    </div>
+
+    <script type="module" src="./ocrPdf.js"></script>
+</body>
+
+</html>

@@ -30,7 +30,8 @@
   },
   "dependencies": {
     "electron-updater": "^6.6.2",
-    "pdf-lib": "^1.17.1"
+    "pdf-lib": "^1.17.1",
+    "tesseract.js": "^7.0.0"
   },
   "build": {
     "appId": "com.localpdfstudio.app",

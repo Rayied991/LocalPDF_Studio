@@ -28,6 +28,7 @@ const fs = require('fs');
 const { spawn } = require('child_process');
 const { autoUpdater } = require('electron-updater');
 const { PDFDocument, PDFName, PDFRawStream } = require('pdf-lib');
+const Tesseract = require('tesseract.js');
 const gotTheLock = app.requestSingleInstanceLock();
 
 let apiProcess = null;
@@ -237,7 +238,7 @@ const createWindow = () => {
 
     mainWindow.maximize();
     mainWindow.loadFile(path.resolve(app.getAppPath(), 'src/renderer/index.html'));
-    
+
     // Flush queued files once the renderer is ready
     mainWindow.webContents.on('did-finish-load', () => {
         console.log('Window content loaded, flushing open file queue...');
@@ -467,7 +468,7 @@ function cleanupTaskFolder() {
 // Helper function to get the LocalPDF_Studio_Task folder path in Downloads
 function getTaskFolderPath() {
     let basePath;
-    
+
     // Handle Snap with strict confinement
     if (process.platform === 'linux' && process.env.SNAP) {
         // Use snap-specific path for confined snaps
@@ -540,6 +541,18 @@ ipcMain.handle('select-pdf-files', async () => {
     const result = await dialog.showOpenDialog({
         properties: ['openFile', 'multiSelections'],
         filters: [{ name: 'PDF Files', extensions: ['pdf'] }]
+    });
+    return result.canceled ? [] : result.filePaths;
+});
+
+ipcMain.handle('select-pdf-and-image-files', async () => {
+    const result = await dialog.showOpenDialog({
+        properties: ['openFile', 'multiSelections'],
+        filters: [
+            { name: 'PDF and Image Files', extensions: ['pdf', 'jpg', 'jpeg', 'png', 'bmp', 'tiff'] },
+            { name: 'PDF Files', extensions: ['pdf'] },
+            { name: 'Image Files', extensions: ['jpg', 'jpeg', 'png', 'bmp', 'tiff'] }
+        ]
     });
     return result.canceled ? [] : result.filePaths;
 });
@@ -628,6 +641,39 @@ ipcMain.handle('save-pdf-file', async (event, { filename, buffer }) => {
     }
 });
 
+ipcMain.handle('save-text-file', async (event, { filename, text }) => {
+    const { filePath, canceled } = await dialog.showSaveDialog({
+        defaultPath: filename,
+        filters: [{ name: 'Text Files', extensions: ['txt'] }]
+    });
+
+    if (canceled || !filePath) {
+        return null;
+    }
+
+    try {
+        // Convert text string to buffer if needed
+        let nodeBuffer;
+        if (typeof text === 'string') {
+            nodeBuffer = Buffer.from(text, 'utf-8');
+        } else if (Buffer.isBuffer(text)) {
+            nodeBuffer = text;
+        } else if (text instanceof ArrayBuffer) {
+            nodeBuffer = Buffer.from(new Uint8Array(text));
+        } else if (ArrayBuffer.isView(text)) {
+            nodeBuffer = Buffer.from(text.buffer, text.byteOffset, text.byteLength);
+        } else {
+            throw new Error("Unsupported data type for text file");
+        }
+
+        fs.writeFileSync(filePath, nodeBuffer);
+        return filePath;
+    } catch (err) {
+        console.error("Failed to save text file:", err);
+        return null;
+    }
+});
+
 ipcMain.handle('save-pdf-with-metadata', async (event, { filePath, metadata }) => {
     try {
         const ext = path.extname(filePath);
@@ -705,5 +751,263 @@ ipcMain.handle('delete-file', async (event, filePath) => {
     } catch (err) {
         console.error('Failed to delete file:', err);
         return { success: false, error: err.message };
+    }
+});
+
+ipcMain.handle('perform-tesseract-ocr', async (event, { imagePath, language, options = {} }) => {
+    try {
+        console.log(`Starting Tesseract OCR for: ${imagePath}, language: ${language}`);
+
+        // MODERN v7 API: Language is specified when creating the worker
+        const worker = await Tesseract.createWorker(language, 1, options);
+
+        // Perform recognition
+        const result = await worker.recognize(imagePath);
+
+        // Terminate the worker
+        await worker.terminate();
+
+        return {
+            success: true,
+            text: result.data.text,
+            confidence: result.data.confidence,
+            blocks: result.data.blocks,
+            lines: result.data.lines,
+            words: result.data.words
+        };
+    } catch (error) {
+        console.error('Tesseract OCR failed:', error);
+        return {
+            success: false,
+            error: error.message
+        };
+    }
+});
+
+ipcMain.handle('perform-tesseract-pdf-ocr', async (event, { pages, language, options = {} }) => {
+    try {
+        console.log(`Starting PDF OCR for ${pages.length} pages, language: ${language}`);
+        const worker = await Tesseract.createWorker(language, 1, options);
+        const results = [];
+
+        try {
+            for (let i = 0; i < pages.length; i++) {
+                const page = pages[i];
+                try {
+                    const result = await worker.recognize(page.imageData);
+
+                    results.push({
+                        page: page.pageNumber,
+                        success: true,
+                        text: result.data.text,
+                        confidence: result.data.confidence,
+                        blocks: result.data.blocks,
+                        lines: result.data.lines,
+                        words: result.data.words
+                    });
+
+                    event.sender.send('tesseract-progress', {
+                        current: i + 1,
+                        total: pages.length,
+                        page: page.pageNumber
+                    });
+
+                } catch (pageError) {
+                    console.error(`Page ${page.pageNumber} OCR failed:`, pageError);
+                    results.push({
+                        page: page.pageNumber,
+                        success: false,
+                        error: pageError.message
+                    });
+                }
+            }
+
+            await worker.terminate();
+            return { success: true, results };
+
+        } catch (error) {
+            await worker.terminate();
+            throw error;
+        }
+    } catch (error) {
+        console.error('PDF OCR failed:', error);
+        return {
+            success: false,
+            error: error.message,
+            results: []
+        };
+    }
+});
+
+ipcMain.handle('perform-tesseract-pdf-ocr-optimized', async (event, { pages, language, options = {} }) => {
+    let worker = null;
+
+    try {
+        console.log(`Starting optimized PDF OCR for ${pages.length} pages, language: ${language}`);
+
+        // Create worker once
+        worker = await Tesseract.createWorker(language, 1, options);
+        const results = [];
+
+        for (let i = 0; i < pages.length; i++) {
+            const page = pages[i];
+            try {
+                const result = await worker.recognize(page.imageData);
+
+                results.push({
+                    page: page.pageNumber,
+                    success: true,
+                    text: result.data.text,
+                    confidence: result.data.confidence
+                });
+
+                // Progress update
+                event.sender.send('tesseract-progress', {
+                    current: i + 1,
+                    total: pages.length,
+                    page: page.pageNumber
+                });
+
+            } catch (pageError) {
+                console.error(`Page ${page.pageNumber} OCR failed:`, pageError);
+                results.push({
+                    page: page.pageNumber,
+                    success: false,
+                    error: pageError.message
+                });
+            }
+        }
+
+        // Terminate worker after all pages
+        if (worker) {
+            await worker.terminate();
+        }
+
+        return { success: true, results };
+
+    } catch (error) {
+        // Clean up on error
+        if (worker) {
+            await worker.terminate();
+        }
+
+        console.error('Optimized PDF OCR failed:', error);
+        return {
+            success: false,
+            error: error.message,
+            results: []
+        };
+    }
+});
+
+// IPC handler to get available Tesseract languages
+ipcMain.handle('get-tesseract-languages', async () => {
+    try {
+        const availableLanguages = [
+            { code: "eng", name: "English" },
+            { code: "por", name: "Portuguese" },
+            { code: "afr", name: "Afrikaans" },
+            { code: "sqi", name: "Albanian" },
+            { code: "amh", name: "Amharic" },
+            { code: "ara", name: "Arabic" },
+            { code: "asm", name: "Assamese" },
+            { code: "aze", name: "Azerbaijani" },
+            { code: "aze_cyrl", name: "Azerbaijani - Cyrillic" },
+            { code: "eus", name: "Basque" },
+            { code: "bel", name: "Belarusian" },
+            { code: "ben", name: "Bengali" },
+            { code: "bos", name: "Bosnian" },
+            { code: "bul", name: "Bulgarian" },
+            { code: "mya", name: "Burmese" },
+            { code: "cat", name: "Catalan; Valencian" },
+            { code: "ceb", name: "Cebuano" },
+            { code: "khm", name: "Central Khmer" },
+            { code: "chr", name: "Cherokee" },
+            { code: "chi_sim", name: "Chinese - Simplified" },
+            { code: "chi_tra", name: "Chinese - Traditional" },
+            { code: "hrv", name: "Croatian" },
+            { code: "ces", name: "Czech" },
+            { code: "dan", name: "Danish" },
+            { code: "nld", name: "Dutch; Flemish" },
+            { code: "dzo", name: "Dzongkha" },
+            { code: "enm", name: "English, Middle (1100-1500)",  },
+            { code: "epo", name: "Esperanto" },
+            { code: "est", name: "Estonian" },
+            { code: "fin", name: "Finnish" },
+            { code: "fra", name: "French" },
+            { code: "frm", name: "French, Middle (ca. 1400-1600)" },
+            { code: "glg", name: "Galician" },
+            { code: "kat", name: "Georgian" },
+            { code: "deu", name: "German" },
+            { code: "frk", name: "German Fraktur" },
+            { code: "ell", name: "Greek, Modern (1453-)" },
+            { code: "grc", name: "Greek, Ancient (-1453)" },
+            { code: "guj", name: "Gujarati" },
+            { code: "hat", name: "Haitian; Haitian Creole" },
+            { code: "heb", name: "Hebrew" },
+            { code: "hin", name: "Hindi" },
+            { code: "hun", name: "Hungarian" },
+            { code: "isl", name: "Icelandic" },
+            { code: "ind", name: "Indonesian" },
+            { code: "iku", name: "Inuktitut" },
+            { code: "gle", name: "Irish" },
+            { code: "ita", name: "Italian" },
+            { code: "jpn", name: "Japanese" },
+            { code: "jav", name: "Javanese" },
+            { code: "kan", name: "Kannada" },
+            { code: "kaz", name: "Kazakh" },
+            { code: "kir", name: "Kirghiz; Kyrgyz" },
+            { code: "kor", name: "Korean" },
+            { code: "kur", name: "Kurdish" },
+            { code: "lao", name: "Lao" },
+            { code: "lat", name: "Latin" },
+            { code: "lav", name: "Latvian" },
+            { code: "lit", name: "Lithuanian" },
+            { code: "mkd", name: "Macedonian" },
+            { code: "msa", name: "Malay" },
+            { code: "mal", name: "Malayalam" },
+            { code: "mlt", name: "Maltese" },
+            { code: "mar", name: "Marathi" },
+            { code: "nep", name: "Nepali" },
+            { code: "nor", name: "Norwegian" },
+            { code: "ori", name: "Oriya" },
+            { code: "pan", name: "Panjabi; Punjabi",  },
+            { code: "fas", name: "Persian" },
+            { code: "pol", name: "Polish" },
+            { code: "pus", name: "Pushto; Pashto" },
+            { code: "ron", name: "Romanian; Moldavian; Moldovan" },
+            { code: "rus", name: "Russian" },
+            { code: "san", name: "Sanskrit" },
+            { code: "srp", name: "Serbian" },
+            { code: "srp_latn", name: "Serbian - Latin" },
+            { code: "sin", name: "Sinhala; Sinhalese" },
+            { code: "slk", name: "Slovak" },
+            { code: "slv", name: "Slovenian" },
+            { code: "spa", name: "Spanish; Castilian" },
+            { code: "swa", name: "Swahili" },
+            { code: "swe", name: "Swedish" },
+            { code: "syr", name: "Syriac" },
+            { code: "tgl", name: "Tagalog" },
+            { code: "tgk", name: "Tajik" },
+            { code: "tam", name: "Tamil" },
+            { code: "tel", name: "Telugu" },
+            { code: "tha", name: "Thai" },
+            { code: "bod", name: "Tibetan" },
+            { code: "tir", name: "Tigrinya" },
+            { code: "tur", name: "Turkish" },
+            { code: "uig", name: "Uighur; Uyghur" },
+            { code: "ukr", name: "Ukrainian" },
+            { code: "urd", name: "Urdu" },
+            { code: "uzb", name: "Uzbek" },
+            { code: "uzb_cyrl", name: "Uzbek - Cyrillic" },
+            { code: "vie", name: "Vietnamese" },
+            { code: "cym", name: "Welsh" },
+            { code: "yid", name: "Yiddish" },
+        ];
+
+        return { success: true, languages: availableLanguages };
+    } catch (error) {
+        console.error('Failed to get languages:', error);
+        return { success: false, error: error.message };
     }
 });
