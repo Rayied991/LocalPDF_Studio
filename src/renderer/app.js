@@ -22,10 +22,14 @@ import TabManager from './tabs/tabManager.js';
 import { ClockManager } from './utils/clockManager.js';
 import createPdfTab from './utils/createPdfTab.js';
 import customAlert from './utils/customAlert.js';
+import i18n from './utils/i18n.js';
 import { SearchBar } from './utils/searchBar.js';
 import { SearchIndexManager } from './utils/searchIndexManager.js';
 
-window.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('DOMContentLoaded', async() => {
+
+    await i18n.init();
+
     const tabManager = new TabManager('#tab-bar', '#tab-content');
     const clockManager = new ClockManager();
     const searchIndexManager = new SearchIndexManager();
@@ -109,7 +113,8 @@ window.addEventListener('DOMContentLoaded', () => {
 
         isDialogOpen = true;
         openPdfBtn.disabled = true;
-        openPdfBtn.textContent = 'Selecting...';
+        // openPdfBtn.textContent = 'Selecting...';
+        openPdfBtn.textContent =  i18n.t('selecting');
 
         try {
             const files = await window.electronAPI.selectPdfs();
@@ -126,7 +131,8 @@ window.addEventListener('DOMContentLoaded', () => {
         } finally {
             isDialogOpen = false;
             openPdfBtn.disabled = false;
-            openPdfBtn.textContent = 'Open PDF Reader';
+            // openPdfBtn.textContent = 'Open PDF Reader';
+            openPdfBtn.textContent = i18n.t('open-pdf-btn');
         }
     });
 
@@ -301,7 +307,7 @@ window.addEventListener('DOMContentLoaded', () => {
         modal.classList.add('hidden');
     });
 
-    saveBtn.addEventListener('click', () => {
+    saveBtn.addEventListener('click', async() => {
         const selectedRestore = document.querySelector('input[name="restore-tabs"]:checked').value;
         const clockEnabled = document.getElementById('clock-enabled').checked;
         const searchEnabled = document.getElementById('search-enabled').checked;
@@ -313,10 +319,13 @@ window.addEventListener('DOMContentLoaded', () => {
         searchIndexManager.setEnabled(searchEnabled);
         searchBar.setVisible(searchEnabled);
 
+
+        // Apply language change
+        await i18n.setLanguage(selectedLanguage);
         modal.classList.add('hidden');
     });
 
-    function restoreOriginalSettings() {
+    async function restoreOriginalSettings() {
         localStorage.setItem('language', originalSettings.language || 'en');
         localStorage.setItem('restoreTabs', originalSettings.restoreTabs);
         localStorage.setItem('clockEnabled', originalSettings.clockEnabled.toString());
@@ -327,13 +336,19 @@ window.addEventListener('DOMContentLoaded', () => {
         document.getElementById('clock-enabled').checked = originalSettings.clockEnabled;
         document.getElementById('search-enabled').checked = originalSettings.searchEnabled;
         languageSelect.value = originalSettings.language;
+
+        await i18n.setLanguage(originalSettings.language);
     }
 
     if (clearHistoryBtn) {
         clearHistoryBtn.addEventListener('click', () => {
             searchIndexManager.clearHistory();
             if (customAlert) {
-                customAlert.alert('Search History Cleared', 'All search history has been removed.');
+                // customAlert.alert('Search History Cleared', 'All search history has been removed.');
+                customAlert.alert(
+                      i18n.t('history-cleared-title'), 
+                    i18n.t('history-cleared-msg')
+                );
             }
         });
     }
@@ -367,5 +382,9 @@ window.addEventListener('DOMContentLoaded', () => {
         if (window.electronAPI && window.electronAPI.checkForUpdates) {
             window.electronAPI.checkForUpdates();
         }
+    });
+    //  Handle language change in real-time (preview)
+    languageSelect.addEventListener('change', async (e) => {
+        await i18n.setLanguage(e.target.value);
     });
 });

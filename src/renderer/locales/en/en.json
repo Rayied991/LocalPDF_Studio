@@ -1,0 +1,68 @@
+{
+  "nav": {
+    "open-pdf-btn": "Open PDF Reader",
+    "tools-btn": "Tools",
+    "settings-btn": "Settings",
+    "about-btn": "About",
+    "donate-btn": "Donate",
+    "selecting": "Selecting..."
+  },
+
+  "tools": {
+    "tool-merge": "Merge PDF",
+    "tool-split": "Split PDF",
+    "tool-remove": "Remove Pages",
+    "tool-organize": "Organize/Re-Arrange PDF",
+    "tool-compress": "Compress PDF",
+    "tool-pdf-to-image": "PDF to Image",
+    "tool-page-numbers": "Add Page Numbers",
+    "tool-watermark": "Add Watermark",
+    "tool-crop": "Crop PDF",
+    "tool-lock-unlock": "Lock/Unlock PDF",
+    "tool-metadata": "View and Edit Metadata",
+    "tool-extract-images": "Extract Images",
+    "tool-OCR": "OCR PDF or Image"
+  },
+
+  "error": {
+    "empty-message": "No PDFs open. Click \"Open PDF Reader\" to get started!"
+  },
+  "settings": {
+    "settings-title": "Settings",
+    "startup-behavior": "Startup Behavior",
+    "restore-session": "Restore Session",
+    "restore-session-desc": "Automatically reopen all PDFs from your last session",
+    "fresh-start": "Fresh Start",
+    "fresh-start-desc": "Start with a clean slate every time",
+    "sidebar-note": "Sidebar layout and size preferences are always remembered",
+
+    "language-section": "Language",
+    "interface-language": "Interface Language",
+    "interface-language-desc": "Select your preferred language for the application",
+
+    "interface-section": "Interface",
+    "show-clock": "Show Clock",
+    "show-clock-desc": "Display time and date when no PDFs are open",
+
+    "search-history": "Search & History",
+    "enable-search": "Enable Search Bar",
+    "enable-search-desc": "Quickly find and reopen previously opened PDF files",
+    "search-note": "Only indexes PDF files you've opened in LocalPDF Studio",
+    "clear-history-btn": "Clear Search History",
+
+    "auto-updates": "Auto-updates",
+    "update-status": "Checking for updates...",
+    "check-updates-btn": "Check for Updates",
+
+    "cancel-btn": "Cancel",
+    "save-changes-btn": "Save Changes"
+  },
+
+  "history-cleared-title": "Search History Cleared",
+  "history-cleared-msg": "All search history has been removed.",
+
+  "lang-en": "English",
+  "lang-bn": "Bangla",
+  "lang-zh": "Chinese",
+  "lang-ja": "Japanese"
+}

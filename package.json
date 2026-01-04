@@ -30,6 +30,10 @@
   },
   "dependencies": {
     "electron-updater": "^6.6.2",
+    "i18next": "^25.7.3",
+    "i18next-browser-languagedetector": "^8.2.0",
+    "i18next-electron-language-detector": "^0.0.10",
+    "i18next-http-backend": "^3.0.2",
     "pdf-lib": "^1.17.1",
     "tesseract.js": "^7.0.0"
   },

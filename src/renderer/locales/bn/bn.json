@@ -1,0 +1,67 @@
+{
+  "nav": {
+    "open-pdf-btn": "পিডিএফ রিডার খুলুন",
+    "tools-btn": "টুলস",
+    "settings-btn": "সেটিংস",
+    "about-btn": "সম্পর্কে",
+    "donate-btn": "দান করুন",
+    "selecting": "নির্বাচন করা হচ্ছে..."
+  },
+  "tools": {
+    "tool-merge": "পিডিএফ একত্রিত করুন",
+    "tool-split": "পিডিএফ বিভক্ত করুন",
+    "tool-remove": "পৃষ্ঠা মুছুন",
+    "tool-organize": "পিডিএফ সাজান/পুনর্বিন্যাস করুন",
+    "tool-compress": "পিডিএফ সংকুচিত করুন",
+    "tool-pdf-to-image": "পিডিএফ থেকে ছবি",
+    "tool-page-numbers": "পৃষ্ঠা নম্বর যোগ করুন",
+    "tool-watermark": "ওয়াটারমার্ক যোগ করুন",
+    "tool-crop": "পিডিএফ ক্রপ করুন",
+    "tool-lock-unlock": "পিডিএফ লক/আনলক করুন",
+    "tool-metadata": "মেটাডেটা দেখুন এবং সম্পাদনা করুন",
+    "tool-extract-images": "ছবি বের করুন",
+    "tool-OCR": "ওসিআর পিডিএফ বা ছবি"
+  },
+  "error": {
+    "empty-message": "কোন পিডিএফ খোলা নেই। শুরু করতে \"পিডিএফ রিডার খুলুন\" ক্লিক করুন!"
+  },
+
+  "settings": {
+    "settings-title": "সেটিংস",
+    "startup-behavior": "স্টার্টআপ আচরণ",
+    "restore-session": "সেশন পুনরুদ্ধার করুন",
+    "restore-session-desc": "আপনার শেষ সেশন থেকে স্বয়ংক্রিয়ভাবে সব পিডিএফ পুনরায় খুলুন",
+    "fresh-start": "নতুন শুরু",
+    "fresh-start-desc": "প্রতিবার একটি পরিষ্কার স্লেট দিয়ে শুরু করুন",
+    "sidebar-note": "সাইডবার লেআউট এবং আকার পছন্দগুলি সর্বদা মনে রাখা হয়",
+
+    "language-section": "ভাষা",
+    "interface-language": "ইন্টারফেস ভাষা",
+    "interface-language-desc": "অ্যাপ্লিকেশনের জন্য আপনার পছন্দের ভাষা নির্বাচন করুন",
+
+    "interface-section": "ইন্টারফেস",
+    "show-clock": "ঘড়ি দেখান",
+    "show-clock-desc": "কোন পিডিএফ খোলা না থাকলে সময় এবং তারিখ প্রদর্শন করুন",
+
+    "search-history": "অনুসন্ধান এবং ইতিহাস",
+    "enable-search": "অনুসন্ধান বার সক্ষম করুন",
+    "enable-search-desc": "দ্রুত খুঁজুন এবং পূর্বে খোলা পিডিএফ ফাইলগুলি পুনরায় খুলুন",
+    "search-note": "শুধুমাত্র LocalPDF Studio-তে খোলা পিডিএফ ফাইলগুলি সূচীবদ্ধ করে",
+    "clear-history-btn": "অনুসন্ধান ইতিহাস মুছুন",
+
+    "auto-updates": "স্বয়ংক্রিয় আপডেট",
+    "update-status": "আপডেটের জন্য পরীক্ষা করা হচ্ছে...",
+    "check-updates-btn": "আপডেট পরীক্ষা করুন",
+
+    "cancel-btn": "বাতিল",
+    "save-changes-btn": "পরিবর্তন সংরক্ষণ করুন"
+  },
+
+  "history-cleared-title": "অনুসন্ধান ইতিহাস মুছে ফেলা হয়েছে",
+  "history-cleared-msg": "সমস্ত অনুসন্ধান ইতিহাস সরানো হয়েছে।",
+
+  "lang-en": "ইংরেজি",
+  "lang-bn": "বাংলা",
+  "lang-zh": "চীনা",
+  "lang-ja": "জাপানি"
+}

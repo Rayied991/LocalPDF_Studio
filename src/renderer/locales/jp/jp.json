@@ -1,0 +1,66 @@
+{
+  "nav": {
+    "open-pdf-btn": "PDFリーダーを開く",
+    "tools-btn": "ツール",
+    "settings-btn": "設定",
+    "about-btn": "について",
+    "donate-btn": "寄付",
+    "selecting": "選択中..."
+  },
+  "tools": {
+    "tool-merge": "PDFを結合",
+    "tool-split": "PDFを分割",
+    "tool-remove": "ページを削除",
+    "tool-organize": "PDFを整理/並べ替え",
+    "tool-compress": "PDFを圧縮",
+    "tool-pdf-to-image": "PDFを画像に変換",
+    "tool-page-numbers": "ページ番号を追加",
+    "tool-watermark": "透かしを追加",
+    "tool-crop": "PDFをトリミング",
+    "tool-lock-unlock": "PDFをロック/ロック解除",
+    "tool-metadata": "メタデータを表示・編集",
+    "tool-extract-images": "画像を抽出",
+    "tool-OCR": "OCR PDFまたは画像"
+  },
+  "error": {
+    "empty-message": "PDFが開かれていません。「PDFリーダーを開く」をクリックして開始してください！"
+  },
+  "settings": {
+    "settings-title": "設定",
+    "startup-behavior": "起動時の動作",
+    "restore-session": "セッションを復元",
+    "restore-session-desc": "前回のセッションからすべてのPDFを自動的に再度開く",
+    "fresh-start": "新規起動",
+    "fresh-start-desc": "毎回クリーンな状態で開始",
+    "sidebar-note": "サイドバーのレイアウトとサイズの設定は常に記憶されます",
+
+    "language-section": "言語",
+    "interface-language": "インターフェース言語",
+    "interface-language-desc": "アプリケーションの優先言語を選択",
+
+    "interface-section": "インターフェース",
+    "show-clock": "時計を表示",
+    "show-clock-desc": "PDFが開かれていないときに時刻と日付を表示",
+
+    "search-history": "検索と履歴",
+    "enable-search": "検索バーを有効にする",
+    "enable-search-desc": "以前に開いたPDFファイルをすばやく検索して再度開く",
+    "search-note": "LocalPDF Studioで開いたPDFファイルのみをインデックス化",
+    "clear-history-btn": "検索履歴をクリア",
+
+    "auto-updates": "自動更新",
+    "update-status": "更新を確認中...",
+    "check-updates-btn": "更新を確認",
+
+    "cancel-btn": "キャンセル",
+    "save-changes-btn": "変更を保存"
+  },
+
+  "history-cleared-title": "検索履歴がクリアされました",
+  "history-cleared-msg": "すべての検索履歴が削除されました。",
+
+  "lang-en": "英語",
+  "lang-bn": "ベンガル語",
+  "lang-zh": "中国語",
+  "lang-ja": "日本語"
+}
