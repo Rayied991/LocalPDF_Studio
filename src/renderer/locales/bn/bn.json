@@ -52,6 +52,7 @@
     "auto-updates": "স্বয়ংক্রিয় আপডেট",
     "update-status": "আপডেটের জন্য পরীক্ষা করা হচ্ছে...",
     "check-updates-btn": "আপডেট পরীক্ষা করুন",
+    "update-checker": "এখনও কোনও আপডেট চেক করা হয়নি।",
 
     "cancel-btn": "বাতিল",
     "save-changes-btn": "পরিবর্তন সংরক্ষণ করুন"

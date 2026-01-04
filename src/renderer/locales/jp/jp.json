@@ -51,6 +51,7 @@
     "auto-updates": "自動更新",
     "update-status": "更新を確認中...",
     "check-updates-btn": "更新を確認",
+    "update-checker": "まだ更新は確認されていません。",
 
     "cancel-btn": "キャンセル",
     "save-changes-btn": "変更を保存"

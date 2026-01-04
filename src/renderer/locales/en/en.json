@@ -53,7 +53,7 @@
     "auto-updates": "Auto-updates",
     "update-status": "Checking for updates...",
     "check-updates-btn": "Check for Updates",
-
+    "update-checker": "No updates checked yet.",
     "cancel-btn": "Cancel",
     "save-changes-btn": "Save Changes"
   },

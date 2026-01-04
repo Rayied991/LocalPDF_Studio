@@ -21,7 +21,6 @@
 
 
 // src/main/main.js
-
 const { app, BrowserWindow, dialog, ipcMain, shell, Menu } = require('electron/main');
 const path = require('path');
 const fs = require('fs');
@@ -186,7 +185,7 @@ const getIcon = () => {
 };
 
 const createWindow = () => {
-    Menu.setApplicationMenu(null);
+    // Menu.setApplicationMenu(null);
     mainWindow = new BrowserWindow({
         minWidth: 700,
         minHeight: 600,

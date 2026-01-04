@@ -53,6 +53,7 @@
     "auto-updates": "自动更新",
     "update-status": "正在检查更新...",
     "check-updates-btn": "检查更新",
+    "update-checker": "尚未檢查任何更新。",
 
     "cancel-btn": "取消",
     "save-changes-btn": "保存更改"
