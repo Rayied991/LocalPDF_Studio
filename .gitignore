@@ -589,3 +589,4 @@ FodyWeavers.xsd
 *.msp
 /build
 /.flatpak-builder
+*.traineddata
