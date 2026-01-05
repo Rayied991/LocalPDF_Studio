@@ -1,4 +1,5 @@
 {
+  "_comment": "index.html part",
   "nav": {
     "open-pdf-btn": "打开PDF阅读器",
     "tools-btn": "工具",
@@ -59,11 +60,87 @@
     "save-changes-btn": "保存更改"
   },
 
-  "history-cleared-title": "搜索历史已清除",
-  "history-cleared-msg": "所有搜索历史记录已删除。",
+  "history-lang": {
+    "history-cleared-title": "搜索历史已清除",
+    "history-cleared-msg": "所有搜索历史记录已删除。",
 
-  "lang-en": "英语",
-  "lang-bn": "孟加拉语",
-  "lang-zh": "中文",
-  "lang-ja": "日语"
+    "lang-en": "English  | 英语",
+    "lang-bn": "Bengali  | 孟加拉语",
+    "lang-chi": "Chinese | 中文",
+    "lang-jp": "Japanese | 日语"
+  },
+  "_Comment": "about.html part",
+  "page": {
+    "title": "关于 LocalPDF Studio",
+    "backToApp": "← 返回应用",
+    "heading": "关于 LocalPDF Studio"
+  },
+
+  "hero": {
+    "appName": "LocalPDF Studio",
+    "version": "v0.0.9",
+    "tagline": "完整的离线 PDF 工具套件",
+    "description": "一款以隐私为核心、完全离线运行的跨平台 PDF 编辑器。"
+  },
+
+  "features": {
+    "title": "为什么选择 LocalPDF Studio？",
+    "offline": {
+      "title": "100% 离线",
+      "description": "您的文件永远不会离开您的计算机，确保完全的隐私与安全。"
+    },
+    "privacy": {
+      "title": "隐私优先",
+      "description": "无数据收集、无跟踪、无需互联网连接。"
+    },
+    "openSource": {
+      "title": "免费且开源",
+      "description": "完全免费使用，基于 AGPL 3.0 许可证的开源软件。"
+    },
+    "crossPlatform": {
+      "title": "跨平台支持",
+      "description": "在 Windows、Linux 和 macOS 上无缝运行。"
+    }
+  },
+
+  "technology": {
+    "title": "基于现代技术构建",
+    "electron": {
+      "name": "Electron",
+      "tooltip": "Electron（HTML、CSS、JavaScript）"
+    },
+    "dotnet": {
+      "name": ".NET Core",
+      "tooltip": "ASP.NET Core Web API（C#）"
+    },
+    "python": {
+      "name": "Python",
+      "tooltip": "Python"
+    },
+    "pdfjs": {
+      "name": "PDF.js",
+      "tooltip": "Mozilla PDF.js"
+    },
+    "pdfsharp": {
+      "name": "PDFSharp",
+      "tooltip": "PDFSharp"
+    }
+  },
+
+  "license": {
+    "title": "许可证",
+    "summary": "本软件基于 AGPL 3.0（GNU Affero 通用公共许可证第3版）发布。",
+    "details": "您可以自由使用、修改和分发本软件，但必须遵守 AGPL 3.0 的条款，包括向通过网络使用该软件的用户提供源代码。"
+  },
+
+  "support": {
+    "title": "支持此项目",
+    "supportDevelopment": "💝 支持开发",
+    "releaseNote": "发布说明",
+    "viewSource": "查看源代码",
+    "currentlyWorkingOn": "当前正在进行的工作",
+    "starRepo": "在 GitHub 上点星",
+    "reportIssue": "报告问题",
+    "credits": "致谢"
+  }
 }

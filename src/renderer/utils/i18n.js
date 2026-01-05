@@ -24,8 +24,6 @@ class I18n {
                 'bn': './locales/bn/bn.json',
                 'jp': './locales/jp/jp.json',
                 'chi': './locales/chi/chi.json',
-                'ja': './locales/jp/jp.json',  // Add 'ja' as an alias for 'jp'
-                'zh': './locales/chi/chi.json' // Add 'zh' as an alias for 'chi'
             };
 
             const filePath = languageFiles[lang];
@@ -131,7 +129,7 @@ class I18n {
 
         // Update language select options
         document.querySelectorAll('#language-select option').forEach(option => {
-            const langKey = `lang-${option.value}`;
+            const langKey = `history-lang.lang-${option.value}`;
             option.textContent = this.t(langKey);
         });
     }

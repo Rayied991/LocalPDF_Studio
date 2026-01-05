@@ -1,4 +1,5 @@
 {
+  "_comment": "index.html part",
   "nav": {
     "open-pdf-btn": "PDFリーダーを開く",
     "tools-btn": "ツール",
@@ -56,12 +57,87 @@
     "cancel-btn": "キャンセル",
     "save-changes-btn": "変更を保存"
   },
+  "history-lang": {
+    "history-cleared-title": "検索履歴がクリアされました",
+    "history-cleared-msg": "すべての検索履歴が削除されました。",
 
-  "history-cleared-title": "検索履歴がクリアされました",
-  "history-cleared-msg": "すべての検索履歴が削除されました。",
+    "lang-en": "English  | 英語",
+    "lang-bn": "Bengali  | ベンガル語",
+    "lang-chi": "Chinese |中国語",
+    "lang-jp": "Japanese | 日本語"
+  },
+  "_Comment": "about.html part",
+  "page": {
+    "title": "LocalPDF Studio について",
+    "backToApp": "← アプリに戻る",
+    "heading": "LocalPDF Studio について"
+  },
 
-  "lang-en": "英語",
-  "lang-bn": "ベンガル語",
-  "lang-zh": "中国語",
-  "lang-ja": "日本語"
+  "hero": {
+    "appName": "LocalPDF Studio",
+    "version": "v0.0.9",
+    "tagline": "完全オフラインのPDFツールキット",
+    "description": "完全にオフラインで動作する、プライバシー重視のクロスプラットフォームPDFエディターです。"
+  },
+
+  "features": {
+    "title": "なぜ LocalPDF Studio を選ぶのか？",
+    "offline": {
+      "title": "100% オフライン",
+      "description": "ファイルが外部に送信されることはありません。完全なプライバシーと安全性を提供します。"
+    },
+    "privacy": {
+      "title": "プライバシー最優先",
+      "description": "データ収集なし、追跡なし、インターネット接続不要。"
+    },
+    "openSource": {
+      "title": "無料 & オープンソース",
+      "description": "完全無料で使用可能。AGPL 3.0 ライセンスのオープンソースです。"
+    },
+    "crossPlatform": {
+      "title": "クロスプラットフォーム",
+      "description": "Windows、Linux、macOS でシームレスに動作します。"
+    }
+  },
+
+  "technology": {
+    "title": "最新技術で構築",
+    "electron": {
+      "name": "Electron",
+      "tooltip": "Electron（HTML、CSS、JavaScript）"
+    },
+    "dotnet": {
+      "name": ".NET Core",
+      "tooltip": "ASP.NET Core Web API（C#）"
+    },
+    "python": {
+      "name": "Python",
+      "tooltip": "Python"
+    },
+    "pdfjs": {
+      "name": "PDF.js",
+      "tooltip": "Mozilla PDF.js"
+    },
+    "pdfsharp": {
+      "name": "PDFSharp",
+      "tooltip": "PDFSharp"
+    }
+  },
+
+  "license": {
+    "title": "ライセンス",
+    "summary": "本ソフトウェアは AGPL 3.0（GNU Affero General Public License バージョン3）で提供されています。",
+    "details": "本ソフトウェアは使用、変更、配布が可能ですが、AGPL 3.0 の条件に従う必要があります。ネットワーク経由で利用するユーザーに対してソースコードを提供する義務も含まれます。"
+  },
+
+  "support": {
+    "title": "プロジェクトを支援する",
+    "supportDevelopment": "💝 開発を支援する",
+    "releaseNote": "リリースノート",
+    "viewSource": "ソースコードを見る",
+    "currentlyWorkingOn": "現在取り組んでいる内容",
+    "starRepo": "GitHub でスターを付ける",
+    "reportIssue": "問題を報告",
+    "credits": "クレジット"
+  }
 }
