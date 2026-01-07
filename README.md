@@ -13,6 +13,7 @@ This software is completely free, open-source, and privacy-focused.
 
 > Unlimited usage.
 
+Donate: [Gumroad](https://alinur3.gumroad.com/coffee)
 
 ## For the developers
 LocalPDF Studio is built with modern web technologies and follows open-source principles. We welcome contributions from developers who believe in privacy-focused, offline-first software.
