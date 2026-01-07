@@ -140,5 +140,28 @@
     "starRepo": "Star on GitHub",
     "reportIssue": "Report Issues",
     "credits": "Credits"
+  },
+
+
+  "addPageNumbers":{
+    "back-btn": "← Back",
+    "page-title": "Add Page Numbers",
+    "btn-select": "Click to Select a PDF File or drop PDF here",
+    "pdf-preview": "PDF Preview",
+    "page-numbers": "Page Number Options",
+    "position-label": "Position:",
+    "position-option-1": "Bottom Center",
+    "position-option-2": "Bottom Left",
+    "position-option-3": "Bottom Right",
+    "position-option-4": "Top Center",
+    "position-option-5": "Top Left",
+    "position-option-6": "Top Right",
+    "format-label": "Format:",
+    "fontSize-label": "Font Size:",
+    "startingPage-label": "Starting Page:",
+    "startingPage-hlpTxt-label": "Add numbers starting from this page",
+    "startingNumber-label": "Starting Number:",
+    "startingNumber-hlpTxt-label": "First page will have this number",
+    "addPageNumberBtn": "Add Page Numbers"
   }
 }

@@ -140,5 +140,28 @@
     "starRepo": "GitHub-এ স্টার দিন",
     "reportIssue": "সমস্যা রিপোর্ট করুন",
     "credits": "কৃতজ্ঞতা"
+  },
+
+
+  "addPageNumbers": {
+    "back-btn": "← পিছনে",
+    "page-title": "পৃষ্ঠা নম্বর যোগ করুন",
+    "btn-select": "PDF ফাইল নির্বাচন করতে ক্লিক করুন অথবা PDF এখানে ড্রপ করুন",
+    "pdf-preview": "PDF প্রিভিউ",
+    "page-numbers": "পৃষ্ঠা নম্বরের অপশনসমূহ",
+    "position-label": "অবস্থান:",
+    "position-option-1": "নীচের মাঝখানে",
+    "position-option-2": "নীচের বামে",
+    "position-option-3": "নীচের ডানে",
+    "position-option-4": "উপরের মাঝখানে",
+    "position-option-5": "উপরের বামে",
+    "position-option-6": "উপরের ডানে",
+    "format-label": "ফরম্যাট:",
+    "fontSize-label": "ফন্টের সাইজ:",
+    "startingPage-label": "শুরুর পৃষ্ঠা:",
+    "startingPage-hlpTxt-label": "এই পৃষ্ঠা থেকে নম্বর যোগ শুরু করুন",
+    "startingNumber-label": "শুরুর নম্বর:",
+    "startingNumber-hlpTxt-label": "প্রথম পৃষ্ঠায় এই নম্বর থাকবে",
+    "addPageNumberBtn": "পৃষ্ঠা নম্বর যোগ করুন"
   }
 }

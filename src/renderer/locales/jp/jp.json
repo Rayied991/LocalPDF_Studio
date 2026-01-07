@@ -139,5 +139,29 @@
     "starRepo": "GitHub でスターを付ける",
     "reportIssue": "問題を報告",
     "credits": "クレジット"
+  },
+
+
+
+  "addPageNumbers": {
+    "back-btn": "← 戻る",
+    "page-title": "ページ番号を追加",
+    "btn-select": "PDFファイルを選択するか、ここにPDFをドロップしてください",
+    "pdf-preview": "PDFプレビュー",
+    "page-numbers": "ページ番号オプション",
+    "position-label": "位置:",
+    "position-option-1": "下中央",
+    "position-option-2": "下左",
+    "position-option-3": "下右",
+    "position-option-4": "上中央",
+    "position-option-5": "上左",
+    "position-option-6": "上右",
+    "format-label": "形式:",
+    "fontSize-label": "フォントサイズ:",
+    "startingPage-label": "開始ページ:",
+    "startingPage-hlpTxt-label": "このページから番号を追加開始",
+    "startingNumber-label": "開始番号:",
+    "startingNumber-hlpTxt-label": "最初のページにこの番号が表示されます",
+    "addPageNumberBtn": "ページ番号を追加"
   }
 }

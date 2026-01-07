@@ -142,5 +142,26 @@
     "starRepo": "在 GitHub 上点星",
     "reportIssue": "报告问题",
     "credits": "致谢"
+  },
+  "addPageNumbers": {
+    "back-btn": "← 返回",
+    "page-title": "添加页码",
+    "btn-select": "点击选择PDF文件或将PDF拖放到此处",
+    "pdf-preview": "PDF预览",
+    "page-numbers": "页码选项",
+    "position-label": "位置：",
+    "position-option-1": "底部居中",
+    "position-option-2": "底部左侧",
+    "position-option-3": "底部右侧",
+    "position-option-4": "顶部居中",
+    "position-option-5": "顶部左侧",
+    "position-option-6": "顶部右侧",
+    "format-label": "格式：",
+    "fontSize-label": "字体大小：",
+    "startingPage-label": "起始页：",
+    "startingPage-hlpTxt-label": "从该页面开始添加页码",
+    "startingNumber-label": "起始数字：",
+    "startingNumber-hlpTxt-label": "第一页将显示此数字",
+    "addPageNumberBtn": "添加页码"
   }
 }

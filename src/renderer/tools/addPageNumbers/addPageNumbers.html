@@ -34,12 +34,12 @@
 <body>
     <div id="app">
         <div class="top-bar">
-            <a href="../../index.html" class="top-btn">← Back</a>
-            <h1 class="tool-title">Add Page Numbers</h1>
+            <a href="../../index.html" class="top-btn" data-i18n="addPageNumbers.back-btn">← Back</a>
+            <h1 class="tool-title" data-i18n="addPageNumbers.page-title">Add Page Numbers</h1>
         </div>
         <main class="tool-container">
             <div class="file-selection-area">
-                <button id="select-pdf-btn" class="select-pdf-btn">Click to Select a PDF File or drop PDF here</button>
+                <button id="select-pdf-btn" class="select-pdf-btn" data-i18n="addPageNumbers.btn-select">Click to Select a PDF File or drop PDF here</button>
                 <div id="selected-file-info" class="selected-file-info" style="display: none;">
                     <div style="flex-grow: 1;">
                         <p id="pdf-name" class="pdf-name"></p>
@@ -51,29 +51,29 @@
 
             <div id="preview-container" class="preview-container" style="display: none;">
                 <div class="preview-header">
-                    <h3>PDF Preview</h3>
+                    <h3 data-i18n="addPageNumbers.pdf-preview">PDF Preview</h3>
                     <span id="page-count" class="page-count"></span>
                 </div>
                 <div id="preview-grid" class="preview-grid"></div>
             </div>
 
             <div class="options-container">
-                <h2>Page Number Options</h2>
+                <h2 data-i18n="addPageNumbers.page-numbers">Page Number Options</h2>
 
                 <div class="option-group">
-                    <label>Position:</label>
+                    <label data-i18n="addPageNumbers.position-label">Position:</label>
                     <select id="position" class="options-select">
-                        <option value="BottomCenter">Bottom Center</option>
-                        <option value="BottomLeft">Bottom Left</option>
-                        <option value="BottomRight">Bottom Right</option>
-                        <option value="TopCenter">Top Center</option>
-                        <option value="TopLeft">Top Left</option>
-                        <option value="TopRight">Top Right</option>
+                        <option value="BottomCenter" data-i18n="addPageNumbers.position-option-1">Bottom Center</option>
+                        <option value="BottomLeft" data-i18n="addPageNumbers.position-option-2">Bottom Left</option>
+                        <option value="BottomRight" data-i18n="addPageNumbers.position-option-3">Bottom Right</option>
+                        <option value="TopCenter" data-i18n="addPageNumbers.position-option-4">Top Center</option>
+                        <option value="TopLeft" data-i18n="addPageNumbers.position-option-5">Top Left</option>
+                        <option value="TopRight" data-i18n="addPageNumbers.position-option-6">Top Right</option>
                     </select>
                 </div>
 
                 <div class="option-group">
-                    <label>Format:</label>
+                    <label data-i18n="addPageNumbers.format-label">Format:</label>
                     <select id="format" class="options-select">
                         <option value="Number">1, 2, 3...</option>
                         <option value="PageOfTotal">Page 1 of 10</option>
@@ -84,25 +84,25 @@
                 </div>
 
                 <div class="option-group">
-                    <label>Font Size:</label>
+                    <label data-i18n="addPageNumbers.fontSize-label">Font Size:</label>
                     <input type="number" id="fontSize" class="options-input" value="12" min="8" max="72">
                 </div>
 
                 <div class="option-group">
-                    <label>Starting Page:</label>
+                    <label data-i18n="addPageNumbers.startingPage-label">Starting Page:</label>
                     <input type="number" id="startPage" class="options-input" value="1" min="1">
-                    <small class="help-text">Add numbers starting from this page</small>
+                    <small class="help-text" data-i18n="addPageNumbers.startingPage-hlpTxt-label">Add numbers starting from this page</small>
                 </div>
 
                 <div class="option-group">
-                    <label>Starting Number:</label>
+                    <label data-i18n="addPageNumbers.startingNumber-label">Starting Number:</label>
                     <input type="number" id="startNumber" class="options-input" value="1" min="1">
-                    <small class="help-text">First page will have this number</small>
+                    <small class="help-text" data-i18n="addPageNumbers.startingNumber-hlpTxt-label">First page will have this number</small>
                 </div>
             </div>
 
             <div class="action-buttons">
-                <button id="add-btn" class="top-btn" disabled>Add Page Numbers</button>
+                <button id="add-btn" class="top-btn" data-i18n="addPageNumbers.addPageNumberBtn" disabled>Add Page Numbers</button>
             </div>
         </main>
     </div>
