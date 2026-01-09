@@ -13,7 +13,7 @@
           "PdfPig": "0.1.11",
           "PdfSharpCore": "1.3.67",
           "Portable.BouncyCastle": "1.9.0",
-          "SixLabors.ImageSharp": "3.1.11",
+          "SixLabors.ImageSharp": "2.1.13",
           "Swashbuckle.AspNetCore": "6.6.2",
           "runtimepack.Microsoft.NETCore.App.Runtime.linux-x64": "8.0.22",
           "runtimepack.Microsoft.AspNetCore.App.Runtime.linux-x64": "8.0.22"
@@ -1311,6 +1311,7 @@
         }
       },
       "Microsoft.Extensions.ApiDescription.Server/6.0.5": {},
+      "Microsoft.NETCore.Platforms/5.0.0": {},
       "Microsoft.OpenApi/1.6.14": {
         "runtime": {
           "lib/netstandard2.0/Microsoft.OpenApi.dll": {
@@ -1355,7 +1356,7 @@
         "dependencies": {
           "SharpZipLib": "1.4.2",
           "SixLabors.Fonts": "1.0.0-beta17",
-          "SixLabors.ImageSharp": "3.1.11"
+          "SixLabors.ImageSharp": "2.1.13"
         },
         "runtime": {
           "lib/net8.0/PdfSharpCore.dll": {
@@ -1393,11 +1394,15 @@
           }
         }
       },
-      "SixLabors.ImageSharp/3.1.11": {
+      "SixLabors.ImageSharp/2.1.13": {
+        "dependencies": {
+          "System.Runtime.CompilerServices.Unsafe": "5.0.0",
+          "System.Text.Encoding.CodePages": "5.0.0"
+        },
         "runtime": {
-          "lib/net6.0/SixLabors.ImageSharp.dll": {
-            "assemblyVersion": "3.0.0.0",
-            "fileVersion": "3.1.11.0"
+          "lib/netcoreapp3.1/SixLabors.ImageSharp.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "2.1.13.0"
           }
         }
       },
@@ -1438,6 +1443,12 @@
             "fileVersion": "6.6.2.401"
           }
         }
+      },
+      "System.Runtime.CompilerServices.Unsafe/5.0.0": {},
+      "System.Text.Encoding.CodePages/5.0.0": {
+        "dependencies": {
+          "Microsoft.NETCore.Platforms": "5.0.0"
+        }
       }
     }
   },
@@ -1470,6 +1481,13 @@
       "sha512": "sha512-Ckb5EDBUNJdFWyajfXzUIMRkhf52fHZOQuuZg/oiu8y7zDCVwD0iHhew6MnThjHmevanpxL3f5ci2TtHQEN6bw==",
       "path": "microsoft.extensions.apidescription.server/6.0.5",
       "hashPath": "microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512"
+    },
+    "Microsoft.NETCore.Platforms/5.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-VyPlqzH2wavqquTcYpkIIAQ6WdenuKoFN0BdYBbCWsclXacSOHNQn66Gt4z5NBqEYW0FAPm5rlvki9ZiCij5xQ==",
+      "path": "microsoft.netcore.platforms/5.0.0",
+      "hashPath": "microsoft.netcore.platforms.5.0.0.nupkg.sha512"
     },
     "Microsoft.OpenApi/1.6.14": {
       "type": "package",
@@ -1513,12 +1531,12 @@
       "path": "sixlabors.fonts/1.0.0-beta17",
       "hashPath": "sixlabors.fonts.1.0.0-beta17.nupkg.sha512"
     },
-    "SixLabors.ImageSharp/3.1.11": {
+    "SixLabors.ImageSharp/2.1.13": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-JfPLyigLthuE50yi6tMt7Amrenr/fA31t2CvJyhy/kQmfulIBAqo5T/YFUSRHtuYPXRSaUHygFeh6Qd933EoSw==",
-      "path": "sixlabors.imagesharp/3.1.11",
-      "hashPath": "sixlabors.imagesharp.3.1.11.nupkg.sha512"
+      "sha512": "sha512-zmVHZR13XE477TBAVXE71VcMhqhiv1PbzMWIfuIDytVdBPl3KZlvYYBkqcuQSDdszVY2XHanW98VmDffoNzSSw==",
+      "path": "sixlabors.imagesharp/2.1.13",
+      "hashPath": "sixlabors.imagesharp.2.1.13.nupkg.sha512"
     },
     "Swashbuckle.AspNetCore/6.6.2": {
       "type": "package",
@@ -1547,6 +1565,20 @@
       "sha512": "sha512-mBBb+/8Hm2Q3Wygag+hu2jj69tZW5psuv0vMRXY07Wy+Rrj40vRP8ZTbKBhs91r45/HXT4aY4z0iSBYx1h6JvA==",
       "path": "swashbuckle.aspnetcore.swaggerui/6.6.2",
       "hashPath": "swashbuckle.aspnetcore.swaggerui.6.6.2.nupkg.sha512"
+    },
+    "System.Runtime.CompilerServices.Unsafe/5.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ZD9TMpsmYJLrxbbmdvhwt9YEgG5WntEnZ/d1eH8JBX9LBp+Ju8BSBhUGbZMNVHHomWo2KVImJhTDl2hIgw/6MA==",
+      "path": "system.runtime.compilerservices.unsafe/5.0.0",
+      "hashPath": "system.runtime.compilerservices.unsafe.5.0.0.nupkg.sha512"
+    },
+    "System.Text.Encoding.CodePages/5.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-NyscU59xX6Uo91qvhOs2Ccho3AR2TnZPomo1Z0K6YpyztBPM/A5VbkzOO19sy3A3i1TtEnTxA7bCe3Us+r5MWg==",
+      "path": "system.text.encoding.codepages/5.0.0",
+      "hashPath": "system.text.encoding.codepages.5.0.0.nupkg.sha512"
     }
   },
   "runtimes": {
