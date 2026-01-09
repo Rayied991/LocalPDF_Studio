@@ -75,9 +75,9 @@ async function requestFormData(endpoint, formData) {
             throw new Error(errText || `Request failed with status ${res.status}`);
         }
 
-        // Auto-handle JSON or Blob
+        // Auto-handle JSON, Blob, or ZIP
         const contentType = res.headers.get("content-type");
-        if (contentType && contentType.includes('application/pdf')) {
+        if (contentType && (contentType.includes('application/pdf') || contentType.includes('application/zip'))) {
             return await res.blob();
         } else {
             return await res.json();
@@ -116,6 +116,7 @@ async function getEndpoints() {
         extractImages: `${base}/PdfExtractImages/extract`,
         removeImages: `${base}/PdfExtractImages/extract`,
         ghostscriptCheck: `${base}/Ghostscript/check`,
+        imageToPdf: `${base}/ImageToPdf/convert`,
         // Add more as necessary
     };
 }

@@ -1,0 +1,133 @@
+<!--
+ * LocalPDF Studio - Offline PDF Toolkit
+ * ======================================
+ * 
+ * @author      Md. Alinur Hossain <alinur1160@gmail.com>
+ * @license     AGPL 3.0 (GNU Affero General Public License version 3)
+ * @website     https://alinur1.github.io/LocalPDF_Studio_Website/
+ * @repository  https://github.com/Alinur1/LocalPDF_Studio
+ * 
+ * Copyright (c) 2025 Md. Alinur Hossain. All rights reserved.
+ * 
+ * Architecture:
+ * - Frontend: Electron + HTML/CSS/JS
+ * - Backend: ASP.NET Core Web API, Python
+ * - PDF Engine: PdfSharp + Mozilla PDF.js
+-->
+
+<!-- src/renderer/tools/imageToPdf/imageToPdf.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LocalPDF Studio - Image to PDF</title>
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: file:; connect-src 'self' http://localhost:*;">
+
+    <link rel="stylesheet" href="../../styles/main.css">
+    <link rel="stylesheet" href="./imageToPdf.css">
+
+</head>
+
+<body>
+    <div id="app">
+        <div class="top-bar">
+            <a href="../../index.html" class="top-btn">← Back</a>
+            <h1 class="tool-title">Image to PDF</h1>
+        </div>
+
+        <main class="tool-container">
+            <!-- File Selection Area -->
+            <div class="file-selection-area" id="file-selection-area">
+                <button id="select-images-btn" class="select-images-btn">Click to Select Images or drop images
+                    here</button>
+                <div id="selected-files-info" class="selected-files-info" style="display: none;">
+                    <div style="flex-grow: 1;">
+                        <p id="files-count" class="files-count"></p>
+                        <p id="files-size" class="files-size"></p>
+                    </div>
+                    <button id="remove-files-btn" class="remove-btn">×</button>
+                </div>
+            </div>
+
+            <!-- Two-column layout -->
+            <div class="image-pdf-wrapper">
+                <!-- Images Preview Panel -->
+                <div id="preview-container" class="preview-container" style="display:none;">
+                    <div class="preview-header">
+                        <h3>Images Preview</h3>
+                        <div class="preview-actions">
+                            <button id="clear-all-btn" class="secondary-btn" title="Clear All Images">Clear All</button>
+                        </div>
+                    </div>
+
+                    <div id="images-grid" class="images-grid"></div>
+                </div>
+
+                <!-- Conversion Options Panel -->
+                <div class="options-container">
+                    <h2>Conversion Options</h2>
+
+                    <!-- Page Orientation -->
+                    <div class="option-group">
+                        <label>Page Orientation:</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="orientation" value="portrait" checked> Portrait</label>
+                            <label><input type="radio" name="orientation" value="landscape"> Landscape</label>
+                        </div>
+                    </div>
+
+                    <!-- Page Size -->
+                    <div class="option-group">
+                        <label for="page-size">Page Size:</label>
+                        <select id="page-size" class="options-select">
+                            <option value="fit">Fit (same as image)</option>
+                            <option value="a4" selected>A4 (297×210 mm)</option>
+                            <option value="letter">US Letter (279.4×215.9 mm)</option>
+                        </select>
+                        <small class="help-text">Choose the page size for the PDF output.</small>
+                    </div>
+
+                    <!-- Merge Option -->
+                    <div class="option-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="merge-images" checked>
+                            <span>Merge all images into one PDF file</span>
+                        </label>
+                        <small class="help-text">If unchecked, each image will be saved as a separate PDF file.</small>
+                    </div>
+
+                    <!-- Image Quality (Optional Enhancement) -->
+                    <div class="option-group">
+                        <label for="image-quality">Image Quality:</label>
+                        <div class="quality-slider-container">
+                            <input type="range" id="image-quality" class="quality-slider" min="50" max="100" value="95">
+                            <span id="quality-value" class="quality-value">95%</span>
+                        </div>
+                        <small class="help-text">Higher quality = larger file size.</small>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="action-buttons">
+                        <button id="convert-btn" class="top-btn" disabled>Convert to PDF</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal for messages -->
+    <div id="message-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <p id="modal-message">Message</p>
+        </div>
+    </div>
+
+    <script type="module" src="./imageToPdf.js"></script>
+</body>
+
+</html>

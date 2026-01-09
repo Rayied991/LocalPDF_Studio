@@ -76,9 +76,13 @@ export function initializeGlobalDragDrop(options = {}) {
         const isFormElement = e.target.matches('input, textarea, [contenteditable]');
         if (isFormElement) return;
 
+        // Check if this is an internal drag operation
+        const isInternalDrag = e.dataTransfer.types.includes('application/x-page-item');
+        if (isInternalDrag) return;
+
         dragCounter++;
         const dt = e.dataTransfer;
-        
+
         if (dt.types && (dt.types.includes('Files') || dt.types.includes('application/x-moz-file'))) {
             overlay.style.display = 'flex';
             overlay.style.pointerEvents = 'auto';
@@ -88,6 +92,10 @@ export function initializeGlobalDragDrop(options = {}) {
     document.addEventListener('dragleave', (e) => {
         const isFormElement = e.target.matches('input, textarea, [contenteditable]');
         if (isFormElement) return;
+
+        // Check if this is an internal drag operation
+        const isInternalDrag = e.dataTransfer.types.includes('application/x-page-item');
+        if (isInternalDrag) return;
 
         dragCounter--;
         if (dragCounter === 0) {
@@ -99,6 +107,10 @@ export function initializeGlobalDragDrop(options = {}) {
     document.addEventListener('drop', (e) => {
         const isFormElement = e.target.matches('input, textarea, [contenteditable]');
         if (isFormElement) return;
+
+        // Check if this is an internal drag operation
+        const isInternalDrag = e.dataTransfer.types.includes('application/x-page-item');
+        if (isInternalDrag) return;
 
         e.preventDefault();
         e.stopPropagation();
@@ -132,7 +144,10 @@ export function initializeGlobalDragDrop(options = {}) {
 
     document.addEventListener('dragover', (e) => {
         const isFormElement = e.target.matches('input, textarea, [contenteditable]');
-        if (!isFormElement) {
+        // Check if this is an internal drag operation
+        const isInternalDrag = e.dataTransfer.types.includes('application/x-page-item');
+
+        if (!isFormElement && !isInternalDrag) {
             e.preventDefault();
             e.stopPropagation();
             e.dataTransfer.dropEffect = 'copy';
@@ -198,9 +213,14 @@ export function initializeGlobalDragDropForOCR(options = {}) {
         const isFormElement = e.target.matches('input, textarea, [contenteditable]');
         if (isFormElement) return;
 
+        // Check if this is an internal drag operation (page or image)
+        const isInternalDrag = e.dataTransfer.types.includes('application/x-page-item') ||
+            e.dataTransfer.types.includes('application/x-image-item');
+        if (isInternalDrag) return;
+
         dragCounter++;
         const dt = e.dataTransfer;
-        
+
         if (dt.types && (dt.types.includes('Files') || dt.types.includes('application/x-moz-file'))) {
             overlay.style.display = 'flex';
             overlay.style.pointerEvents = 'auto';
@@ -210,6 +230,11 @@ export function initializeGlobalDragDropForOCR(options = {}) {
     document.addEventListener('dragleave', (e) => {
         const isFormElement = e.target.matches('input, textarea, [contenteditable]');
         if (isFormElement) return;
+
+        // Check if this is an internal drag operation (page or image)
+        const isInternalDrag = e.dataTransfer.types.includes('application/x-page-item') ||
+            e.dataTransfer.types.includes('application/x-image-item');
+        if (isInternalDrag) return;
 
         dragCounter--;
         if (dragCounter === 0) {
@@ -221,6 +246,11 @@ export function initializeGlobalDragDropForOCR(options = {}) {
     document.addEventListener('drop', (e) => {
         const isFormElement = e.target.matches('input, textarea, [contenteditable]');
         if (isFormElement) return;
+
+        // Check if this is an internal drag operation (page or image)
+        const isInternalDrag = e.dataTransfer.types.includes('application/x-page-item') ||
+            e.dataTransfer.types.includes('application/x-image-item');
+        if (isInternalDrag) return;
 
         e.preventDefault();
         e.stopPropagation();
@@ -256,7 +286,11 @@ export function initializeGlobalDragDropForOCR(options = {}) {
 
     document.addEventListener('dragover', (e) => {
         const isFormElement = e.target.matches('input, textarea, [contenteditable]');
-        if (!isFormElement) {
+        // Check if this is an internal drag operation (page or image)
+        const isInternalDrag = e.dataTransfer.types.includes('application/x-page-item') ||
+            e.dataTransfer.types.includes('application/x-image-item');
+
+        if (!isFormElement && !isInternalDrag) {
             e.preventDefault();
             e.stopPropagation();
             e.dataTransfer.dropEffect = 'copy';
