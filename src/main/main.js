@@ -689,6 +689,7 @@ ipcMain.handle('save-pdf-with-metadata', async (event, { filePath, metadata }) =
         const pdfBytes = fs.readFileSync(filePath);
         const pdfDoc = await PDFDocument.load(pdfBytes);
 
+        // Remove XMP metadata (XML streams)
         const entries = pdfDoc.context.enumerateIndirectObjects();
         for (const [ref, obj] of entries) {
             if (obj instanceof PDFRawStream) {
@@ -700,19 +701,17 @@ ipcMain.handle('save-pdf-with-metadata', async (event, { filePath, metadata }) =
             }
         }
 
-        // Set standard metadata
-        if (metadata.title) pdfDoc.setTitle(metadata.title);
-        if (metadata.author) pdfDoc.setAuthor(metadata.author);
-        if (metadata.subject) pdfDoc.setSubject(metadata.subject);
-        if (metadata.creator) pdfDoc.setCreator(metadata.creator);
-        if (metadata.producer) pdfDoc.setProducer(metadata.producer);
+        pdfDoc.setTitle(metadata.title || '');
+        pdfDoc.setAuthor(metadata.author || '');
+        pdfDoc.setSubject(metadata.subject || '');
+        pdfDoc.setCreator(metadata.creator || '');
+        pdfDoc.setProducer(metadata.producer || '');
 
         if (metadata.keywords) {
             pdfDoc.setKeywords(metadata.keywords.split(',').map(k => k.trim()));
+        } else {
+            pdfDoc.setKeywords([]);
         }
-
-        //Set Modification Date to now
-        pdfDoc.setModificationDate(new Date());
 
         const modifiedPdfBytes = await pdfDoc.save();
         fs.writeFileSync(savedPath, modifiedPdfBytes);
@@ -929,7 +928,7 @@ ipcMain.handle('get-tesseract-languages', async () => {
             { code: "dan", name: "Danish" },
             { code: "nld", name: "Dutch; Flemish" },
             { code: "dzo", name: "Dzongkha" },
-            { code: "enm", name: "English, Middle (1100-1500)",  },
+            { code: "enm", name: "English, Middle (1100-1500)", },
             { code: "epo", name: "Esperanto" },
             { code: "est", name: "Estonian" },
             { code: "fin", name: "Finnish" },
@@ -970,7 +969,7 @@ ipcMain.handle('get-tesseract-languages', async () => {
             { code: "nep", name: "Nepali" },
             { code: "nor", name: "Norwegian" },
             { code: "ori", name: "Oriya" },
-            { code: "pan", name: "Panjabi; Punjabi",  },
+            { code: "pan", name: "Panjabi; Punjabi", },
             { code: "fas", name: "Persian" },
             { code: "pol", name: "Polish" },
             { code: "pus", name: "Pushto; Pashto" },

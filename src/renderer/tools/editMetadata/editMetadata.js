@@ -40,7 +40,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     const readonlyView = document.getElementById('readonly-view');
     const editableView = document.getElementById('editable-view');
     const editActions = document.getElementById('edit-actions');
-    
+    const sanitizePdfMetadata = document.getElementById('sanitize-metadata-btn');
+
     const metaElements = {
         title: document.getElementById('meta-title'),
         author: document.getElementById('meta-author'),
@@ -81,7 +82,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         cancelEditBtn.addEventListener('click', cancelEdit);
         saveMetadataBtn.addEventListener('click', saveMetadata);
         savePdfBtn.addEventListener('click', savePdfWithMetadata);
-        
+        sanitizePdfMetadata.addEventListener('click', sanitizeAndSaveMetadata);
+
         const copyMetadataBtn = document.getElementById('copy-metadata-btn');
         if (copyMetadataBtn) {
             copyMetadataBtn.addEventListener('click', copyMetadataToClipboard);
@@ -205,6 +207,86 @@ document.addEventListener('DOMContentLoaded', async () => {
             savePdfBtn.disabled = true;
         } finally {
             loadingUI.hide();
+        }
+    }
+
+    async function sanitizeAndSaveMetadata() {
+        if (!currentFilePath) {
+            await customAlert.alert('LocalPDF Studio - NOTICE', 'Please select a PDF file first.', ['OK']);
+            return;
+        }
+
+        try {
+            // Show confirmation dialog
+            const clickedButton = await customAlert.alert(
+                'LocalPDF Studio - Confirm',
+                'This will remove ALL metadata from the PDF including:\n' +
+                '• Title\n• Author\n• Subject\n• Keywords\n• Creator\n• Producer\n\n' +
+                'Continue?',
+                ['Cancel', 'Yes, Remove All Metadata']
+            );
+
+            if (clickedButton !== 'Yes, Remove All Metadata') {
+                return;
+            }
+
+            loadingUI.show('Removing all metadata from PDF...');
+            sanitizePdfMetadata.disabled = true;
+            sanitizePdfMetadata.textContent = 'Cleaning...';
+
+            // Create metadata object with empty values
+            const emptyMetadata = {
+                title: '',
+                author: '',
+                subject: '',
+                keywords: '',
+                creator: '',
+                producer: '',
+                description: ''
+            };
+
+            // Call the Electron IPC handler to save PDF with empty metadata
+            const result = await window.electronAPI.savePdfWithMetadata(currentFilePath, emptyMetadata);
+
+            if (result.success) {
+                // Update current metadata to reflect the changes
+                currentMetadata = {
+                    ...currentMetadata,
+                    title: '',
+                    author: '',
+                    subject: '',
+                    keywords: '',
+                    creator: '',
+                    producer: '',
+                    description: ''
+                };
+
+                // Update the display
+                displayMetadata(currentMetadata);
+                hasUnsavedChanges = false;
+
+                await customAlert.alert(
+                    'LocalPDF Studio - SUCCESS',
+                    `✅ All metadata removed successfully!\n\n` +
+                    `Saved to: ${result.path}\n\n` +
+                    `The PDF now has no metadata.`,
+                    ['OK']
+                );
+            } else {
+                throw new Error(result.error || 'Failed to sanitize PDF metadata');
+            }
+
+        } catch (error) {
+            console.error('Error sanitizing metadata:', error);
+            await customAlert.alert(
+                'LocalPDF Studio - ERROR',
+                `Failed to remove metadata: ${error.message}`,
+                ['OK']
+            );
+        } finally {
+            loadingUI.hide();
+            sanitizePdfMetadata.disabled = false;
+            sanitizePdfMetadata.textContent = '🧹 Clean Metadata and Save';
         }
     }
 

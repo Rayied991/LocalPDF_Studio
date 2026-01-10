@@ -229,7 +229,7 @@
     align-items: center;
 }
 
-.copy-btn {
+.copy-clean-metadata-btn {
     background: #27ae60;
     color: white;
     border: none;
@@ -243,11 +243,11 @@
     gap: 0.5rem;
 }
 
-.copy-btn:hover {
+.copy-clean-metadata-btn:hover {
     background: #219653;
 }
 
-.copy-btn.copied {
+.copy-clean-metadata-btn.copied {
     background: #2ecc71;
     animation: pulse 0.5s ease-in-out;
 }
@@ -266,7 +266,7 @@
     }
 }
 
-.copy-btn::after {
+.copy-clean-metadata-btn::after {
     content: "Copy all metadata to clipboard";
     position: absolute;
     bottom: -30px;
@@ -283,7 +283,7 @@
     transition: opacity 0.2s;
 }
 
-.copy-btn:hover::after {
+.copy-clean-metadata-btn:hover::after {
     opacity: 1;
 }
 
