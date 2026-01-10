@@ -18,12 +18,24 @@ class I18n {
     async loadLanguage(lang) {
         try {
             console.log(`Loading language: ${lang}`);
-            // Map language codes to file paths
+
+            // Determine base path based on current location
+            const getBasePath = () => {
+                const path = window.location.pathname;
+                if (path.includes('/tools/')) {
+                    return '../../';
+                }
+                else{
+                    return './';
+                }
+            };
+
+            const basePath = getBasePath();
             const languageFiles = {
-                'en': './locales/en/en.json',
-                'bn': './locales/bn/bn.json',
-                'jp': './locales/jp/jp.json',
-                'chi': './locales/chi/chi.json',
+                'en': `${basePath}locales/en/en.json`,
+                'bn': `${basePath}locales/bn/bn.json`,
+                'jp': `${basePath}locales/jp/jp.json`,
+                'chi': `${basePath}locales/chi/chi.json`,
             };
 
             const filePath = languageFiles[lang];
@@ -88,11 +100,11 @@ class I18n {
     //     return this.translations[this.currentLanguage][key] || key;
     // }
     t(key) {
-    if (!this.translations[this.currentLanguage]) return key;
+        if (!this.translations[this.currentLanguage]) return key;
 
-    // This allows you to use "tools.tool-merge" to access nested objects
-    return key.split('.').reduce((obj, i) => (obj ? obj[i] : null), this.translations[this.currentLanguage]) || key;
-}
+        // This allows you to use "tools.tool-merge" to access nested objects
+        return key.split('.').reduce((obj, i) => (obj ? obj[i] : null), this.translations[this.currentLanguage]) || key;
+    }
 
     updateUI() {
         if (!this.loaded) return;
@@ -101,7 +113,7 @@ class I18n {
         document.querySelectorAll('[data-i18n]').forEach(element => {
             const key = element.getAttribute('data-i18n');
             const translation = this.t(key);
-            
+
             if (element.tagName === 'INPUT' && element.type === 'button') {
                 element.value = translation;
             } else if (element.tagName === 'BUTTON') {
