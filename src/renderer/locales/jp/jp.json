@@ -141,13 +141,20 @@
     "credits": "クレジット"
   },
 
-
+  
+  
+  
+  
+  
+  
+  "common":{
+    "back-btn": "← 戻る",
+    "btn-select": "PDFファイルを選択するか、ここにPDFをドロップしてください",
+    "pdf-preview": "PDFプレビュー"
+  },
 
   "addPageNumbers": {
-    "back-btn": "← 戻る",
     "page-title": "ページ番号を追加",
-    "btn-select": "PDFファイルを選択するか、ここにPDFをドロップしてください",
-    "pdf-preview": "PDFプレビュー",
     "page-numbers": "ページ番号オプション",
     "position-label": "位置:",
     "position-option-1": "下中央",
@@ -163,5 +170,37 @@
     "startingNumber-label": "開始番号:",
     "startingNumber-hlpTxt-label": "最初のページにこの番号が表示されます",
     "addPageNumberBtn": "ページ番号を追加"
+  },
+
+  "addWatermark": {
+    "page-title": "透かしを追加",
+    "wm-options": "透かしオプション",
+    "wm-type-label": "透かしタイプ：",
+    "wm-type-text": "テキスト透かし",
+    "wm-type-image": "画像透かし",
+    "wm-text-label": "透かしテキスト：",
+    "wm-fontSize-label": "フォントサイズ：",
+    "wm-txtColor-label": "文字色：",
+    "wm-slctImage-label": "画像を選択：",
+    "wm-slctImage-helpTxt": "対応形式：PNG, JPG, JPEG, GIF, BMP",
+    "wm-imgScale-label": "画像スケール：",
+    "wm-opacity-label": "不透明度：",
+    "wm-position-label": "位置：",
+    "position-option1": "中央",
+    "position-option2": "左上",
+    "position-option3": "右上",
+    "position-option4": "左下",
+    "position-option5": "右下",
+    "position-option6": "タイル状（繰り返し）",
+    "wm-rotation-label": "回転：",
+    "wm-pta-label": "適用ページ：",
+    "pta-option1": "すべてのページ",
+    "pta-option2": "最初のページのみ",
+    "pta-option3": "最後のページのみ",
+    "pta-option4": "カスタム範囲",
+    "wm-pgRange-label": "ページ範囲：",
+    "wm-pgRang-helpTxt": "ページ番号または範囲をカンマで区切って入力（例：1-5, 7, 9-12）",
+    "wm-preview": "透かしプレビュー：",
+    "add-wm-btn": "透かしを追加"
   }
 }

@@ -142,12 +142,19 @@
     "credits": "কৃতজ্ঞতা"
   },
 
-
-  "addPageNumbers": {
+  
+  
+  
+  
+  
+  "common":{
     "back-btn": "← পিছনে",
-    "page-title": "পৃষ্ঠা নম্বর যোগ করুন",
     "btn-select": "PDF ফাইল নির্বাচন করতে ক্লিক করুন অথবা PDF এখানে ড্রপ করুন",
-    "pdf-preview": "PDF প্রিভিউ",
+    "pdf-preview": "PDF প্রিভিউ"
+  },
+
+  "addPageNumbers": {    
+    "page-title": "পৃষ্ঠা নম্বর যোগ করুন",
     "page-numbers": "পৃষ্ঠা নম্বরের অপশনসমূহ",
     "position-label": "অবস্থান:",
     "position-option-1": "নীচের মাঝখানে",
@@ -163,5 +170,37 @@
     "startingNumber-label": "শুরুর নম্বর:",
     "startingNumber-hlpTxt-label": "প্রথম পৃষ্ঠায় এই নম্বর থাকবে",
     "addPageNumberBtn": "পৃষ্ঠা নম্বর যোগ করুন"
+  },
+
+  "addWatermark": {
+    "page-title": "ওয়াটারমার্ক যোগ করুন",
+    "wm-options": "ওয়াটারমার্ক অপশনসমূহ",
+    "wm-type-label": "ওয়াটারমার্ক ধরন:",
+    "wm-type-text": "টেক্সট ওয়াটারমার্ক",
+    "wm-type-image": "ইমেজ ওয়াটারমার্ক",
+    "wm-text-label": "ওয়াটারমার্ক টেক্সট:",
+    "wm-fontSize-label": "ফন্ট সাইজ:",
+    "wm-txtColor-label": "টেক্সট রঙ:",
+    "wm-slctImage-label": "ইমেজ নির্বাচন করুন:",
+    "wm-slctImage-helpTxt": "সমর্থিত ফরম্যাট: PNG, JPG, JPEG, GIF, BMP",
+    "wm-imgScale-label": "ইমেজ স্কেল:",
+    "wm-opacity-label": "স্বচ্ছতা:",
+    "wm-position-label": "অবস্থান:",
+    "position-option1": "মাঝখানে",
+    "position-option2": "উপরের বামে",
+    "position-option3": "উপরের ডানে",
+    "position-option4": "নীচের বামে",
+    "position-option5": "নীচের ডানে",
+    "position-option6": "টাইলড (পুনরাবৃত্ত)",
+    "wm-rotation-label": "ঘূর্ণন:",
+    "wm-pta-label": "প্রয়োগ করার পৃষ্ঠাসমূহ:",
+    "pta-option1": "সব পৃষ্ঠা",
+    "pta-option2": "শুধুমাত্র প্রথম পৃষ্ঠা",
+    "pta-option3": "শুধুমাত্র শেষ পৃষ্ঠা",
+    "pta-option4": "কাস্টম রেঞ্জ",
+    "wm-pgRange-label": "পৃষ্ঠা রেঞ্জ:",
+    "wm-pgRang-helpTxt": "পৃষ্ঠা নম্বর বা রেঞ্জ কমা দিয়ে আলাদা করে লিখুন (যেমন: 1-5, 7, 9-12)",
+    "wm-preview": "ওয়াটারমার্ক প্রিভিউ:",
+    "add-wm-btn": "ওয়াটারমার্ক যোগ করুন"
   }
 }

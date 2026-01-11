@@ -142,12 +142,19 @@
     "credits": "Credits"
   },
 
-
-  "addPageNumbers":{
+  
+  
+  
+  
+  
+  "common":{
     "back-btn": "← Back",
-    "page-title": "Add Page Numbers",
     "btn-select": "Click to Select a PDF File or drop PDF here",
-    "pdf-preview": "PDF Preview",
+    "pdf-preview": "PDF Preview"
+  },
+
+  "addPageNumbers":{    
+    "page-title": "Add Page Numbers",
     "page-numbers": "Page Number Options",
     "position-label": "Position:",
     "position-option-1": "Bottom Center",
@@ -163,5 +170,37 @@
     "startingNumber-label": "Starting Number:",
     "startingNumber-hlpTxt-label": "First page will have this number",
     "addPageNumberBtn": "Add Page Numbers"
+  },
+
+  "addWatermark":{
+    "page-title": "Add Watermark",
+    "wm-options": "Watermark Options",
+    "wm-type-label": "Watermark Type:",
+    "wm-type-text": "Text Watermark",
+    "wm-type-image": "Image Watermark",
+    "wm-text-label": "Watermark Text:",
+    "wm-fontSize-label": "Font Size:",
+    "wm-txtColor-label": "Text Color:",
+    "wm-slctImage-label": "Select Image:",
+    "wm-slctImage-helpTxt": "Supported formats: PNG, JPG, JPEG, GIF, BMP",
+    "wm-imgScale-label": "Image Scale:",
+    "wm-opacity-label": "Opacity:",
+    "wm-position-label": "Position:",
+    "position-option1": "Center",
+    "position-option2": "Top Left",
+    "position-option3": "Top Right",
+    "position-option4": "Bottom Left",
+    "position-option5": "Bottom Right",
+    "position-option6": "Tiled (Repeated)",
+    "wm-rotation-label": "Rotation:",
+    "wm-pta-label": "Pages to Apply:",
+    "pta-option1": "All Pages",
+    "pta-option2": "First Page Only",
+    "pta-option3": "Last Page Only",
+    "pta-option4": "Custom Range",
+    "wm-pgRange-label": "Page Range:",
+    "wm-pgRang-helpTxt": "Enter page numbers or ranges separated by commas (e.g., 1-5, 7, 9-12)",
+    "wm-preview": "Watermark Preview:",
+    "add-wm-btn": "Add Watermark"
   }
 }

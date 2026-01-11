@@ -143,11 +143,18 @@
     "reportIssue": "报告问题",
     "credits": "致谢"
   },
-  "addPageNumbers": {
+
+  
+  
+  
+  "common":{
     "back-btn": "← 返回",
-    "page-title": "添加页码",
     "btn-select": "点击选择PDF文件或将PDF拖放到此处",
-    "pdf-preview": "PDF预览",
+    "pdf-preview": "PDF预览"
+  },
+
+  "addPageNumbers": {
+    "page-title": "添加页码",    
     "page-numbers": "页码选项",
     "position-label": "位置：",
     "position-option-1": "底部居中",
@@ -163,5 +170,37 @@
     "startingNumber-label": "起始数字：",
     "startingNumber-hlpTxt-label": "第一页将显示此数字",
     "addPageNumberBtn": "添加页码"
+  },
+
+  "addWatermark": {
+    "page-title": "添加水印",
+    "wm-options": "水印选项",
+    "wm-type-label": "水印类型：",
+    "wm-type-text": "文字水印",
+    "wm-type-image": "图片水印",
+    "wm-text-label": "水印文字：",
+    "wm-fontSize-label": "字体大小：",
+    "wm-txtColor-label": "文字颜色：",
+    "wm-slctImage-label": "选择图片：",
+    "wm-slctImage-helpTxt": "支持的格式：PNG, JPG, JPEG, GIF, BMP",
+    "wm-imgScale-label": "图片缩放：",
+    "wm-opacity-label": "不透明度：",
+    "wm-position-label": "位置：",
+    "position-option1": "居中",
+    "position-option2": "左上角",
+    "position-option3": "右上角",
+    "position-option4": "左下角",
+    "position-option5": "右下角",
+    "position-option6": "平铺（重复）",
+    "wm-rotation-label": "旋转角度：",
+    "wm-pta-label": "应用页面：",
+    "pta-option1": "所有页面",
+    "pta-option2": "仅第一页",
+    "pta-option3": "仅最后一页",
+    "pta-option4": "自定义范围",
+    "wm-pgRange-label": "页面范围：",
+    "wm-pgRang-helpTxt": "输入页码或范围，用逗号分隔（例如：1-5, 7, 9-12）",
+    "wm-preview": "水印预览：",
+    "add-wm-btn": "添加水印"
   }
 }

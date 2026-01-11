@@ -34,12 +34,12 @@
 <body>
     <div id="app">
         <div class="top-bar">
-            <a href="../../index.html" class="top-btn">← Back</a>
-            <h1 class="tool-title">Add Watermark</h1>
+            <a href="../../index.html" class="top-btn" data-i18n="common.back-btn">← Back</a>
+            <h1 class="tool-title" data-i18n="addWatermark.page-title">Add Watermark</h1>
         </div>
         <main class="tool-container">
             <div class="file-selection-area">
-                <button id="select-pdf-btn" class="select-pdf-btn">Click to Select a PDF File or drop PDF here</button>
+                <button id="select-pdf-btn" class="select-pdf-btn" data-i18n="common.btn-select">Click to Select a PDF File or drop PDF here</button>
                 <div id="selected-file-info" class="selected-file-info" style="display: none;">
                     <div style="flex-grow: 1;">
                         <p id="pdf-name" class="pdf-name"></p>
@@ -50,35 +50,35 @@
             </div>
             <div id="preview-container" class="preview-container" style="display: none;">
                 <div class="preview-header">
-                    <h3>PDF Preview</h3>
+                    <h3 data-i18n="common.pdf-preview">PDF Preview</h3>
                     <span id="page-count" class="page-count"></span>
                 </div>
                 <div id="preview-grid" class="preview-grid"></div>
             </div>
             <div class="options-container">
-                <h2>Watermark Options</h2>
+                <h2 data-i18n="addWatermark.wm-options">Watermark Options</h2>
                 <div class="option-group">
-                    <label>Watermark Type:</label>
+                    <label data-i18n="addWatermark.wm-type-label">Watermark Type:</label>
                     <select id="watermark-type" class="options-select">
-                        <option value="text">Text Watermark</option>
-                        <option value="image">Image Watermark</option>
+                        <option value="text" data-i18n="addWatermark.wm-type-text">Text Watermark</option>
+                        <option value="image" data-i18n="addWatermark.wm-type-image">Image Watermark</option>
                     </select>
                 </div>
                 <div id="text-options">
                     <div class="option-group">
-                        <label>Watermark Text:</label>
+                        <label data-i18n="addWatermark.wm-text-label">Watermark Text:</label>
                         <textarea id="watermark-text" class="options-textarea"
                             placeholder="Enter watermark text">CONFIDENTIAL</textarea>
                     </div>
                     <div class="option-group">
-                        <label>Font Size:</label>
+                        <label data-i18n="addWatermark.wm-fontSize-label">Font Size:</label>
                         <div class="range-input-group">
                             <input type="range" id="font-size" class="range-input" min="12" max="72" value="36">
                             <span id="font-size-value" class="range-value">36</span>
                         </div>
                     </div>
                     <div class="option-group">
-                        <label>Text Color:</label>
+                        <label data-i18n="addWatermark.wm-txtColor-label">Text Color:</label>
                         <div class="color-input-group">
                             <input type="color" id="text-color" class="color-input" value="#3498db">
                             <div id="color-preview" class="color-preview" style="background-color: #3498db;"></div>
@@ -87,12 +87,12 @@
                 </div>
                 <div id="image-options" style="display: none;">
                     <div class="option-group">
-                        <label>Select Image:</label>
+                        <label data-i18n="addWatermark.wm-slctImage-label">Select Image:</label>
                         <input type="file" id="image-file" class="options-input" accept=".png,.jpg,.jpeg,.gif,.bmp">
-                        <small class="help-text">Supported formats: PNG, JPG, JPEG, GIF, BMP</small>
+                        <small class="help-text" data-i18n="addWatermark.wm-slctImage-helpTxt">Supported formats: PNG, JPG, JPEG, GIF, BMP</small>
                     </div>
                     <div class="option-group">
-                        <label>Image Scale:</label>
+                        <label data-i18n="addWatermark.wm-imgScale-label">Image Scale:</label>
                         <div class="range-input-group">
                             <input type="range" id="image-scale" class="range-input" min="10" max="100" value="50">
                             <span id="image-scale-value" class="range-value">50%</span>
@@ -100,47 +100,47 @@
                     </div>
                 </div>
                 <div class="option-group">
-                    <label>Opacity:</label>
+                    <label data-i18n="addWatermark.wm-opacity-label">Opacity:</label>
                     <div class="range-input-group">
                         <input type="range" id="opacity" class="range-input" min="10" max="100" value="60">
                         <span id="opacity-value" class="range-value">60%</span>
                     </div>
                 </div>
                 <div class="option-group">
-                    <label>Position:</label>
+                    <label data-i18n="addWatermark.wm-position-label">Position:</label>
                     <select id="position" class="options-select">
-                        <option value="Center">Center</option>
-                        <option value="TopLeft">Top Left</option>
-                        <option value="TopRight">Top Right</option>
-                        <option value="BottomLeft">Bottom Left</option>
-                        <option value="BottomRight">Bottom Right</option>
-                        <option value="Tiled">Tiled (Repeated)</option>
+                        <option value="Center" data-i18n="addWatermark.position-option1">Center</option>
+                        <option value="TopLeft" data-i18n="addWatermark.position-option2">Top Left</option>
+                        <option value="TopRight" data-i18n="addWatermark.position-option3">Top Right</option>
+                        <option value="BottomLeft" data-i18n="addWatermark.position-option4">Bottom Left</option>
+                        <option value="BottomRight" data-i18n="addWatermark.position-option5">Bottom Right</option>
+                        <option value="Tiled" data-i18n="addWatermark.position-option6">Tiled (Repeated)</option>
                     </select>
                 </div>
                 <div class="option-group">
-                    <label>Rotation:</label>
+                    <label data-i18n="addWatermark.wm-rotation-label">Rotation:</label>
                     <div class="range-input-group">
                         <input type="range" id="rotation" class="range-input" min="0" max="360" value="45">
                         <span id="rotation-value" class="range-value">45°</span>
                     </div>
                 </div>
                 <div class="option-group">
-                    <label>Pages to Apply:</label>
+                    <label data-i18n="addWatermark.wm-pta-label">Pages to Apply:</label>
                     <select id="pages-range" class="options-select">
-                        <option value="all">All Pages</option>
-                        <option value="first">First Page Only</option>
-                        <option value="last">Last Page Only</option>
-                        <option value="custom">Custom Range</option>
+                        <option value="all" data-i18n="addWatermark.pta-option1">All Pages</option>
+                        <option value="first" data-i18n="addWatermark.pta-option2">First Page Only</option>
+                        <option value="last" data-i18n="addWatermark.pta-option3">Last Page Only</option>
+                        <option value="custom" data-i18n="addWatermark.pta-option4">Custom Range</option>
                     </select>
                 </div>
                 <div id="custom-pages-group" class="option-group" style="display: none;">
-                    <label>Page Range:</label>
+                    <label data-i18n="addWatermark.wm-pgRange-label">Page Range:</label>
                     <input type="text" id="custom-pages" class="options-input" placeholder="e.g., 1-5, 7, 9-12">
-                    <small class="help-text">Enter page numbers or ranges separated by commas (e.g., 1-5, 7,
+                    <small class="help-text" data-i18n="addWatermark.wm-pgRang-helpTxt">Enter page numbers or ranges separated by commas (e.g., 1-5, 7,
                         9-12)</small>
                 </div>
                 <div class="option-group">
-                    <label>Watermark Preview:</label>
+                    <label data-i18n="addWatermark.wm-preview">Watermark Preview:</label>
                     <div class="watermark-preview">
                         <div id="watermark-preview-text" class="watermark-preview-text">CONFIDENTIAL</div>
                         <img id="watermark-preview-image" class="watermark-preview-image" style="display: none;">
@@ -148,7 +148,7 @@
                 </div>
             </div>
             <div class="action-buttons">
-                <button id="add-btn" class="top-btn" disabled>Add Watermark</button>
+                <button id="add-btn" class="top-btn" data-i18n="addWatermark.add-wm-btn" disabled>Add Watermark</button>
             </div>
         </main>
     </div>
