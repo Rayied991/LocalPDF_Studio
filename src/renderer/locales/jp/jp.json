@@ -150,5 +150,23 @@
     "wm-pgRang-helpTxt": "ページ番号または範囲をカンマで区切って入力（例：1-5, 7, 9-12）",
     "wm-preview": "透かしプレビュー：",
     "add-wm-btn": "透かしを追加"
+  },
+
+  "compressPdf": {
+    "page-title": "PDF 圧縮",
+    "compress-settings": "圧縮設定",
+    "quality-settings": "品質レベル",
+    "high-quality": "高品質",
+    "min-quality": "最小圧縮、最高品質",
+    "medium-quality": "中品質（推奨）",
+    "balanced-quality": "バランスの取れた圧縮",
+    "low-quality": "低品質",
+    "reduced-quality": "最大圧縮、品質低下",
+    "custom-quality": "カスタム品質",
+    "compression-level": "独自の圧縮レベルを設定",
+    "quality-percent": "品質：",
+    "small-file": "小さいファイル",
+    "better-file": "品質優先",
+    "compress-btn": "PDF を圧縮"
   }
 }

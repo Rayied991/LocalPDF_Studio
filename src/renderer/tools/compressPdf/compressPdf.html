@@ -37,12 +37,12 @@
 <body>
     <div id="app">
         <div class="top-bar">
-            <a href="../../index.html" class="top-btn">← Back</a>
-            <h1 class="tool-title">Compress PDF</h1>
+            <a href="../../index.html" class="top-btn" data-i18n="common.back-btn">← Back</a>
+            <h1 class="tool-title" data-i18n="compressPdf.page-title">Compress PDF</h1>
         </div>
         <main class="tool-container">
             <div class="file-selection-area">
-                <button id="select-pdf-btn" class="select-pdf-btn">Click to Select a PDF File or drop PDF here</button>
+                <button id="select-pdf-btn" class="select-pdf-btn" data-i18n="common.btn-select">Click to Select a PDF File or drop PDF here</button>
                 <div id="selected-file-info" class="selected-file-info" style="display: none;">
                     <div style="flex-grow: 1;">
                         <p id="pdf-name" class="pdf-name"></p>
@@ -58,17 +58,17 @@
                 </div>
             </div> -->
             <div class="compress-options-container">
-                <h2>Compression Settings</h2>
+                <h2 data-i18n="compressPdf.compress-settings">Compression Settings</h2>
 
                 <div class="quality-section">
-                    <h3>Quality Level</h3>
+                    <h3 data-i18n="compressPdf.quality-settings">Quality Level</h3>
 
                     <div class="quality-option">
                         <label class="radio-label">
                             <input type="radio" name="quality" value="high" checked>
                             <div class="option-content">
-                                <span class="option-title">High Quality</span>
-                                <span class="option-desc">Minimal compression, best quality</span>
+                                <span class="option-title" data-i18n="compressPdf.high-quality">High Quality</span>
+                                <span class="option-desc" data-i18n="compressPdf.min-quality">Minimal compression, best quality</span>
                             </div>
                         </label>
                     </div>
@@ -76,8 +76,8 @@
                         <label class="radio-label">
                             <input type="radio" name="quality" value="medium">
                             <div class="option-content">
-                                <span class="option-title">Medium Quality (Recommended)</span>
-                                <span class="option-desc">Balanced compression</span>
+                                <span class="option-title" data-i18n="compressPdf.medium-quality">Medium Quality (Recommended)</span>
+                                <span class="option-desc" data-i18n="compressPdf.balanced-quality">Balanced compression</span>
                             </div>
                         </label>
                     </div>
@@ -85,8 +85,8 @@
                         <label class="radio-label">
                             <input type="radio" name="quality" value="low">
                             <div class="option-content">
-                                <span class="option-title">Low Quality</span>
-                                <span class="option-desc">Maximum compression, reduced quality</span>
+                                <span class="option-title" data-i18n="compressPdf.low-quality">Low Quality</span>
+                                <span class="option-desc" data-i18n="compressPdf.reduced-quality">Maximum compression, reduced quality</span>
                             </div>
                         </label>
                     </div>
@@ -94,23 +94,23 @@
                         <label class="radio-label">
                             <input type="radio" name="quality" value="custom">
                             <div class="option-content">
-                                <span class="option-title">Custom Quality</span>
-                                <span class="option-desc">Set your own compression level</span>
+                                <span class="option-title" data-i18n="compressPdf.custom-quality">Custom Quality</span>
+                                <span class="option-desc" data-i18n="compressPdf.compression-level">Set your own compression level</span>
                             </div>
                         </label>
                     </div>
                     <div id="custom-quality-section" class="custom-quality-section" style="display: none;">
-                        <label for="custom-quality-slider">Quality: <span id="quality-value">75</span>%</label>
+                        <label for="custom-quality-slider"><span data-i18n="compressPdf.quality-percent">Quality: </span><span id="quality-value">75</span>%</label>
                         <input type="range" id="custom-quality-slider" min="1" max="100" value="75">
                         <div class="slider-labels">
-                            <span>Smaller file</span>
-                            <span>Better quality</span>
+                            <span data-i18n="compressPdf.small-file">Smaller file</span>
+                            <span data-i18n="compressPdf.better-file">Better quality</span>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="action-buttons">
-                <button id="compress-btn" class="top-btn" disabled>Compress PDF</button>
+                <button id="compress-btn" class="top-btn" data-i18n="compressPdf.compress-btn" disabled>Compress PDF</button>
             </div>
         </main>
     </div>

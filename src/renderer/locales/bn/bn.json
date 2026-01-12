@@ -150,5 +150,23 @@
     "wm-pgRang-helpTxt": "পৃষ্ঠা নম্বর বা রেঞ্জ কমা দিয়ে আলাদা করে লিখুন (যেমন: 1-5, 7, 9-12)",
     "wm-preview": "ওয়াটারমার্ক প্রিভিউ:",
     "add-wm-btn": "ওয়াটারমার্ক যোগ করুন"
+  },
+
+  "compressPdf": {
+    "page-title": "PDF কম্প্রেস করুন",
+    "compress-settings": "কম্প্রেশন সেটিংস",
+    "quality-settings": "কোয়ালিটি লেভেল",
+    "high-quality": "উচ্চ মানের",
+    "min-quality": "সর্বনিম্ন কম্প্রেশন, সর্বোচ্চ মান",
+    "medium-quality": "মাঝারি মানের (সুপারিশকৃত)",
+    "balanced-quality": "সুষম কম্প্রেশন",
+    "low-quality": "নিম্ন মানের",
+    "reduced-quality": "সর্বোচ্চ কম্প্রেশন, মান কমে যাবে",
+    "custom-quality": "কাস্টম কোয়ালিটি",
+    "compression-level": "আপনার নিজের কম্প্রেশন লেভেল সেট করুন",
+    "quality-percent": "কোয়ালিটি: ",
+    "small-file": "ছোট ফাইল",
+    "better-file": "বেশি মানসম্পন্ন",
+    "compress-btn": "PDF কম্প্রেস করুন"
   }
 }

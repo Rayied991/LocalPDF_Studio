@@ -150,5 +150,23 @@
     "wm-pgRang-helpTxt": "Enter page numbers or ranges separated by commas (e.g., 1-5, 7, 9-12)",
     "wm-preview": "Watermark Preview:",
     "add-wm-btn": "Add Watermark"
+  },
+
+  "compressPdf":{
+    "page-title": "Compress PDF",
+    "compress-settings": "Compression Settings",
+    "quality-settings": "Quality Level",
+    "high-quality": "High Quality",
+    "min-quality": "Minimal compression, best quality",
+    "medium-quality": "Medium Quality (Recommended)",
+    "balanced-quality": "Balanced compression",
+    "low-quality": "Low Quality",
+    "reduced-quality": "Maximum compression, reduced quality",
+    "custom-quality": "Custom Quality",
+    "compression-level": "Set your own compression level",
+    "quality-percent": "Quality: ",
+    "small-file": "Smaller file",
+    "better-file": "Better quality",
+    "compress-btn": "Compress PDF"
   }
 }

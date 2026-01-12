@@ -22,9 +22,11 @@ import { API } from '../../api/api.js';
 import customAlert from '../../utils/customAlert.js';
 import loadingUI from '../../utils/loading.js';
 import { initializeGlobalDragDrop } from '../../utils/globalDragDrop.js';
+import i18n from '../../utils/i18n.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
     await API.init();
+    await i18n.init();
 
     const selectPdfBtn = document.getElementById('select-pdf-btn');
     const removePdfBtn = document.getElementById('remove-pdf-btn');

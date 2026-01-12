@@ -150,5 +150,23 @@
     "wm-pgRang-helpTxt": "输入页码或范围，用逗号分隔（例如：1-5, 7, 9-12）",
     "wm-preview": "水印预览：",
     "add-wm-btn": "添加水印"
+  },
+
+  "compressPdf": {
+    "page-title": "压缩 PDF",
+    "compress-settings": "压缩设置",
+    "quality-settings": "质量级别",
+    "high-quality": "高质量",
+    "min-quality": "最小压缩，最佳质量",
+    "medium-quality": "中等质量（推荐）",
+    "balanced-quality": "平衡压缩",
+    "low-quality": "低质量",
+    "reduced-quality": "最大压缩，质量降低",
+    "custom-quality": "自定义质量",
+    "compression-level": "设置您自己的压缩级别",
+    "quality-percent": "质量：",
+    "small-file": "文件更小",
+    "better-file": "质量更好",
+    "compress-btn": "压缩 PDF"
   }
 }
