@@ -36,14 +36,14 @@
 <body>
     <div id="app">
         <div class="top-bar">
-            <a href="../../index.html" class="top-btn">← Back</a>
-            <h1 class="tool-title">Crop PDF</h1>
+            <a href="../../index.html" class="top-btn" data-i18n="common.back-btn">← Back</a>
+            <h1 class="tool-title" data-i18n="cropPdf.page-title">Crop PDF</h1>
         </div>
 
         <main class="tool-container">
             <!-- File Selection Area -->
             <div class="file-selection-area" id="file-selection-area">
-                <button id="select-pdf-btn" class="select-pdf-btn">Click to Select a PDF File or drop PDF here</button>
+                <button id="select-pdf-btn" class="select-pdf-btn" data-i18n="common.btn-select">Click to Select a PDF File or drop PDF here</button>
                 <div id="selected-file-info" class="selected-file-info" style="display: none;">
                     <div style="flex-grow: 1;">
                         <p id="pdf-name" class="pdf-name"></p>
@@ -58,7 +58,7 @@
                 <!-- PDF Preview Panel -->
                 <div id="preview-container" class="preview-container" style="display:none;">
                     <div class="preview-header">
-                        <h3>PDF Preview</h3>
+                        <h3 data-i18n="common.pdf-preview">PDF Preview</h3>
 
                         <div class="page-nav">
                             <input type="number" id="page-input" class="page-input" min="1">
@@ -85,56 +85,56 @@
 
                 <!-- Crop Options Panel -->
                 <div class="options-container">
-                    <h2>Crop Options</h2>
+                    <h2 data-i18n="cropPdf.crop-options">Crop Options</h2>
 
                     <!-- Pages Selection -->
                     <div class="option-group">
-                        <label>Pages to Crop:</label>
+                        <label data-i18n="cropPdf.page-option">Pages to Crop:</label>
                         <div class="radio-group">
-                            <label><input type="radio" name="pages-range" value="all" checked> All Pages</label>
-                            <label><input type="radio" name="pages-range" value="custom"> Custom Range</label>
+                            <label><input type="radio" name="pages-range" value="all" data-i18n="cropPdf.page-option1" checked> All Pages</label>
+                            <label><input type="radio" name="pages-range" value="custom" data-i18n="cropPdf.page-option2"> Custom Range</label>
                         </div>
                     </div>
 
                     <!-- Custom Pages Range -->
                     <div id="custom-pages-group" class="option-group" style="display:none;">
-                        <label for="custom-pages">Custom Page Range:</label>
+                        <label for="custom-pages" data-i18n="cropPdf.page-range">Custom Page Range:</label>
                         <input type="text" id="custom-pages" class="options-input" placeholder="e.g., 1, 2-4, 7">
-                        <small class="help-text">Enter page numbers or ranges separated by commas.</small>
+                        <small class="help-text" data-i18n="cropPdf.rage-range-helpTxt">Enter page numbers or ranges separated by commas.</small>
                     </div>
 
                     <!-- Crop Margins -->
                     <div class="option-group">
-                        <label>Crop Margins (in points):</label>
+                        <label data-i18n="cropPdf.margin-option">Crop Margins (in points):</label>
                         <div class="margin-inputs">
                             <div class="margin-input-group">
-                                <label for="margin-top">Top</label>
+                                <label for="margin-top" data-i18n="cropPdf.margin-option1">Top</label>
                                 <input type="number" id="margin-top" class="margin-input" min="0" value="0">
                             </div>
                             <div class="margin-input-group">
-                                <label for="margin-right">Right</label>
+                                <label for="margin-right" data-i18n="cropPdf.margin-option2">Right</label>
                                 <input type="number" id="margin-right" class="margin-input" min="0" value="0">
                             </div>
                             <div class="margin-input-group">
-                                <label for="margin-bottom">Bottom</label>
+                                <label for="margin-bottom" data-i18n="cropPdf.margin-option3">Bottom</label>
                                 <input type="number" id="margin-bottom" class="margin-input" min="0" value="0">
                             </div>
                             <div class="margin-input-group">
-                                <label for="margin-left">Left</label>
+                                <label for="margin-left" data-i18n="cropPdf.margin-option4">Left</label>
                                 <input type="number" id="margin-left" class="margin-input" min="0" value="0">
                             </div>
                         </div>
-                        <small class="help-text">1 point ≈ 1/72 inch.</small>
+                        <small class="help-text" data-i18n="cropPdf.margin-point">1 point ≈ 1/72 inch.</small>
                     </div>
 
                     <!-- Reset Button -->
                     <div class="option-group reset-group">
-                        <button id="reset-btn" class="secondary-btn">Reset Margins</button>
+                        <button id="reset-btn" class="secondary-btn" data-i18n="cropPdf.margin-reset">Reset Margins</button>
                     </div>
 
                     <!-- Action Buttons -->
                     <div class="action-buttons">
-                        <button id="crop-btn" class="top-btn" disabled>Crop PDF</button>
+                        <button id="crop-btn" class="top-btn" data-i18n="cropPdf.crop-btn" disabled>Crop PDF</button>
                     </div>
                 </div>
             </div>
@@ -145,7 +145,7 @@
     <div id="page-not-found-modal" class="modal" style="display: none;">
         <div class="modal-content">
             <span class="close-btn">&times;</span>
-            <p>Page not available.</p>
+            <p data-i18n="cropPdf.no-page-warning">Page not available.</p>
         </div>
     </div>
 

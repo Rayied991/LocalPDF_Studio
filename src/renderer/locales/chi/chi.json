@@ -168,5 +168,24 @@
     "small-file": "文件更小",
     "better-file": "质量更好",
     "compress-btn": "压缩 PDF"
+  },
+
+  "cropPdf": {
+    "page-title": "裁剪 PDF",
+    "crop-options": "裁剪选项",
+    "page-option": "要裁剪的页面：",
+    "page-option1": "所有页面",
+    "page-option2": "自定义范围",
+    "page-range": "自定义页面范围：",
+    "rage-range-helpTxt": "输入页码或范围，用逗号分隔。",
+    "margin-option": "裁剪边距（以点为单位）：",
+    "margin-option1": "上边距",
+    "margin-option2": "右边距",
+    "margin-option3": "下边距",
+    "margin-option4": "左边距",
+    "margin-point": "1 点 ≈ 1/72 英寸。",
+    "margin-reset": "重置边距",
+    "crop-btn": "裁剪 PDF",
+    "no-page-warning": "页面不可用。"
   }
 }

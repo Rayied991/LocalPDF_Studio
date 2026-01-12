@@ -168,5 +168,24 @@
     "small-file": "ছোট ফাইল",
     "better-file": "বেশি মানসম্পন্ন",
     "compress-btn": "PDF কম্প্রেস করুন"
+  },
+
+  "cropPdf": {
+    "page-title": "PDF ক্রপ করুন",
+    "crop-options": "ক্রপ অপশনসমূহ",
+    "page-option": "ক্রপ করার পৃষ্ঠাসমূহ:",
+    "page-option1": "সব পৃষ্ঠা",
+    "page-option2": "কাস্টম রেঞ্জ",
+    "page-range": "কাস্টম পৃষ্ঠা রেঞ্জ:",
+    "rage-range-helpTxt": "পৃষ্ঠা নম্বর বা রেঞ্জ কমা দিয়ে আলাদা করে লিখুন।",
+    "margin-option": "ক্রপ মার্জিন (পয়েন্টে):",
+    "margin-option1": "উপর",
+    "margin-option2": "ডান",
+    "margin-option3": "নিচ",
+    "margin-option4": "বাম",
+    "margin-point": "১ পয়েন্ট ≈ ১/৭২ ইঞ্চি।",
+    "margin-reset": "মার্জিন রিসেট করুন",
+    "crop-btn": "PDF ক্রপ করুন",
+    "no-page-warning": "পৃষ্ঠা পাওয়া যায়নি।"
   }
 }

@@ -168,5 +168,24 @@
     "small-file": "Smaller file",
     "better-file": "Better quality",
     "compress-btn": "Compress PDF"
+  },
+
+  "cropPdf":{
+    "page-title": "Crop PDF",
+    "crop-options": "Crop Options",
+    "page-option": "Pages to Crop:",
+    "page-option1": " All Pages",
+    "page-option2": " Custom Range",
+    "page-range": "Custom Page Range:",
+    "rage-range-helpTxt": "Enter page numbers or ranges separated by commas.",
+    "margin-option": "Crop Margins (in points):",
+    "margin-option1": "Top",
+    "margin-option2": "Right",
+    "margin-option3": "Bottom",
+    "margin-option4": "Left",
+    "margin-point": "1 point ≈ 1/72 inch.",
+    "margin-reset": "Reset Margins",
+    "crop-btn": "Crop PDF",
+    "no-page-warning": "Page not available."
   }
 }

@@ -168,5 +168,24 @@
     "small-file": "小さいファイル",
     "better-file": "品質優先",
     "compress-btn": "PDF を圧縮"
+  },
+
+  "cropPdf": {
+    "page-title": "PDF トリミング",
+    "crop-options": "トリミングオプション",
+    "page-option": "トリミングするページ：",
+    "page-option1": "すべてのページ",
+    "page-option2": "カスタム範囲",
+    "page-range": "カスタムページ範囲：",
+    "rage-range-helpTxt": "ページ番号または範囲をカンマで区切って入力してください。",
+    "margin-option": "トリミング余白（ポイント単位）：",
+    "margin-option1": "上",
+    "margin-option2": "右",
+    "margin-option3": "下",
+    "margin-option4": "左",
+    "margin-point": "1 ポイント ≈ 1/72 インチ。",
+    "margin-reset": "余白をリセット",
+    "crop-btn": "PDF をトリミング",
+    "no-page-warning": "ページが利用できません。"
   }
 }
