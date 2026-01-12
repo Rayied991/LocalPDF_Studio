@@ -67,85 +67,33 @@
     "lang-chi": "Chinese",
     "lang-jp": "Japanese"
   },
-  "_Comment": "about.html part",
-  "page": {
-    "title": "About - LocalPDF Studio",
-    "backToApp": "← Back to App",
-    "heading": "About LocalPDF Studio"
-  },
-
-  "hero": {
-    "appName": "LocalPDF Studio",
-    "version": "v0.0.9",
-    "tagline": "Your complete offline PDF toolkit",
-    "description": "A privacy-focused, cross-platform PDF editor that works completely offline."
-  },
-
-  "features": {
-    "title": "Why Choose LocalPDF Studio?",
-    "offline": {
-      "title": "100% Offline",
-      "description": "Your files never leave your computer. Complete privacy and security."
-    },
-    "privacy": {
-      "title": "Privacy First",
-      "description": "No data collection, no tracking, no internet connection required."
-    },
-    "openSource": {
-      "title": "Free & Open Source",
-      "description": "Completely free to use. Open source under AGPL 3.0 license."
-    },
-    "crossPlatform": {
-      "title": "Cross-Platform",
-      "description": "Works seamlessly on Windows, Linux, and macOS."
-    }
-  },
-
-  "technology": {
-    "title": "Built With Modern Technology",
-    "electron": {
-      "name": "Electron",
-      "tooltip": "Electron (HTML, CSS, JavaScript)"
-    },
-    "dotnet": {
-      "name": ".NET Core",
-      "tooltip": "ASP.NET Core Web API (C#)"
-    },
-    "python": {
-      "name": "Python",
-      "tooltip": "Python"
-    },
-    "pdfjs": {
-      "name": "PDF.js",
-      "tooltip": "Mozilla PDF.js"
-    },
-    "pdfsharp": {
-      "name": "PDFSharp",
-      "tooltip": "PDFSharp"
-    }
-  },
-
-  "license": {
-    "title": "License",
-    "summary": "This software is licensed under the AGPL 3.0 (GNU Affero General Public License version 3)",
-    "details": "You are free to use, modify, and distribute this software, but you must adhere to the terms of the AGPL 3.0. This includes providing the source code to users who interact with the software over a network."
-  },
-
-  "support": {
-    "title": "Support This Project",
-    "supportDevelopment": "💝 Support Development",
-    "releaseNote": "Release Note",
-    "viewSource": "View Source Code",
-    "currentlyWorkingOn": "Currently Working On",
-    "starRepo": "Star on GitHub",
-    "reportIssue": "Report Issues",
-    "credits": "Credits"
-  },
-
   
-  
-  
-  
+  "about":{
+    "pg-title": "About LocalPDF Studio",
+    "app-tag": "Your complete offline PDF toolkit",
+    "app-description": "A privacy-focused, cross-platform PDF editor that works completely offline.",
+    "feature-title": "Why Choose LocalPDF Studio?",
+    "feature-assurance": "100% Offline",
+    "feature-description": "Your files never leave your computer. Complete privacy and security.",
+    "privacy-card": "Privacy First",
+    "privacy-description": "No data collection, no tracking, no internet connection required.",
+    "free-msg": "Free & Open Source",
+    "free-description": "Completely free to use. Open source under AGPL 3.0 license.",
+    "platform-card": "Cross-Platform",
+    "platform-description": "Works seamlessly on Windows, Linux, and macOS.",
+    "stack-tech": "Built With Modern Technology",
+    "license-card": "License",
+    "license-description1": "This software is licensed under the AGPL 3.0 (GNU Affero General Public License version 3)",
+    "license-description2": "You are free to use, modify, and distribute this software, but you must adhere to the terms of the AGPL 3.0. This includes providing the source code to users who interact with the software over a network.",
+    "support-card": "Support This Project",
+    "support-dev-btn": "💝 Support Development",
+    "release-note-btn": "Release Note",
+    "github-link": "View Source Code",
+    "current-progress": "Currently Working On",
+    "star-github": "Star on GitHub",
+    "report-issues": "Report Issues",
+    "credits-btn": "Credits"
+  },
   
   "common":{
     "back-btn": "← Back",

@@ -40,7 +40,7 @@
     <div id="app">
         <div class="top-bar">
             <a href="../index.html" class="top-btn">← Back to App</a>
-            <h1 class="page-title">About LocalPDF Studio</h1>
+            <h1 class="page-title" data-i18n="about.pg-title">About LocalPDF Studio</h1>
         </div>
         <main class="about-container">
             <section class="hero-section">
@@ -49,38 +49,38 @@
                 </div>
                 <h1 class="app-name">LocalPDF Studio</h1>
                 <p class="app-version">v0.0.9</p>
-                <p class="app-tagline">Your complete offline PDF toolkit</p>
-                <p class="app-description">
+                <p class="app-tagline" data-i18n="about.app-tag">Your complete offline PDF toolkit</p>
+                <p class="app-description" data-i18n="about.app-description">
                     A privacy-focused, cross-platform PDF editor that works completely offline.
                 </p>
             </section>
             <section class="features-section">
-                <h2 class="section-title">Why Choose LocalPDF Studio?</h2>
+                <h2 class="section-title" data-i18n="about.feature-title">Why Choose LocalPDF Studio?</h2>
                 <div class="features-grid">
                     <div class="feature-card">
                         <div class="feature-icon">🔒</div>
-                        <h3>100% Offline</h3>
-                        <p>Your files never leave your computer. Complete privacy and security.</p>
+                        <h3 data-i18n="about.feature-assurance">100% Offline</h3>
+                        <p data-i18n="about.feature-description">Your files never leave your computer. Complete privacy and security.</p>
                     </div>
                     <div class="feature-card">
                         <div class="feature-icon">🛡️</div>
-                        <h3>Privacy First</h3>
-                        <p>No data collection, no tracking, no internet connection required.</p>
+                        <h3 data-i18n="about.privacy-card">Privacy First</h3>
+                        <p data-i18n="about.privacy-description">No data collection, no tracking, no internet connection required.</p>
                     </div>
                     <div class="feature-card">
                         <div class="feature-icon">🆓</div>
-                        <h3>Free & Open Source</h3>
-                        <p>Completely free to use. Open source under AGPL 3.0 license.</p>
+                        <h3 data-i18n="about.free-msg">Free & Open Source</h3>
+                        <p data-i18n="about.free-description">Completely free to use. Open source under AGPL 3.0 license.</p>
                     </div>
                     <div class="feature-card">
                         <div class="feature-icon">🌐</div>
-                        <h3>Cross-Platform</h3>
-                        <p>Works seamlessly on Windows, Linux, and macOS.</p>
+                        <h3 data-i18n="about.platform-card">Cross-Platform</h3>
+                        <p data-i18n="about.platform-description">Works seamlessly on Windows, Linux, and macOS.</p>
                     </div>
                 </div>
             </section>
             <section class="tech-section">
-                <h2 class="section-title">Built With Modern Technology</h2>
+                <h2 class="section-title" data-i18n="about.stack-tech">Built With Modern Technology</h2>
                 <div class="tech-grid">
                     <div class="tech-item" data-tooltip="Electron (HTML, CSS, JavaScript)">
                         <img data-local-asset="icons/tech/electron.png" alt="Electron" class="tech-icon">
@@ -105,36 +105,36 @@
                 </div>
             </section>
             <section class="license-section">
-                <h2 class="section-title">License</h2>
+                <h2 class="section-title" data-i18n="about.license-card">License</h2>
                 <div class="license-card">
-                    <p>This software is licensed under the <strong>AGPL 3.0 (GNU Affero General Public License version 3)</strong></p>
-                    <p>You are free to use, modify, and distribute this software, but you must adhere to the terms of the AGPL 3.0. This includes providing the source code to users who interact with the software over a network.
+                    <p data-i18n="about.license-description1">This software is licensed under the AGPL 3.0 (GNU Affero General Public License version 3)</p>
+                    <p data-i18n="about.license-description2">You are free to use, modify, and distribute this software, but you must adhere to the terms of the AGPL 3.0. This includes providing the source code to users who interact with the software over a network.
                     </p>
                 </div>
             </section>
             <section class="support-section">
-                <h2 class="section-title">Support This Project</h2>
+                <h2 class="section-title" data-i18n="about.support-card">Support This Project</h2>
                 <div class="support-actions">
                     <div class="primary-actions"> 
-                            <a href="../donate/donate.html" class="support-btn primary">💝 Support Development</a>
+                            <a href="../donate/donate.html" class="support-btn primary" data-i18n="about.support-dev-btn">💝 Support Development</a>
                             <button class="support-btn primary" id="release-note">
-                                    <img data-local-asset="icons/social/note.png" alt="Note"> Release Note
+                                    <img data-local-asset="icons/social/note.png" alt="Note"><p data-i18n="about.release-note-btn">Release Note</p>
                             </button>           
                     </div>
                     <div class="secondary-actions">
                         <button class="support-btn secondary" id="view-source">
-                                    <img data-local-asset="icons/social/github.png" alt="GitHub"> View Source Code
+                                    <img data-local-asset="icons/social/github.png" alt="GitHub"><p data-i18n="about.github-link">View Source Code</p>
                                 </button>
                         <button class="support-btn secondary" id="currently-working-on">
-                            <img data-local-asset="icons/social/docs.png" alt="Google Docs"> Currently Working On
+                            <img data-local-asset="icons/social/docs.png" alt="Google Docs"><p data-i18n="about.current-progress">Currently Working On</p>
                         </button>
                         <button class="support-btn secondary" id="star-repo">
-                            <img data-local-asset="icons/social/star.png" alt="Star"> Star on GitHub
+                            <img data-local-asset="icons/social/star.png" alt="Star"><p data-i18n="about.star-github">Star on GitHub</p>
                         </button>
                         <button class="support-btn secondary" id="report-issue">
-                            <img data-local-asset="icons/social/bug.png" alt="Bug"> Report Issues
+                            <img data-local-asset="icons/social/bug.png" alt="Bug"><p data-i18n="about.report-issues">Report Issues</p>
                         </button>
-                        <a href="../credits/credits.html" class="support-btn secondary" id="credits">Credits</a>
+                        <a href="../credits/credits.html" class="support-btn secondary" id="credits" data-i18n="about.credits-btn">Credits</a>
                     </div>
                 </div>
             </section>

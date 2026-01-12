@@ -22,10 +22,20 @@ class I18n {
             // Determine base path based on current location
             const getBasePath = () => {
                 const path = window.location.pathname;
-                if (path.includes('/tools/')) {
+                if (path.includes('/about/'))
+                {
+                    return '../';
+                }
+                if (path.includes('/donate/'))
+                {
+                    return '../';
+                }
+                if (path.includes('/tools/'))
+                {
                     return '../../';
                 }
-                else{
+                else
+                {
                     return './';
                 }
             };

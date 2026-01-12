@@ -26,6 +26,7 @@
   "error": {
     "empty-message": "PDFが開かれていません。「PDFリーダーを開く」をクリックして開始してください！"
   },
+  
   "settings": {
     "settings-title": "設定",
     "startup-behavior": "起動時の動作",
@@ -66,87 +67,34 @@
     "lang-chi": "Chinese |中国語",
     "lang-jp": "Japanese | 日本語"
   },
-  "_Comment": "about.html part",
-  "page": {
-    "title": "LocalPDF Studio について",
-    "backToApp": "← アプリに戻る",
-    "heading": "LocalPDF Studio について"
+
+  "about":{
+    "pg-title": "LocalPDF Studio について",
+    "app-tag": "完全なオフラインPDFツールキット",
+    "app-description": "プライバシー重視のクロスプラットフォームPDFエディタで、完全にオフラインで動作します。",
+    "feature-title": "LocalPDF Studio を選ぶ理由",
+    "feature-assurance": "100% オフライン",
+    "feature-description": "ファイルがコンピュータから離れることはありません。完全なプライバシーとセキュリティ。",
+    "privacy-card": "プライバシー第一",
+    "privacy-description": "データ収集なし、トラッキングなし、インターネット接続不要。",
+    "free-msg": "無料 & オープンソース",
+    "free-description": "完全に無料で使用できます。AGPL 3.0 ライセンスの下でオープンソースです。",
+    "platform-card": "クロスプラットフォーム",
+    "platform-description": "Windows、Linux、macOS でシームレスに動作します。",
+    "stack-tech": "モダンな技術で構築",
+    "license-card": "ライセンス",
+    "license-description1": "このソフトウェアはAGPL 3.0（GNU Affero 一般公衆利用許諾書バージョン3）の下でライセンスされています",
+    "license-description2": "このソフトウェアを自由に使用、変更、配布できますが、AGPL 3.0の条件を遵守する必要があります。これには、ネットワークを介してソフトウェアと対話するユーザーにソースコードを提供することが含まれます。",
+    "support-card": "このプロジェクトをサポート",
+    "support-dev-btn": "💝 開発をサポート",
+    "release-note-btn": "リリースノート",
+    "github-link": "ソースコードを表示",
+    "current-progress": "現在取り組んでいる機能",
+    "star-github": "GitHubでスターを付ける",
+    "report-issues": "問題を報告",
+    "credits-btn": "クレジット"
   },
 
-  "hero": {
-    "appName": "LocalPDF Studio",
-    "version": "v0.0.9",
-    "tagline": "完全オフラインのPDFツールキット",
-    "description": "完全にオフラインで動作する、プライバシー重視のクロスプラットフォームPDFエディターです。"
-  },
-
-  "features": {
-    "title": "なぜ LocalPDF Studio を選ぶのか？",
-    "offline": {
-      "title": "100% オフライン",
-      "description": "ファイルが外部に送信されることはありません。完全なプライバシーと安全性を提供します。"
-    },
-    "privacy": {
-      "title": "プライバシー最優先",
-      "description": "データ収集なし、追跡なし、インターネット接続不要。"
-    },
-    "openSource": {
-      "title": "無料 & オープンソース",
-      "description": "完全無料で使用可能。AGPL 3.0 ライセンスのオープンソースです。"
-    },
-    "crossPlatform": {
-      "title": "クロスプラットフォーム",
-      "description": "Windows、Linux、macOS でシームレスに動作します。"
-    }
-  },
-
-  "technology": {
-    "title": "最新技術で構築",
-    "electron": {
-      "name": "Electron",
-      "tooltip": "Electron（HTML、CSS、JavaScript）"
-    },
-    "dotnet": {
-      "name": ".NET Core",
-      "tooltip": "ASP.NET Core Web API（C#）"
-    },
-    "python": {
-      "name": "Python",
-      "tooltip": "Python"
-    },
-    "pdfjs": {
-      "name": "PDF.js",
-      "tooltip": "Mozilla PDF.js"
-    },
-    "pdfsharp": {
-      "name": "PDFSharp",
-      "tooltip": "PDFSharp"
-    }
-  },
-
-  "license": {
-    "title": "ライセンス",
-    "summary": "本ソフトウェアは AGPL 3.0（GNU Affero General Public License バージョン3）で提供されています。",
-    "details": "本ソフトウェアは使用、変更、配布が可能ですが、AGPL 3.0 の条件に従う必要があります。ネットワーク経由で利用するユーザーに対してソースコードを提供する義務も含まれます。"
-  },
-
-  "support": {
-    "title": "プロジェクトを支援する",
-    "supportDevelopment": "💝 開発を支援する",
-    "releaseNote": "リリースノート",
-    "viewSource": "ソースコードを見る",
-    "currentlyWorkingOn": "現在取り組んでいる内容",
-    "starRepo": "GitHub でスターを付ける",
-    "reportIssue": "問題を報告",
-    "credits": "クレジット"
-  },
-
-  
-  
-  
-  
-  
-  
   "common":{
     "back-btn": "← 戻る",
     "btn-select": "PDFファイルを選択するか、ここにPDFをドロップしてください",
