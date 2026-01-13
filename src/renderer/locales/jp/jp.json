@@ -187,5 +187,32 @@
     "margin-reset": "余白をリセット",
     "crop-btn": "PDF をトリミング",
     "no-page-warning": "ページが利用できません。"
+  },
+
+  "editMetadata": {
+    "page-title": "メタデータの表示と編集",
+    "metadata-form": "PDF メタデータ",
+    "copy-metadata-btn": "📋 メタデータをコピー",
+    "sanitize-metedata-btn": "🧹 メタデータをクリーンアップして保存",
+    "edit-metadata-btn": "メタデータを編集",
+    "metadata-item1": "タイトル：",
+    "metadata-item2": "作成者：",
+    "metadata-item3": "件名：",
+    "metadata-item4": "キーワード：",
+    "metadata-item5": "作成ソフト：",
+    "metadata-item6": "生成ソフト：",
+    "metadata-item7": "作成日：",
+    "metadata-item8": "更新日：",
+    "metadata-item9": "ページ数：",
+    "metadata-edit1": "タイトル：",
+    "metadata-edit2": "作成者：*",
+    "metadata-edit3": "件名：",
+    "metadata-edit4": "キーワード：",
+    "metadata-edit5": "作成ソフト：",
+    "metadata-edit6": "生成ソフト：",
+    "metadata-edit7": "説明：",
+    "cancel-btn": "キャンセル",
+    "save-btn1": "メタデータを保存",
+    "save-btn2": "更新されたメタデータでPDFを保存"
   }
 }

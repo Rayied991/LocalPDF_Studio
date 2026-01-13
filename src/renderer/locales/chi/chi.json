@@ -187,5 +187,32 @@
     "margin-reset": "重置边距",
     "crop-btn": "裁剪 PDF",
     "no-page-warning": "页面不可用。"
+  },
+
+  "editMetadata": {
+    "page-title": "查看和编辑元数据",
+    "metadata-form": "PDF 元数据",
+    "copy-metadata-btn": "📋 复制元数据",
+    "sanitize-metedata-btn": "🧹 清理元数据并保存",
+    "edit-metadata-btn": "编辑元数据",
+    "metadata-item1": "标题：",
+    "metadata-item2": "作者：",
+    "metadata-item3": "主题：",
+    "metadata-item4": "关键词：",
+    "metadata-item5": "创建者：",
+    "metadata-item6": "生成器：",
+    "metadata-item7": "创建日期：",
+    "metadata-item8": "修改日期：",
+    "metadata-item9": "页数：",
+    "metadata-edit1": "标题：",
+    "metadata-edit2": "作者：*",
+    "metadata-edit3": "主题：",
+    "metadata-edit4": "关键词：",
+    "metadata-edit5": "创建者：",
+    "metadata-edit6": "生成器：",
+    "metadata-edit7": "描述：",
+    "cancel-btn": "取消",
+    "save-btn1": "保存元数据",
+    "save-btn2": "使用更新后的元数据保存 PDF"
   }
 }

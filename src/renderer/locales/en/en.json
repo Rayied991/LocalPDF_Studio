@@ -187,5 +187,32 @@
     "margin-reset": "Reset Margins",
     "crop-btn": "Crop PDF",
     "no-page-warning": "Page not available."
+  },
+
+  "editMetadata":{
+    "page-title": "View and Edit Metadata",
+    "metadata-form": "PDF Metadata",
+    "copy-metadata-btn": "📋 Copy Metadata",
+    "sanitize-metedata-btn": "🧹 Clean Metadata and Save",
+    "edit-metadata-btn": "Edit Metadata",
+    "metadata-item1": "Title:",
+    "metadata-item2": "Author:",
+    "metadata-item3": "Subject:",
+    "metadata-item4": "Keywords:",
+    "metadata-item5": "Creator:",
+    "metadata-item6": "Producer:",
+    "metadata-item7": "Creation Date:",
+    "metadata-item8": "Modification Date:",
+    "metadata-item9": "Number of Pages:",
+    "metadata-edit1": "Title:",
+    "metadata-edit2": "Author: *",
+    "metadata-edit3": "Subject:",
+    "metadata-edit4": "Keywords:",
+    "metadata-edit5": "Creator:",
+    "metadata-edit6": "Producer:",
+    "metadata-edit7": "Description:",
+    "cancel-btn": "Cancel",
+    "save-btn1": "Save Metadata",
+    "save-btn2": "Save PDF with Updated Metadata"
   }
 }
