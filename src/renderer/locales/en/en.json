@@ -137,6 +137,14 @@
     "thanks-card1": "Thank You!",
     "thanks-card2": "Whether through donations, code contributions, or simply using and sharing LocalPDF Studio, your support means the world to us. Together, we're building better, privacy-focused software for everyone."
   },
+
+  "credits":{
+    "back-btn": "← Back to About",
+    "page-title": "Credits & Dependencies",
+    "description": "is made possible thanks to these incredible open-source projects and libraries.",
+    "section-title": "Projects & Dependencies",
+    "visit-url": "Visit Website"
+  },
   
   "common":{
     "back-btn": "← Back",

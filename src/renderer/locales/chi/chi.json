@@ -138,6 +138,14 @@
     "thanks-card2": "无论是通过捐赠、代码贡献，还是简单地使用和分享 LocalPDF Studio，您的支持对我们来说都意义重大。我们正在共同努力为每个人构建更好、注重隐私的软件。"
   },
 
+  "credits": {
+    "back-btn": "← 返回关于页面",
+    "page-title": "致谢与依赖项",
+    "description": "得益于这些出色的开源项目和库才成为可能。",
+    "section-title": "项目与依赖项",
+    "visit-url": "访问网站"
+  },
+
   "common":{
     "back-btn": "← 返回",
     "btn-select": "点击选择 PDF 文件或将 PDF 拖放到此处",

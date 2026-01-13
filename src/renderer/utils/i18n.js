@@ -30,6 +30,10 @@ class I18n {
                 {
                     return '../';
                 }
+                if (path.includes('/credits/'))
+                {
+                    return '../';
+                }
                 if (path.includes('/tools/'))
                 {
                     return '../../';

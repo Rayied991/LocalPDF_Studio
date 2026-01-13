@@ -17,7 +17,10 @@
 
 // src/renderer/credits/credits.js
 
-document.addEventListener('DOMContentLoaded', () => {
+import i18n from '../utils/i18n.js';
+
+document.addEventListener('DOMContentLoaded', async () => {
+    await i18n.init();
     setupCreditLinks();
     fixImagePaths();
 });
