@@ -98,6 +98,7 @@
   "common":{
     "back-btn": "← পিছনে",
     "btn-select": "PDF ফাইল নির্বাচন করতে ক্লিক করুন অথবা PDF এখানে ড্রপ করুন",
+    "btn-select-merge": "PDF ফাইল নির্বাচন করতে ক্লিক করুন অথবা PDF এখানে ড্রপ করুন",
     "btn-image-select": "ইমেজ নির্বাচন করতে ক্লিক করুন অথবা ইমেজ এখানে ড্রপ করুন",
     "pdf-preview": "PDF প্রিভিউ",
     "image-preview": "ইমেজ প্রিভিউ"
@@ -285,5 +286,11 @@
     "unlock-password": "PDF পাসওয়ার্ড:",
     "helpTxt": "এই PDF এনক্রিপ্ট করতে ব্যবহৃত পাসওয়ার্ড লিখুন",
     "lock-unlock-btn": "PDF লক করুন"
+  },
+
+  "merge": {
+    "page-title": "PDF মার্জ করুন",
+    "clear-btn": "সব ক্লিয়ার করুন",
+    "merge-btn": "PDF মার্জ করুন"
   }
 }

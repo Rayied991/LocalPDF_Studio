@@ -98,6 +98,7 @@
   "common":{
     "back-btn": "← Back",
     "btn-select": "Click to Select a PDF File or drop PDF here",
+    "btn-select-merge": "Click to Select PDF Files or drop PDFs here",
     "btn-image-select": "Click to Select Images or drop images here",
     "pdf-preview": "PDF Preview",
     "image-preview": "Images Preview"
@@ -285,5 +286,11 @@
     "unlock-password": "PDF Password:",
     "helpTxt": "Enter the password used to encrypt this PDF",
     "lock-unlock-btn": "Lock PDF"
+  },
+
+  "merge":{
+    "page-title": "Merge PDF",
+    "clear-btn": "Clear All",
+    "merge-btn": "Merge PDFs"
   }
 }

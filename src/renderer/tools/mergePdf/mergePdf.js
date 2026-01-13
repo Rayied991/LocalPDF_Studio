@@ -23,10 +23,13 @@ import * as pdfjsLib from '../../../pdf/build/pdf.mjs';
 import customAlert from '../../utils/customAlert.js';
 import loadingUI from '../../utils/loading.js';
 import { initializeGlobalDragDrop } from '../../utils/globalDragDrop.js';
+import i18n from '../../utils/i18n.js';
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = '../../../pdf/build/pdf.worker.mjs';
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async() => {
+    await i18n.init();
+
     const selectBtn = document.getElementById('select-pdf-btn');
     const mergeBtn = document.getElementById('merge-btn');
     const clearBtn = document.getElementById('clear-btn');

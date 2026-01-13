@@ -98,6 +98,7 @@
   "common":{
     "back-btn": "← 戻る",
     "btn-select": "PDFファイルを選択するか、ここにPDFをドロップしてください",
+    "btn-select-merge": "PDFファイルを選択するか、ここにPDFをドロップしてください",
     "btn-image-select": "画像を選択するか、ここに画像をドロップしてください",
     "pdf-preview": "PDF プレビュー",
     "image-preview": "画像プレビュー"
@@ -285,5 +286,11 @@
     "unlock-password": "PDF パスワード：",
     "helpTxt": "このPDFを暗号化するために使用されたパスワードを入力してください",
     "lock-unlock-btn": "PDF をロック"
+  },
+
+  "merge": {
+    "page-title": "PDF を結合",
+    "clear-btn": "すべてクリア",
+    "merge-btn": "PDF を結合"
   }
 }

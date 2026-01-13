@@ -98,6 +98,7 @@
   "common":{
     "back-btn": "← 返回",
     "btn-select": "点击选择 PDF 文件或将 PDF 拖放到此处",
+    "btn-select-merge": "点击选择 PDF 文件或将 PDF 拖放到此处",
     "btn-image-select": "点击选择图片或将图片拖放到此处",
     "pdf-preview": "PDF 预览",
     "image-preview": "图片预览"
@@ -285,5 +286,11 @@
     "unlock-password": "PDF 密码：",
     "helpTxt": "输入用于加密此 PDF 的密码",
     "lock-unlock-btn": "锁定 PDF"
+  },
+
+  "merge": {
+    "page-title": "合并 PDF",
+    "clear-btn": "清除全部",
+    "merge-btn": "合并 PDF"
   }
 }
