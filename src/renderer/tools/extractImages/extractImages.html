@@ -37,12 +37,12 @@
 <body>
     <div id="app">
         <div class="top-bar">
-            <a href="../../index.html" class="top-btn">← Back</a>
-            <h1 class="tool-title">Extract or Remove Images from PDF</h1>
+            <a href="../../index.html" class="top-btn" data-i18n="common.back-btn">← Back</a>
+            <h1 class="tool-title" data-i18n="extractImage.page-title">Extract or Remove Images from PDF</h1>
         </div>
         <main class="tool-container">
             <div class="file-selection-area">
-                <button id="select-pdf-btn" class="select-pdf-btn">Click to Select a PDF File or drop PDF here</button>
+                <button id="select-pdf-btn" class="select-pdf-btn" data-i18n="common.btn-select">Click to Select a PDF File or drop PDF here</button>
                 <div id="selected-file-info" class="selected-file-info" style="display: none;">
                     <div style="flex-grow: 1;">
                         <p id="pdf-name" class="pdf-name"></p>
@@ -54,28 +54,27 @@
             <div id="preview-container" class="preview-container" style="display: none;">
                 <div class="preview-header">
                     <div>
-                        <h3>PDF Preview - Select Pages</h3>
-                        <p class="selection-info" id="selection-info">No pages selected</p>
+                        <h3 data-i18n="extractImage.pdf-preview">PDF Preview - Select Pages</h3>
+                        <p class="selection-info" id="selection-info" data-i18n="extractImage.no-page-selected">No pages selected</p>
                     </div>
                     <div style="display: flex; gap: 0.5rem; align-items: center;">
                         <span id="page-count" class="page-count"></span>
-                        <button id="clear-selection-btn" class="action-btn secondary" style="display: none;">Clear
-                            Selection</button>
+                        <button id="clear-selection-btn" class="action-btn secondary" data-i18n="extractImage.clear-selection" style="display: none;">Clear Selection</button>
                     </div>
                 </div>
                 <div id="preview-grid" class="preview-grid">
                 </div>
             </div>
             <div class="options-container">
-                <h2>Operation Mode</h2>
+                <h2 data-i18n="extractImage.operation-mode">Operation Mode</h2>
                 <div class="mode-selection">
                     <label class="mode-option">
                         <input type="radio" name="operation-mode" value="extract" checked>
                         <div class="mode-card">
                             <div class="mode-icon extract-icon">📤</div>
                             <div class="mode-details">
-                                <h3>Extract Images</h3>
-                                <p>Extract images from PDF pages and save as ZIP</p>
+                                <h3 data-i18n="extractImage.mode-header1">Extract Images</h3>
+                                <p data-i18n="extractImage.mode-description1">Extract images from PDF pages and save as ZIP</p>
                             </div>
                         </div>
                     </label>
@@ -84,49 +83,49 @@
                         <div class="mode-card">
                             <div class="mode-icon remove-icon">🗑️</div>
                             <div class="mode-details">
-                                <h3>Remove Images</h3>
-                                <p>Remove images from PDF pages and save as PDF</p>
+                                <h3 data-i18n="extractImage.mode-header2">Remove Images</h3>
+                                <p data-i18n="extractImage.mode-description2">Remove images from PDF pages and save as PDF</p>
                             </div>
                         </div>
                     </label>
                 </div>
                 <div class="option-group">
-                    <h3>Quick Actions</h3>
+                    <h3 data-i18n="extractImage.quick-action-header">Quick Actions</h3>
                     <div class="quick-actions">
-                        <button class="quick-action-btn" id="select-all-pages">Select All Pages</button>
-                        <button class="quick-action-btn" id="select-even-pages">Select Even Pages</button>
-                        <button class="quick-action-btn" id="select-odd-pages">Select Odd Pages</button>
-                        <button class="quick-action-btn" id="invert-selection">Invert Selection</button>
+                        <button class="quick-action-btn" id="select-all-pages" data-i18n="extractImage.quick-action1">Select All Pages</button>
+                        <button class="quick-action-btn" id="select-even-pages" data-i18n="extractImage.quick-action2">Select Even Pages</button>
+                        <button class="quick-action-btn" id="select-odd-pages" data-i18n="extractImage.quick-action3">Select Odd Pages</button>
+                        <button class="quick-action-btn" id="invert-selection" data-i18n="extractImage.quick-action4">Invert Selection</button>
                     </div>
                 </div>
                 <div class="option-group">
-                    <h3>Specify Pages Manually</h3>
-                    <label for="manual-pages">Individual Pages:</label>
+                    <h3 data-i18n="extractImage.specify-page-header">Specify Pages Manually</h3>
+                    <label for="manual-pages" data-i18n="extractImage.specify-page1">Individual Pages:</label>
                     <input type="text" id="manual-pages" class="options-input" placeholder="e.g., 1, 3, 5, 10">
-                    <small class="help-text">Enter page numbers separated by commas</small>
+                    <small class="help-text" data-i18n="extractImage.specify-page-description">Enter page numbers separated by commas</small>
                 </div>
                 <div class="option-group">
-                    <h3>Page Ranges</h3>
-                    <label for="page-ranges">Page Ranges:</label>
+                    <h3 data-i18n="extractImage.page-range-header">Page Ranges</h3>
+                    <label for="page-ranges" data-i18n="extractImage.page-range-label">Page Ranges:</label>
                     <input type="text" id="page-ranges" class="options-input" placeholder="e.g., 1-3, 7-9, 15-20">
-                    <small class="help-text">Enter ranges like "1-5, 10-15"</small>
+                    <small class="help-text" data-i18n="extractImage.page-range-description">Enter ranges like "1-5, 10-15"</small>
                 </div>
                 <div class="option-group" id="extract-options" style="display: block;">
-                    <h3>Extract Settings</h3>
+                    <h3 data-i18n="extractImage.extract-settings-header">Extract Settings</h3>
                     <div class="extract-settings">
                         <label class="checkbox-label">
                             <input type="checkbox" id="preserve-quality" checked>
-                            Preserve original image quality (recommended)
+                            <span data-i18n="extractImage.extract-settings1">Preserve original image quality (recommended)</span>
                         </label>
                         <label class="checkbox-label">
                             <input type="checkbox" id="preserve-format" checked>
-                            Maintain original file formats (JPEG, PNG, etc.)
+                            <span data-i18n="extractImage.extract-settings2">Maintain original file formats (JPEG, PNG, etc.)</span>
                         </label>
                         <label class="checkbox-label">
                             <input type="checkbox" id="preserve-metadata" checked>
-                            Keep image metadata
+                            <span data-i18n="extractImage.extract-settings3"></span>Keep image metadata
                         </label>
-                        <small class="help-text">Recommended settings ensure best quality and fastest processing</small>
+                        <small class="help-text" data-i18n="extractImage.extract-settings-helpTxt">Recommended settings ensure best quality and fastest processing</small>
                     </div>
                 </div>
                 <div class="info-box" id="extract-info" style="display: block;">
@@ -136,8 +135,8 @@
                         <line x1="12" y1="8" x2="12.01" y2="8"></line>
                     </svg>
                     <div>
-                        <strong>Extract Mode:</strong> Images will be extracted and saved as a ZIP file with original
-                        quality and format.
+                        <strong data-i18n="extractImage.extract-description1">Extract Mode: </strong>
+                        <span data-i18n="extractImage.extract-description2">Images will be extracted and saved as a ZIP file with original quality and format.</span>
                     </div>
                 </div>
                 <div class="info-box warning" id="remove-info" style="display: none;">
@@ -149,14 +148,14 @@
                         <line x1="12" y1="17" x2="12.01" y2="17"></line>
                     </svg>
                     <div>
-                        <strong>Remove Mode:</strong> Images will be permanently removed from the specified pages and
-                        saved as a new PDF file.
+                        <strong data-i18n="extractImage.remove-description1">Remove Mode: </strong>
+                        <span data-i18n="extractImage.remove-description2">Images will be permanently removed from the specified pages and saved as a new PDF file.</span>
                     </div>
                 </div>
             </div>
             <div class="action-buttons">
-                <button id="preview-btn" class="top-btn secondary" disabled>Preview Selection</button>
-                <button id="process-btn" class="top-btn" disabled>Extract Images</button>
+                <button id="preview-btn" class="top-btn secondary" data-i18n="extractImage.preview-selection-btn" disabled>Preview Selection</button>
+                <button id="process-btn" class="top-btn" data-i18n="extractImage.extract-images-btn" disabled>Extract Images</button>
             </div>
         </main>
     </div>
