@@ -69,6 +69,7 @@
   },
 
   "about":{
+    "back-btn": "← 返回应用",
     "pg-title": "关于 LocalPDF Studio",
     "app-tag": "您的完整离线 PDF 工具包",
     "app-description": "一个注重隐私、跨平台的 PDF 编辑器，完全离线工作。",

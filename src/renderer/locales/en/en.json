@@ -69,6 +69,7 @@
   },
   
   "about":{
+    "back-btn": "← Back to App",
     "pg-title": "About LocalPDF Studio",
     "app-tag": "Your complete offline PDF toolkit",
     "app-description": "A privacy-focused, cross-platform PDF editor that works completely offline.",

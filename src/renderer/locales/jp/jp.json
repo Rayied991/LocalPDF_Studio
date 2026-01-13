@@ -69,6 +69,7 @@
   },
 
   "about":{
+    "back-btn": "← アプリに戻る",
     "pg-title": "LocalPDF Studio について",
     "app-tag": "完全なオフラインPDFツールキット",
     "app-description": "プライバシー重視のクロスプラットフォームPDFエディタで、完全にオフラインで動作します。",
