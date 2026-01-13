@@ -19,6 +19,7 @@
 // src/renderer/donate/donate.js
 
 import customAlert from '../utils/customAlert.js';
+import i18n from '../utils/i18n.js';
 
 class DonationManager {
     constructor() {
@@ -188,7 +189,8 @@ class DonationManager {
     }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+    await i18n.init();
     new DonationManager();
 });
 
