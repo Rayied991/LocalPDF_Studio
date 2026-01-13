@@ -269,5 +269,21 @@
     "image-quality-label": "图片质量：",
     "image-quality-helpTxt": "质量越高 = 文件越大。",
     "convert-btn": "转换为 PDF"
+  },
+
+  "lockUnlock": {
+    "page-title": "锁定/解锁 PDF",
+    "operation-header": "操作",
+    "operation-lock": " 锁定 PDF（加密）",
+    "operation-unlock": " 解锁 PDF（移除保护）",
+    "lock-settings-header": "加密设置",
+    "lock-settings1": "密码（查看必需）：",
+    "lock-settings2": "加密级别：",
+    "encrypt-option1": "128 位 AES（标准）",
+    "encrypt-option2": "40 位 RC4（兼容性）",
+    "unlock-option-header": "解密设置",
+    "unlock-password": "PDF 密码：",
+    "helpTxt": "输入用于加密此 PDF 的密码",
+    "lock-unlock-btn": "锁定 PDF"
   }
 }

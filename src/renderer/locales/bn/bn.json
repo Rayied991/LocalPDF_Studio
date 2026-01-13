@@ -269,5 +269,21 @@
     "image-quality-label": "ইমেজ কোয়ালিটি:",
     "image-quality-helpTxt": "বেশি কোয়ালিটি = বড় ফাইল সাইজ।",
     "convert-btn": "PDF-এ কনভার্ট করুন"
+  },
+
+  "lockUnlock": {
+    "page-title": "PDF লক/আনলক করুন",
+    "operation-header": "অপারেশন",
+    "operation-lock": " PDF লক করুন (এনক্রিপ্ট)",
+    "operation-unlock": " PDF আনলক করুন (প্রটেকশন সরান)",
+    "lock-settings-header": "এনক্রিপশন সেটিংস",
+    "lock-settings1": "পাসওয়ার্ড (দেখার জন্য প্রয়োজন):",
+    "lock-settings2": "এনক্রিপশন লেভেল:",
+    "encrypt-option1": "128-bit AES (স্ট্যান্ডার্ড)",
+    "encrypt-option2": "40-bit RC4 (কম্প্যাটিবিলিটি)",
+    "unlock-option-header": "ডিক্রিপশন সেটিংস",
+    "unlock-password": "PDF পাসওয়ার্ড:",
+    "helpTxt": "এই PDF এনক্রিপ্ট করতে ব্যবহৃত পাসওয়ার্ড লিখুন",
+    "lock-unlock-btn": "PDF লক করুন"
   }
 }

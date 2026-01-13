@@ -33,12 +33,12 @@
 <body>
     <div id="app">
         <div class="top-bar">
-            <a href="../../index.html" class="top-btn">← Back</a>
-            <h1 class="tool-title">Lock/Unlock PDF</h1>
+            <a href="../../index.html" class="top-btn" data-i18n="common.back-btn">← Back</a>
+            <h1 class="tool-title" data-i18n="lockUnlock.page-title">Lock/Unlock PDF</h1>
         </div>
         <main class="tool-container">
             <div class="file-selection-area">
-                <button id="select-pdf-btn" class="select-pdf-btn">Click to Select a PDF File or drop PDF here</button>
+                <button id="select-pdf-btn" class="select-pdf-btn" data-i18n="common.btn-select">Click to Select a PDF File or drop PDF here</button>
                 <div id="selected-file-info" class="selected-file-info" style="display: none;">
                     <div style="flex-grow: 1;">
                         <p id="pdf-name" class="pdf-name"></p>
@@ -49,16 +49,16 @@
                 </div>
             </div>
             <div class="options-container">
-                <h2>Operation</h2>
+                <h2 data-i18n="lockUnlock.operation-header">Operation</h2>
                 <div class="radio-group operation-group">
-                    <label><input type="radio" name="operation" value="lock" checked> Lock PDF (Encrypt)</label>
-                    <label><input type="radio" name="operation" value="unlock"> Unlock PDF (Remove Protection)</label>
+                    <label><input type="radio" name="operation" value="lock" checked><span data-i18n="lockUnlock.operation-lock"> Lock PDF (Encrypt)</span></label>
+                    <label><input type="radio" name="operation" value="unlock"><span data-i18n="lockUnlock.operation-unlock"> Unlock PDF (Remove Protection)</span></label>
                 </div>
             </div>
             <div id="lock-options" class="options-container">
-                <h2>Encryption Settings</h2>
+                <h2 data-i18n="lockUnlock.lock-settings-header">Encryption Settings</h2>
                 <div class="option-group">
-                    <label for="open-password">Open Password (Required to view):</label>
+                    <label for="open-password" data-i18n="lockUnlock.lock-settings1">Password (Required to view):</label>
                     <div class="password-input-group">
                         <input type="password" id="open-password" class="password-input"
                             placeholder="Enter password to open PDF">
@@ -66,27 +66,27 @@
                     </div>
                 </div>
                 <div class="option-group">
-                    <label for="encryption-level">Encryption Level:</label>
+                    <label for="encryption-level" data-i18n="lockUnlock.lock-settings2">Encryption Level:</label>
                     <select id="encryption-level" class="options-select">
-                        <option value="128">128-bit AES (Standard)</option>
-                        <option value="40">40-bit RC4 (Compatibility)</option>
+                        <option value="128" data-i18n="lockUnlock.encrypt-option1">128-bit AES (Standard)</option>
+                        <option value="40" data-i18n="lockUnlock.encrypt-option2">40-bit RC4 (Compatibility)</option>
                     </select>
                 </div>
             </div>
             <div id="unlock-options" class="options-container" style="display: none;">
-                <h2>Decryption Settings</h2>
+                <h2 data-i18n="lockUnlock.unlock-option-header">Decryption Settings</h2>
                 <div class="option-group">
-                    <label for="unlock-password">PDF Password:</label>
+                    <label for="unlock-password" data-i18n="lockUnlock.unlock-password">PDF Password:</label>
                     <div class="password-input-group">
                         <input type="password" id="unlock-password" class="password-input"
                             placeholder="Enter PDF password to unlock">
                         <button type="button" class="toggle-password" data-target="unlock-password">👁️</button>
                     </div>
-                    <small class="help-text">Enter the password used to encrypt this PDF</small>
+                    <small class="help-text" data-i18n="lockUnlock.helpTxt">Enter the password used to encrypt this PDF</small>
                 </div>
             </div>
             <div class="action-buttons">
-                <button id="process-btn" class="top-btn" disabled>Lock PDF</button>
+                <button id="process-btn" class="top-btn" data-i18n="lockUnlock.lock-unlock-btn" disabled>Lock PDF</button>
             </div>
         </main>
     </div>

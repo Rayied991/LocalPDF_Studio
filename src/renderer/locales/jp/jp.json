@@ -269,5 +269,21 @@
     "image-quality-label": "画像品質：",
     "image-quality-helpTxt": "品質が高いほどファイルサイズが大きくなります。",
     "convert-btn": "PDFに変換"
+  },
+
+  "lockUnlock": {
+    "page-title": "PDF のロック/アンロック",
+    "operation-header": "操作",
+    "operation-lock": " PDF をロック（暗号化）",
+    "operation-unlock": " PDF をアンロック（保護を解除）",
+    "lock-settings-header": "暗号化設定",
+    "lock-settings1": "パスワード（閲覧に必要）：",
+    "lock-settings2": "暗号化レベル：",
+    "encrypt-option1": "128-bit AES（標準）",
+    "encrypt-option2": "40-bit RC4（互換性）",
+    "unlock-option-header": "復号化設定",
+    "unlock-password": "PDF パスワード：",
+    "helpTxt": "このPDFを暗号化するために使用されたパスワードを入力してください",
+    "lock-unlock-btn": "PDF をロック"
   }
 }
