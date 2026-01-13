@@ -22,9 +22,11 @@ import { API } from "../../api/api.js";
 import customAlert from "../../utils/customAlert.js";
 import loadingUI from "../../utils/loading.js";
 import { initializeGlobalDragDropForOCR } from '../../utils/globalDragDrop.js';
+import i18n from '../../utils/i18n.js';
 
 document.addEventListener("DOMContentLoaded", async () => {
     await API.init();
+    await i18n.init();
 
     const selectImagesBtn = document.getElementById("select-images-btn");
     const removeFilesBtn = document.getElementById("remove-files-btn");

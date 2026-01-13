@@ -98,7 +98,9 @@
   "common":{
     "back-btn": "← পিছনে",
     "btn-select": "PDF ফাইল নির্বাচন করতে ক্লিক করুন অথবা PDF এখানে ড্রপ করুন",
-    "pdf-preview": "PDF প্রিভিউ"
+    "btn-image-select": "ইমেজ নির্বাচন করতে ক্লিক করুন অথবা ইমেজ এখানে ড্রপ করুন",
+    "pdf-preview": "PDF প্রিভিউ",
+    "image-preview": "ইমেজ প্রিভিউ"
   },
 
   "addPageNumbers": {    
@@ -248,5 +250,24 @@
     "remove-description2": "ইমেজসমূহ নির্দিষ্ট পৃষ্ঠা থেকে স্থায়ীভাবে মুছে ফেলা হবে এবং নতুন PDF ফাইল হিসেবে সংরক্ষণ করা হবে।",
     "preview-selection-btn": "সিলেকশন প্রিভিউ করুন",
     "extract-images-btn": "ইমেজ এক্সট্রাক্ট করুন"
+  },
+
+  "imageToPdf": {
+    "page-title": "ইমেজ থেকে PDF",
+    "clear-btn": "সব ক্লিয়ার করুন",
+    "conversion-option": "কনভার্শন অপশনসমূহ",
+    "page-orientation-label": "পৃষ্ঠা ওরিয়েন্টেশন:",
+    "orientation-option1": " পোর্ট্রেট",
+    "orientation-option2": " ল্যান্ডস্কেপ",
+    "page-size-label": "পৃষ্ঠা সাইজ:",
+    "size-option1": "ফিট (ইমেজের মতো)",
+    "size-option2": "A4 (২৯৭×২১০ মিমি)",
+    "size-option3": "US Letter (২৭৯.৪×২১৫.৯ মিমি)",
+    "size-helpTxt": "PDF আউটপুটের জন্য পৃষ্ঠা সাইজ নির্বাচন করুন।",
+    "merge-checkbox": "সব ইমেজ একটিই PDF ফাইলে মার্জ করুন",
+    "merge-hint": "অচেক করলে প্রতিটি ইমেজ আলাদা PDF ফাইল হিসেবে সংরক্ষণ করা হবে।",
+    "image-quality-label": "ইমেজ কোয়ালিটি:",
+    "image-quality-helpTxt": "বেশি কোয়ালিটি = বড় ফাইল সাইজ।",
+    "convert-btn": "PDF-এ কনভার্ট করুন"
   }
 }

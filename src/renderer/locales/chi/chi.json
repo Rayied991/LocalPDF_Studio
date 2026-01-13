@@ -97,8 +97,10 @@
 
   "common":{
     "back-btn": "← 返回",
-    "btn-select": "点击选择PDF文件或将PDF拖放到此处",
-    "pdf-preview": "PDF预览"
+    "btn-select": "点击选择 PDF 文件或将 PDF 拖放到此处",
+    "btn-image-select": "点击选择图片或将图片拖放到此处",
+    "pdf-preview": "PDF 预览",
+    "image-preview": "图片预览"
   },
 
   "addPageNumbers": {
@@ -248,5 +250,24 @@
     "remove-description2": "图片将从指定页面永久删除并保存为新 PDF 文件。",
     "preview-selection-btn": "预览选择",
     "extract-images-btn": "提取图片"
+  },
+
+  "imageToPdf": {
+    "page-title": "图片转 PDF",
+    "clear-btn": "清除全部",
+    "conversion-option": "转换选项",
+    "page-orientation-label": "页面方向：",
+    "orientation-option1": " 纵向",
+    "orientation-option2": " 横向",
+    "page-size-label": "页面尺寸：",
+    "size-option1": "适应（与图片相同）",
+    "size-option2": "A4（297×210 毫米）",
+    "size-option3": "US Letter（279.4×215.9 毫米）",
+    "size-helpTxt": "选择 PDF 输出的页面尺寸。",
+    "merge-checkbox": "将所有图片合并为一个 PDF 文件",
+    "merge-hint": "如果取消勾选，每张图片将保存为单独的 PDF 文件。",
+    "image-quality-label": "图片质量：",
+    "image-quality-helpTxt": "质量越高 = 文件越大。",
+    "convert-btn": "转换为 PDF"
   }
 }

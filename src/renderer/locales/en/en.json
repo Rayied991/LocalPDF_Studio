@@ -98,7 +98,9 @@
   "common":{
     "back-btn": "← Back",
     "btn-select": "Click to Select a PDF File or drop PDF here",
-    "pdf-preview": "PDF Preview"
+    "btn-image-select": "Click to Select Images or drop images here",
+    "pdf-preview": "PDF Preview",
+    "image-preview": "Images Preview"
   },
 
   "addPageNumbers":{    
@@ -248,5 +250,24 @@
     "remove-description2": "Images will be permanently removed from the specified pages and saved as a new PDF file.",
     "preview-selection-btn": "Preview Selection",
     "extract-images-btn": "Extract Images"
+  },
+
+  "imageToPdf":{
+    "page-title": "Image to PDF",
+    "clear-btn": "Clear All",
+    "conversion-option": "Conversion Options",
+    "page-orientation-label": "Page Orientation:",
+    "orientation-option1": " Portrait",
+    "orientation-option2": " Landscape",
+    "page-size-label": "Page Size:",
+    "size-option1": "Fit (same as image)",
+    "size-option2": "A4 (297×210 mm)",
+    "size-option3": "US Letter (279.4×215.9 mm)",
+    "size-helpTxt": "Choose the page size for the PDF output.",
+    "merge-checkbox": "Merge all images into one PDF file",
+    "merge-hint": "If unchecked, each image will be saved as a separate PDF file.",
+    "image-quality-label": "Image Quality:",
+    "image-quality-helpTxt": "Higher quality = larger file size.",
+    "convert-btn": "Convert to PDF"
   }
 }
