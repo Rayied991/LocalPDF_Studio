@@ -49,12 +49,21 @@ function setupCreditLinks() {
     // .NET Ecosystem
     document.getElementById('dotnet-link')?.addEventListener('click', () => 
         openExternalLink('https://dotnet.microsoft.com/en-us/download/dotnet/8.0'));
+
+    document.getElementById('python-link')?.addEventListener('click', () => 
+        openExternalLink('https://www.python.org/'));
     
     document.getElementById('cliwrap-link')?.addEventListener('click', () => 
         openExternalLink('https://www.nuget.org/packages/CLIWrap'));
     
     document.getElementById('bouncycastle-link')?.addEventListener('click', () => 
         openExternalLink('https://www.nuget.org/packages/Portable.BouncyCastle'));
+
+    document.getElementById('tesseract-link')?.addEventListener('click', () => 
+        openExternalLink('https://tesseract.projectnaptha.com/'));
+
+    document.getElementById('pdfjs-link')?.addEventListener('click', () => 
+        openExternalLink('https://mozilla.github.io/pdf.js/'));
 }
 
 async function fixImagePaths() {
@@ -103,8 +112,11 @@ function addButtonTooltips() {
         'pdfsharpcore-link': 'https://www.nuget.org/packages/PdfSharpCore',
         'imagesharp-link': 'https://www.nuget.org/packages/sixlabors.imagesharp/',
         'dotnet-link': 'https://dotnet.microsoft.com/en-us/',
+        'python-link': 'https://www.python.org/',
         'cliwrap-link': 'https://www.nuget.org/packages/CLIWrap',
-        'bouncycastle-link': 'https://www.nuget.org/packages/Portable.BouncyCastle'
+        'bouncycastle-link': 'https://www.nuget.org/packages/Portable.BouncyCastle',
+        'tesseract-link': 'https://tesseract.projectnaptha.com/',
+        'pdfjs-link': 'https://mozilla.github.io/pdf.js/',
     };
 
     Object.entries(buttonUrls).forEach(([id, url]) => {

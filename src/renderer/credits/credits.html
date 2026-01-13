@@ -17,6 +17,7 @@
 <!-- src/renderer/credits/credits.html -->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -32,6 +33,7 @@
     <link rel="stylesheet" href="../about.css">
     <link rel="stylesheet" href="./credits.css">
 </head>
+
 <body>
 
     <div id="app">
@@ -45,120 +47,96 @@
                     <div class="icon-placeholder">📄</div>
                 </div>
                 <h1 class="app-name">LocalPDF Studio</h1>
-                <p class="app-tagline">is made possible thanks to these incredible open-source projects and libraries.</p>
-            </section>
-
-              <section class="credits-section">
-                <h2 class="section-title">Core Technologies</h2>
-                <div class="credits-grid">
-                    <div class="credit-card">
-                        <div class="credit-icon">⚛️</div>
-                        <h3>Node.js</h3>
-                        <p>JavaScript runtime built on Chrome's V8 JavaScript engine</p>
-
-                        <button class="redirect-btn" id="nodejs-link" >
-                            <span>Visit Website</span>
-                            <span class="redirect-icon">↗️</span>
-                        </button> 
-                    </div>
-                    <div class="credit-card">
-                        <div class="credit-icon">📱</div>
-                        <h3>Electron</h3>
-                        <p>Framework for building cross-platform desktop apps with web technologies</p>
-                        <button class="redirect-btn" id="electron-link" >
-                            <span>Visit Website</span>
-                            <span class="redirect-icon">↗️</span>
-                        </button>
-                    </div>
-                    <div class="credit-card">
-                        <div class="credit-icon">🏗️</div>
-                        <h3>Electron Builder</h3>
-                        <p>Complete solution to package and build ready for distribution Electron apps</p>
-                        <button class="redirect-btn" id="electron-builder-link" >
-                            <span>Visit Website</span>
-                            <span class="redirect-icon">↗️</span>
-                        </button>
-                    </div>
-                    <div class="credit-card">
-                        <div class="credit-icon">🔄</div>
-                        <h3>Electron Updater</h3>
-                        <p>Auto-updater for Electron applications</p>
-                        <button class="redirect-btn" id="electron-updater-link" >
-                            <span>Visit Website</span>
-                            <span class="redirect-icon">↗️</span>
-                        </button>
-                    </div>
-                </div>
+                <p class="app-tagline">is made possible thanks to these incredible open-source projects and libraries.
+                </p>
             </section>
 
             <section class="credits-section">
-                <h2 class="section-title">PDF & Image Processing</h2>
-                <div class="credits-grid">
-                    <div class="credit-card">
-                        <div class="credit-icon">👻</div>
-                        <h3>Ghostscript</h3>
-                        <p>Interpreter for the PostScript language and PDF files</p>
-                        <button class="redirect-btn" id="ghostscript-link" >
-                            <span>Visit Website</span>
-                            <span class="redirect-icon">↗️</span>
-                        </button>
-                        
-                    </div>
-                    <div class="credit-card">
-                        <div class="credit-icon">🔤</div>
-                        <h3>PdfSharpCore</h3>
-                        <p>Open source .NET library for processing PDF files</p>
-                        <button class="redirect-btn" id="pdfsharpcore-link" >
-                            <span>Visit Website</span>
-                            <span class="redirect-icon">↗️</span>
-                        </button>
-                    </div>
-                    <div class="credit-card">
-                        <div class="credit-icon">🖼️</div>
-                        <h3>SixLabors.ImageSharp</h3>
-                        <p>Modern, cross-platform, 2D graphics API for .NET</p>
-                        <button class="redirect-btn" id="imagesharp-link" >
-                            <span>Visit Website</span>
-                            <span class="redirect-icon">↗️</span>
-                        </button>
-                    </div>
-                </div>
-            </section>
-
-            <section class="credits-section">
-                <h2 class="section-title">.NET Ecosystem</h2>
-                <div class="credits-grid">
-                    <div class="credit-card">
-                        <div class="credit-icon">🎯</div>
-                        <h3>.NET 8</h3>
-                        <p>Free, cross-platform, open-source developer platform</p>
-                        <button class="redirect-btn" id="dotnet-link" >
-                            <span>Visit Website</span>
-                            <span class="redirect-icon">↗️</span>
-                        </button>
-                    </div>
-                    <div class="credit-card">
-                        <div class="credit-icon">📦</div>
-                        <h3>CliWrap</h3>
-                        <p>Library for interacting with external command line interfaces</p>
-                        <button class="redirect-btn" id="cliwrap-link" >
-                            <span>Visit Website</span>
-                            <span class="redirect-icon">↗️</span>
-                        </button>
-                    </div>
-                    <div class="credit-card">
-                        <div class="credit-icon">🔐</div>
-                        <h3>Portable.BouncyCastle</h3>
-                        <p>Cryptography library for .NET</p>
-                        <button class="redirect-btn" id="bouncycastle-link" >
-                            <span>Visit Website</span>
-                            <span class="redirect-icon">↗️</span>
-                        </button>
-                    </div>
-                </div>
+                <h2 class="section-title">Projects & Dependencies</h2>
+                <ul class="credits-list">
+                    <li class="credits-item">
+                        <div class="item-header">
+                            <h3 class="item-title">Node.js</h3>
+                        </div>
+                        <button class="list-link" id="nodejs-link">Visit Website</button>
+                    </li>
+                    <li class="credits-item">
+                        <div class="item-header">
+                            <h3 class="item-title">Electron</h3>
+                        </div>
+                        <button class="list-link" id="electron-link">Visit Website</button>
+                    </li>
+                    <li class="credits-item">
+                        <div class="item-header">
+                            <h3 class="item-title">Electron Builder</h3>
+                        </div>
+                        <button class="list-link" id="electron-builder-link">Visit Website</button>
+                    </li>
+                    <li class="credits-item">
+                        <div class="item-header">
+                            <h3 class="item-title">Electron Updater</h3>
+                        </div>
+                        <button class="list-link" id="electron-updater-link">Visit Website</button>
+                    </li>
+                    <li class="credits-item">
+                        <div class="item-header">
+                            <h3 class="item-title">Ghostscript</h3>
+                        </div>
+                        <button class="list-link" id="ghostscript-link">Visit Website</button>
+                    </li>
+                    <li class="credits-item">
+                        <div class="item-header">
+                            <h3 class="item-title">PdfSharpCore</h3>
+                        </div>
+                        <button class="list-link" id="pdfsharpcore-link">Visit Website</button>
+                    </li>
+                    <li class="credits-item">
+                        <div class="item-header">
+                            <h3 class="item-title">SixLabors.ImageSharp</h3>
+                        </div>
+                        <button class="list-link" id="imagesharp-link">Visit Website</button>
+                    </li>
+                    <li class="credits-item">
+                        <div class="item-header">
+                            <h3 class="item-title">.NET 8</h3>
+                        </div>
+                        <button class="list-link" id="dotnet-link">Visit Website</button>
+                    </li>
+                    <li class="credits-item">
+                        <div class="item-header">
+                            <h3 class="item-title">Python</h3>
+                        </div>
+                        <button class="list-link" id="python-link">Visit Website</button>
+                    </li>
+                    <li class="credits-item">
+                        <div class="item-header">
+                            <h3 class="item-title">CliWrap</h3>
+                        </div>
+                        <button class="list-link" id="cliwrap-link">Visit Website</button>
+                    </li>
+                    <li class="credits-item">
+                        <div class="item-header">
+                            <h3 class="item-title">Portable.BouncyCastle</h3>
+                        </div>
+                        <button class="list-link" id="bouncycastle-link">Visit Website</button>
+                    </li>
+                    <li class="credits-item">
+                        <div class="item-header">
+                            <h3 class="item-title">Tesseract.js</h3>
+                        </div>
+                        <button class="list-link" id="tesseract-link">Visit Website</button>
+                    </li>
+                    <li class="credits-item">
+                        <div class="item-header">
+                            <h3 class="item-title">PDF.js by Mozilla</h3>
+                        </div>
+                        <button class="list-link" id="pdfjs-link">Visit Website</button>
+                    </li>
+                </ul>
             </section>
         </main>
     </div>
     <script type="module" src="./credits.js"></script>
 </body>
+
 </html>
