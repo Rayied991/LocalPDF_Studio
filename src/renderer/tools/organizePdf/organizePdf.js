@@ -21,13 +21,15 @@
 import * as pdfjsLib from '../../../pdf/build/pdf.mjs';
 import { API } from '../../api/api.js';
 import customAlert from '../../utils/customAlert.js';
-import loadingUI from '../../utils/loading.js';
 import { initializeGlobalDragDrop } from '../../utils/globalDragDrop.js';
+import i18n from '../../utils/i18n.js';
+import loadingUI from '../../utils/loading.js';
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = '../../../pdf/build/pdf.worker.mjs';
 window.pdfjsLib = pdfjsLib;
 
 document.addEventListener('DOMContentLoaded', async () => {
+    await i18n.init();
     await API.init();
 
     const selectPdfBtn = document.getElementById('select-pdf-btn');

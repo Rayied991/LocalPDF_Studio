@@ -20,14 +20,16 @@
 
 import * as pdfjsLib from '../../../pdf/build/pdf.mjs';
 import customAlert from '../../utils/customAlert.js';
-import loadingUI from '../../utils/loading.js';
 import { initializeGlobalDragDropForOCR } from '../../utils/globalDragDrop.js';
+import i18n from '../../utils/i18n.js';
+import loadingUI from '../../utils/loading.js';
 import tesseractOcr from '../../utils/tesseractOcr.js';
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = '../../../pdf/build/pdf.worker.mjs';
 window.pdfjsLib = pdfjsLib;
 
 document.addEventListener('DOMContentLoaded', async () => {
+    await i18n.init();
     const selectPdfBtn = document.getElementById('select-pdf-btn');
     const removePdfBtn = document.getElementById('remove-pdf-btn');
     const processBtn = document.getElementById('process-btn');
@@ -396,7 +398,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     function updateSelectionInfo() {
         const count = selectedPages.size;
         if (count === 0) {
-            selectionInfoEl.textContent = 'No pages selected';
+            // selectionInfoEl.textContent = 'No pages selected';
+            selectionInfoEl.textContent = i18n.t('OCR.preview_no_pages_selected');
             selectionInfoEl.style.display = 'none';
         } else {
             const sortedPages = Array.from(selectedPages).sort((a, b) => a - b);
