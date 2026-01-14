@@ -86,6 +86,9 @@ class DonationManager {
 
         const gumroadBtn = document.getElementById('gumroad-donate');
         if (gumroadBtn) gumroadBtn.addEventListener('click', () => this.openGumroad());
+
+        const gumroadBtn2 = document.getElementById('gumroad-donate2');
+        if (gumroadBtn2) gumroadBtn2.addEventListener('click', () => this.openGumroad2());
     }
 
     setupSupportHandlers() {
@@ -136,6 +139,10 @@ class DonationManager {
 
     openGumroad() {
         this.openExternal('https://alinur3.gumroad.com/coffee');
+    }
+
+    openGumroad2() {
+        this.openExternal('https://alinur3.gumroad.com/l/csbhxr');
     }
 
     async shareApp() {
