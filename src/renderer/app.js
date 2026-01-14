@@ -114,7 +114,7 @@ window.addEventListener('DOMContentLoaded', async() => {
         isDialogOpen = true;
         openPdfBtn.disabled = true;
         // openPdfBtn.textContent = 'Selecting...';
-        openPdfBtn.textContent =  i18n.t('selecting');
+        openPdfBtn.textContent =  i18n.t('nav.selecting');
 
         try {
             const files = await window.electronAPI.selectPdfs();
@@ -132,7 +132,7 @@ window.addEventListener('DOMContentLoaded', async() => {
             isDialogOpen = false;
             openPdfBtn.disabled = false;
             // openPdfBtn.textContent = 'Open PDF Reader';
-            openPdfBtn.textContent = i18n.t('open-pdf-btn');
+            openPdfBtn.textContent = i18n.t('nav.open-pdf-btn');
         }
     });
 
