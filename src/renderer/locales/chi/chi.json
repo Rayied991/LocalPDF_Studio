@@ -26,7 +26,6 @@
   "error": {
     "empty-message": "未打开PDF。点击\"打开PDF阅读器\"开始使用！"
   },
-  
   "settings": {
     "settings-title": "设置",
     "startup-behavior": "启动行为",
@@ -35,40 +34,33 @@
     "fresh-start": "全新开始",
     "fresh-start-desc": "每次都从头开始",
     "sidebar-note": "侧边栏布局和大小首选项始终被记住",
-
-    "language-section": "语言",
+    "language-section": "语言（实验性）",
     "interface-language": "界面语言",
     "interface-language-desc": "选择应用程序的首选语言",
-
     "interface-section": "界面",
     "show-clock": "显示时钟",
     "show-clock-desc": "未打开PDF时显示时间和日期",
-
     "search-history": "搜索和历史",
     "enable-search": "启用搜索栏",
     "enable-search-desc": "快速查找并重新打开以前打开的PDF文件",
     "search-note": "仅索引您在LocalPDF Studio中打开的PDF文件",
     "clear-history-btn": "清除搜索历史",
-
     "auto-updates": "自动更新",
     "update-status": "正在检查更新...",
     "check-updates-btn": "检查更新",
     "update-checker": "尚未檢查任何更新。",
-
     "cancel-btn": "取消",
     "save-changes-btn": "保存更改"
   },
   "history-lang": {
     "history-cleared-title": "搜索历史已清除",
     "history-cleared-msg": "所有搜索历史记录已删除。",
-
     "lang-en": "English  | 英语",
     "lang-bn": "Bengali  | 孟加拉语",
     "lang-chi": "Chinese | 中文",
     "lang-jp": "Japanese | 日语"
   },
-
-  "about":{
+  "about": {
     "back-btn": "← 返回应用",
     "pg-title": "关于 LocalPDF Studio",
     "app-tag": "您的完整离线 PDF 工具包",
@@ -95,7 +87,6 @@
     "report-issues": "报告问题",
     "credits-btn": "致谢"
   },
-
   "donate": {
     "back-btn": "← 返回应用",
     "page-title": "支持 LocalPDF Studio",
@@ -140,7 +131,6 @@
     "thanks-card1": "谢谢您！",
     "thanks-card2": "无论是通过捐赠、代码贡献，还是简单地使用和分享 LocalPDF Studio，您的支持对我们来说都意义重大。我们正在共同努力为每个人构建更好、注重隐私的软件。"
   },
-
   "credits": {
     "back-btn": "← 返回关于页面",
     "page-title": "致谢与依赖项",
@@ -148,8 +138,7 @@
     "section-title": "项目与依赖项",
     "visit-url": "访问网站"
   },
-
-  "common":{
+  "common": {
     "back-btn": "← 返回",
     "btn-select": "点击选择 PDF 文件或将 PDF 拖放到此处",
     "btn-select-merge": "点击选择 PDF 文件或将 PDF 拖放到此处",
@@ -157,9 +146,8 @@
     "pdf-preview": "PDF 预览",
     "image-preview": "图片预览"
   },
-
   "addPageNumbers": {
-    "page-title": "添加页码",    
+    "page-title": "添加页码",
     "page-numbers": "页码选项",
     "position-label": "位置：",
     "position-option-1": "底部居中",
@@ -176,7 +164,6 @@
     "startingNumber-hlpTxt-label": "第一页将显示此数字",
     "addPageNumberBtn": "添加页码"
   },
-
   "addWatermark": {
     "page-title": "添加水印",
     "wm-options": "水印选项",
@@ -208,7 +195,6 @@
     "wm-preview": "水印预览：",
     "add-wm-btn": "添加水印"
   },
-
   "compressPdf": {
     "page-title": "压缩 PDF",
     "compress-settings": "压缩设置",
@@ -226,7 +212,6 @@
     "better-file": "质量更好",
     "compress-btn": "压缩 PDF"
   },
-
   "cropPdf": {
     "page-title": "裁剪 PDF",
     "crop-options": "裁剪选项",
@@ -245,7 +230,6 @@
     "crop-btn": "裁剪 PDF",
     "no-page-warning": "页面不可用。"
   },
-
   "editMetadata": {
     "page-title": "查看和编辑元数据",
     "metadata-form": "PDF 元数据",
@@ -272,7 +256,6 @@
     "save-btn1": "保存元数据",
     "save-btn2": "使用更新后的元数据保存 PDF"
   },
-
   "extractImage": {
     "page-title": "从 PDF 提取或删除图片",
     "pdf-preview": "PDF 预览 - 选择页面",
@@ -306,7 +289,6 @@
     "preview-selection-btn": "预览选择",
     "extract-images-btn": "提取图片"
   },
-
   "imageToPdf": {
     "page-title": "图片转 PDF",
     "clear-btn": "清除全部",
@@ -325,7 +307,6 @@
     "image-quality-helpTxt": "质量越高 = 文件越大。",
     "convert-btn": "转换为 PDF"
   },
-
   "lockUnlock": {
     "page-title": "锁定/解锁 PDF",
     "operation-header": "操作",
@@ -341,50 +322,40 @@
     "helpTxt": "输入用于加密此 PDF 的密码",
     "lock-unlock-btn": "锁定 PDF"
   },
-
   "merge": {
     "page-title": "合并 PDF",
     "clear-btn": "清除全部",
     "merge-btn": "合并 PDF"
   },
-   "OCR": {
+  "OCR": {
     "app_title": "LocalPDF Studio - OCR PDF",
     "nav_back": "← 返回",
     "tool_title": "OCR PDF",
-
     "select_file_button": "点击选择 PDF 或图片文件，或将文件拖放到此处",
     "remove_file_button": "×",
-
     "preview_title": "PDF 预览 - 选择页面",
     "preview_no_pages_selected": "未选择任何页面",
-
     "page_selection_options": "页面选择选项",
     "quick_actions": "快速操作",
     "select_all_pages": "选择所有页面",
     "select_even_pages": "选择偶数页",
     "select_odd_pages": "选择奇数页",
     "invert_selection": "反转选择",
-
     "manual_pages_title": "手动指定页面",
     "manual_pages_label": "单独页面：",
     "manual_pages_placeholder": "例如：1, 3, 5, 10",
     "manual_pages_help": "使用逗号分隔页面编号",
-
     "page_ranges_title": "页面范围",
     "page_ranges_label": "页面范围：",
     "page_ranges_placeholder": "例如：1-3, 7-9, 15-20",
     "page_ranges_help": "输入如 \"1-5, 10-15\" 或混合使用：\"1, 3-5, 8\"",
-
     "clear_selection": "清除选择",
-
     "ocr_language_options": "OCR 语言选项",
     "select_ocr_languages": "选择 OCR 语言：",
     "search_language_placeholder": "搜索语言...",
     "ocr_language_help": "选择一种或多种语言进行文字识别",
     "tesseract_note": "注意：Tesseract 每种语言只需一次联网即可下载模型。",
-
     "process_with_ocr": "使用 OCR 处理",
-
     "progress_title": "正在使用 OCR 处理 PDF",
     "progress_initializing": "正在初始化...",
     "progress_processing_page": "正在处理页面",
@@ -393,120 +364,92 @@
     "large_file_warning": "检测到大文件 - 为提高性能，正在分批处理",
     "cancel_ocr_processing": "取消 OCR 处理"
   },
-   "organizePDF":{
+  "organizePDF": {
     "app_title": "LocalPDF Studio - 整理 PDF",
-  "nav_back": "← 返回",
-  "tool_title": "整理 / 重新排列 PDF",
-
-  "select_pdf_button": "点击选择 PDF 文件或将 PDF 拖放到此处",
-  "remove_file_button": "×",
-
-  "how_to_organize_title": "如何整理：",
-  "organize_drag_drop": "拖放页面以重新排序",
-  "organize_rotate": "点击旋转按钮将页面旋转 90°",
-  "organize_duplicate": "点击复制按钮复制页面",
-  "organize_delete": "点击删除按钮移除页面",
-
-  "drag_pages_title": "拖动页面以重新排序",
-  "reset_to_original": "重置为原始顺序",
-
-  "save_organized_pdf": "保存整理后的 PDF"
-   },
-  "pdftoImg":{
-  "app_title": "LocalPDF Studio - PDF を画像に変換",
-  "nav_back": "← 戻る",
-  "tool_title": "PDF を画像に変換",
-
-  "select_pdf_button": "PDF ファイルをクリックして選択、またはここにドロップしてください",
-  "remove_file_button": "×",
-
-  "preview_title": "PDF プレビュー",
-
-  "conversion_options_title": "変換オプション",
-
-  "image_quality_label": "画像品質：",
-  "quality_low": "低 (72 DPI) - ファイルサイズ小",
-  "quality_medium": "中 (150 DPI) - バランス",
-  "quality_high": "高 (300 DPI) - 最高品質",
-  "quality_help": "DPI が高いほど品質は向上しますが、ファイルサイズが大きくなります",
-
-  "image_format_label": "出力形式：",
-  "format_jpg": "JPG（小さいサイズ、写真向き）",
-  "format_png": "PNG（大きいサイズ、非可逆圧縮なし）",
-  "format_help": "すべての画像は ZIP ファイルとして保存されます",
-
-  "include_page_numbers": "ファイル名にページ番号を含める",
-  "page_number_example": "例：document_page_001.jpg, document_page_002.jpg",
-
-  "convert_to_image": "画像に変換"
+    "nav_back": "← 返回",
+    "tool_title": "整理 / 重新排列 PDF",
+    "select_pdf_button": "点击选择 PDF 文件或将 PDF 拖放到此处",
+    "remove_file_button": "×",
+    "how_to_organize_title": "如何整理：",
+    "organize_drag_drop": "拖放页面以重新排序",
+    "organize_rotate": "点击旋转按钮将页面旋转 90°",
+    "organize_duplicate": "点击复制按钮复制页面",
+    "organize_delete": "点击删除按钮移除页面",
+    "drag_pages_title": "拖动页面以重新排序",
+    "reset_to_original": "重置为原始顺序",
+    "save_organized_pdf": "保存整理后的 PDF"
   },
-  "removepages":{
-     "app_title": "LocalPDF Studio - 删除页面",
-  "nav_back": "← 返回",
-  "tool_title": "删除 PDF 页面",
-
-  "select_pdf_button": "点击选择 PDF 文件或将 PDF 拖放到此处",
-  "remove_file_button": "×",
-
-  "preview_title": "PDF 预览 - 选择要删除的页面",
-  "preview_no_pages_selected": "未选择任何页面",
-  "clear_selection": "清除选择",
-
-  "removal_options_title": "删除选项",
-
-  "quick_actions": "快速操作",
-  "select_even_pages": "选择偶数页",
-  "select_odd_pages": "选择奇数页",
-  "invert_selection": "反转选择",
-
-  "manual_pages_title": "手动指定页面",
-  "manual_pages_label": "单独页面：",
-  "manual_pages_placeholder": "例如：1, 3, 5, 10",
-  "manual_pages_help": "使用逗号分隔页面编号",
-
-  "remove_page_ranges_title": "删除页面范围",
-  "page_ranges_label": "页面范围：",
-  "page_ranges_placeholder": "例如：1-3, 7-9, 15-20",
-  "page_ranges_help": "输入如 \"1-5, 10-15\"",
-
-  "pattern_removal_title": "基于模式的删除",
-  "remove_even_pages": "删除所有偶数页",
-  "remove_odd_pages": "删除所有奇数页",
-
-  "remove_every_nth_page": "每隔 N 页删除：",
-  "start_from_page": "起始页：",
-  "nth_page_example": "示例：从第 3 页开始每隔 3 页删除，将删除第 3、6、9 页等。",
-
-  "preview_changes": "预览更改",
-  "remove_pages": "删除页面"
+  "pdftoImg": {
+    "app_title": "LocalPDF Studio - PDF を画像に変換",
+    "nav_back": "← 戻る",
+    "tool_title": "PDF を画像に変換",
+    "select_pdf_button": "PDF ファイルをクリックして選択、またはここにドロップしてください",
+    "remove_file_button": "×",
+    "preview_title": "PDF プレビュー",
+    "conversion_options_title": "変換オプション",
+    "image_quality_label": "画像品質：",
+    "quality_low": "低 (72 DPI) - ファイルサイズ小",
+    "quality_medium": "中 (150 DPI) - バランス",
+    "quality_high": "高 (300 DPI) - 最高品質",
+    "quality_help": "DPI が高いほど品質は向上しますが、ファイルサイズが大きくなります",
+    "image_format_label": "出力形式：",
+    "format_jpg": "JPG（小さいサイズ、写真向き）",
+    "format_png": "PNG（大きいサイズ、非可逆圧縮なし）",
+    "format_help": "すべての画像は ZIP ファイルとして保存されます",
+    "include_page_numbers": "ファイル名にページ番号を含める",
+    "page_number_example": "例：document_page_001.jpg, document_page_002.jpg",
+    "convert_to_image": "画像に変換"
   },
-  "splitpdf":{
+  "removepages": {
+    "app_title": "LocalPDF Studio - 删除页面",
+    "nav_back": "← 返回",
+    "tool_title": "删除 PDF 页面",
+    "select_pdf_button": "点击选择 PDF 文件或将 PDF 拖放到此处",
+    "remove_file_button": "×",
+    "preview_title": "PDF 预览 - 选择要删除的页面",
+    "preview_no_pages_selected": "未选择任何页面",
+    "clear_selection": "清除选择",
+    "removal_options_title": "删除选项",
+    "quick_actions": "快速操作",
+    "select_even_pages": "选择偶数页",
+    "select_odd_pages": "选择奇数页",
+    "invert_selection": "反转选择",
+    "manual_pages_title": "手动指定页面",
+    "manual_pages_label": "单独页面：",
+    "manual_pages_placeholder": "例如：1, 3, 5, 10",
+    "manual_pages_help": "使用逗号分隔页面编号",
+    "remove_page_ranges_title": "删除页面范围",
+    "page_ranges_label": "页面范围：",
+    "page_ranges_placeholder": "例如：1-3, 7-9, 15-20",
+    "page_ranges_help": "输入如 \"1-5, 10-15\"",
+    "pattern_removal_title": "基于模式的删除",
+    "remove_even_pages": "删除所有偶数页",
+    "remove_odd_pages": "删除所有奇数页",
+    "remove_every_nth_page": "每隔 N 页删除：",
+    "start_from_page": "起始页：",
+    "nth_page_example": "示例：从第 3 页开始每隔 3 页删除，将删除第 3、6、9 页等。",
+    "preview_changes": "预览更改",
+    "remove_pages": "删除页面"
+  },
+  "splitpdf": {
     "app_title": "LocalPDF Studio - 拆分 PDF",
-  "nav_back": "← 返回",
-  "tool_title": "拆分 PDF",
-
-  "select_pdf_button": "点击选择 PDF 文件或将 PDF 拖放到此处",
-  "remove_file_button": "×",
-
-  "preview_title": "PDF 预览",
-
-  "split_options_title": "拆分选项",
-
-  "split_by_page_ranges": "按页面范围拆分",
-  "page_ranges_placeholder": "例如：1-3, 5-7, 8-10",
-  "page_ranges_help": "输入如 \"1-3, 5-7\" 或单页如 \"1, 3, 5\"",
-
-  "split_at_specific_pages": "在指定页面拆分",
-  "split_pages_placeholder": "例如：2, 5, 8（在这些页面之后拆分）",
-  "split_pages_help": "PDF 将在每个指定页面之后拆分",
-
-  "split_every_n_pages": "每隔 N 页拆分",
-  "page_interval_placeholder": "例如：5",
-  "every_n_pages_help": "按指定页数创建多个独立的 PDF",
-
-  "extract_all_pages": "将所有页面提取为单独的 PDF",
-  "extract_all_pages_help": "每一页都会保存为一个单独的 PDF 文件",
-
-  "split_pdf_button": "拆分 PDF"
+    "nav_back": "← 返回",
+    "tool_title": "拆分 PDF",
+    "select_pdf_button": "点击选择 PDF 文件或将 PDF 拖放到此处",
+    "remove_file_button": "×",
+    "preview_title": "PDF 预览",
+    "split_options_title": "拆分选项",
+    "split_by_page_ranges": "按页面范围拆分",
+    "page_ranges_placeholder": "例如：1-3, 5-7, 8-10",
+    "page_ranges_help": "输入如 \"1-3, 5-7\" 或单页如 \"1, 3, 5\"",
+    "split_at_specific_pages": "在指定页面拆分",
+    "split_pages_placeholder": "例如：2, 5, 8（在这些页面之后拆分）",
+    "split_pages_help": "PDF 将在每个指定页面之后拆分",
+    "split_every_n_pages": "每隔 N 页拆分",
+    "page_interval_placeholder": "例如：5",
+    "every_n_pages_help": "按指定页数创建多个独立的 PDF",
+    "extract_all_pages": "将所有页面提取为单独的 PDF",
+    "extract_all_pages_help": "每一页都会保存为一个单独的 PDF 文件",
+    "split_pdf_button": "拆分 PDF"
   }
 }

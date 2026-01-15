@@ -26,7 +26,6 @@
   "error": {
     "empty-message": "কোন পিডিএফ খোলা নেই। শুরু করতে \"পিডিএফ রিডার খুলুন\" ক্লিক করুন!"
   },
-
   "settings": {
     "settings-title": "সেটিংস",
     "startup-behavior": "স্টার্টআপ আচরণ",
@@ -35,39 +34,32 @@
     "fresh-start": "নতুন শুরু",
     "fresh-start-desc": "প্রতিবার একটি পরিষ্কার স্লেট দিয়ে শুরু করুন",
     "sidebar-note": "সাইডবার লেআউট এবং আকার পছন্দগুলি সর্বদা মনে রাখা হয়",
-
-    "language-section": "ভাষা",
+    "language-section": "ভাষা (পরীক্ষামূলক)",
     "interface-language": "ইন্টারফেস ভাষা",
     "interface-language-desc": "অ্যাপ্লিকেশনের জন্য আপনার পছন্দের ভাষা নির্বাচন করুন",
-
     "interface-section": "ইন্টারফেস",
     "show-clock": "ঘড়ি দেখান",
     "show-clock-desc": "কোন পিডিএফ খোলা না থাকলে সময় এবং তারিখ প্রদর্শন করুন",
-
     "search-history": "অনুসন্ধান এবং ইতিহাস",
     "enable-search": "অনুসন্ধান বার সক্ষম করুন",
     "enable-search-desc": "দ্রুত খুঁজুন এবং পূর্বে খোলা পিডিএফ ফাইলগুলি পুনরায় খুলুন",
     "search-note": "শুধুমাত্র LocalPDF Studio-তে খোলা পিডিএফ ফাইলগুলি সূচীবদ্ধ করে",
     "clear-history-btn": "অনুসন্ধান ইতিহাস মুছুন",
-
     "auto-updates": "স্বয়ংক্রিয় আপডেট",
     "update-status": "আপডেটের জন্য পরীক্ষা করা হচ্ছে...",
     "check-updates-btn": "আপডেট পরীক্ষা করুন",
     "update-checker": "এখনও কোনও আপডেট চেক করা হয়নি।",
-
     "cancel-btn": "বাতিল",
     "save-changes-btn": "পরিবর্তন সংরক্ষণ করুন"
   },
   "history-lang": {
     "history-cleared-title": "অনুসন্ধান ইতিহাস মুছে ফেলা হয়েছে",
     "history-cleared-msg": "সমস্ত অনুসন্ধান ইতিহাস সরানো হয়েছে।",
-
     "lang-en": "English  | ইংরেজি",
     "lang-bn": "Bengali  | বাংলা",
     "lang-chi": "Chinese | চীনা",
     "lang-jp": "Japanese | জাপানি"
   },
-
   "about": {
     "back-btn": "← অ্যাপে ফিরুন",
     "pg-title": "LocalPDF Studio সম্পর্কে",
@@ -95,7 +87,6 @@
     "report-issues": "ইস্যু রিপোর্ট করুন",
     "credits-btn": "ক্রেডিটস"
   },
-
   "donate": {
     "back-btn": "← অ্যাপে ফিরুন",
     "page-title": "LocalPDF Studio সমর্থন করুন",
@@ -140,7 +131,6 @@
     "thanks-card1": "ধন্যবাদ!",
     "thanks-card2": "দান, কোড অবদান, অথবা সহজভাবে LocalPDF Studio ব্যবহার এবং শেয়ার করার মাধ্যমে, আপনার সমর্থন আমাদের কাছে অত্যন্ত মূল্যবান। একসাথে আমরা সবার জন্য আরও ভাল, প্রাইভেসি-কেন্দ্রিক সফটওয়্যার তৈরি করছি।"
   },
-
   "credits": {
     "back-btn": "← সম্পর্কে পৃষ্ঠায় ফিরুন",
     "page-title": "ক্রেডিটস ও ডিপেন্ডেন্সি",
@@ -148,8 +138,7 @@
     "section-title": "প্রকল্প ও ডিপেন্ডেন্সি",
     "visit-url": "ওয়েবসাইট ভিজিট করুন"
   },
-  
-  "common":{
+  "common": {
     "back-btn": "← পিছনে",
     "btn-select": "PDF ফাইল নির্বাচন করতে ক্লিক করুন অথবা PDF এখানে ড্রপ করুন",
     "btn-select-merge": "PDF ফাইল নির্বাচন করতে ক্লিক করুন অথবা PDF এখানে ড্রপ করুন",
@@ -157,8 +146,7 @@
     "pdf-preview": "PDF প্রিভিউ",
     "image-preview": "ইমেজ প্রিভিউ"
   },
-
-  "addPageNumbers": {    
+  "addPageNumbers": {
     "page-title": "পৃষ্ঠা নম্বর যোগ করুন",
     "page-numbers": "পৃষ্ঠা নম্বরের অপশনসমূহ",
     "position-label": "অবস্থান:",
@@ -176,7 +164,6 @@
     "startingNumber-hlpTxt-label": "প্রথম পৃষ্ঠায় এই নম্বর থাকবে",
     "addPageNumberBtn": "পৃষ্ঠা নম্বর যোগ করুন"
   },
-
   "addWatermark": {
     "page-title": "ওয়াটারমার্ক যোগ করুন",
     "wm-options": "ওয়াটারমার্ক অপশনসমূহ",
@@ -208,7 +195,6 @@
     "wm-preview": "ওয়াটারমার্ক প্রিভিউ:",
     "add-wm-btn": "ওয়াটারমার্ক যোগ করুন"
   },
-
   "compressPdf": {
     "page-title": "PDF কম্প্রেস করুন",
     "compress-settings": "কম্প্রেশন সেটিংস",
@@ -226,7 +212,6 @@
     "better-file": "বেশি মানসম্পন্ন",
     "compress-btn": "PDF কম্প্রেস করুন"
   },
-
   "cropPdf": {
     "page-title": "PDF ক্রপ করুন",
     "crop-options": "ক্রপ অপশনসমূহ",
@@ -245,7 +230,6 @@
     "crop-btn": "PDF ক্রপ করুন",
     "no-page-warning": "পৃষ্ঠা পাওয়া যায়নি।"
   },
-
   "editMetadata": {
     "page-title": "মেটাডাটা দেখুন এবং সম্পাদনা করুন",
     "metadata-form": "PDF মেটাডাটা",
@@ -272,7 +256,6 @@
     "save-btn1": "মেটাডাটা সংরক্ষণ করুন",
     "save-btn2": "আপডেটেড মেটাডাটা দিয়ে PDF সংরক্ষণ করুন"
   },
-
   "extractImage": {
     "page-title": "PDF থেকে ইমেজ এক্সট্রাক্ট বা মুছুন",
     "pdf-preview": "PDF প্রিভিউ - পৃষ্ঠা নির্বাচন করুন",
@@ -306,7 +289,6 @@
     "preview-selection-btn": "সিলেকশন প্রিভিউ করুন",
     "extract-images-btn": "ইমেজ এক্সট্রাক্ট করুন"
   },
-
   "imageToPdf": {
     "page-title": "ইমেজ থেকে PDF",
     "clear-btn": "সব ক্লিয়ার করুন",
@@ -325,7 +307,6 @@
     "image-quality-helpTxt": "বেশি কোয়ালিটি = বড় ফাইল সাইজ।",
     "convert-btn": "PDF-এ কনভার্ট করুন"
   },
-
   "lockUnlock": {
     "page-title": "PDF লক/আনলক করুন",
     "operation-header": "অপারেশন",
@@ -341,50 +322,40 @@
     "helpTxt": "এই PDF এনক্রিপ্ট করতে ব্যবহৃত পাসওয়ার্ড লিখুন",
     "lock-unlock-btn": "PDF লক করুন"
   },
-
   "merge": {
     "page-title": "PDF মার্জ করুন",
     "clear-btn": "সব ক্লিয়ার করুন",
     "merge-btn": "PDF মার্জ করুন"
   },
-    "OCR": {
+  "OCR": {
     "app_title": "LocalPDF Studio - OCR পিডিএফ",
     "nav_back": "← ফিরে যান",
     "tool_title": "OCR পিডিএফ",
-
     "select_file_button": "একটি পিডিএফ বা ছবি ফাইল নির্বাচন করতে ক্লিক করুন অথবা এখানে ফাইল ড্রপ করুন",
     "remove_file_button": "×",
-
     "preview_title": "পিডিএফ প্রিভিউ - পৃষ্ঠা নির্বাচন করুন",
     "preview_no_pages_selected": "কোনো পৃষ্ঠা নির্বাচন করা হয়নি",
-
     "page_selection_options": "পৃষ্ঠা নির্বাচন অপশন",
     "quick_actions": "দ্রুত কার্যক্রম",
     "select_all_pages": "সব পৃষ্ঠা নির্বাচন করুন",
     "select_even_pages": "জোড় পৃষ্ঠা নির্বাচন করুন",
     "select_odd_pages": "বিজোড় পৃষ্ঠা নির্বাচন করুন",
     "invert_selection": "নির্বাচন উল্টান",
-
     "manual_pages_title": "ম্যানুয়ালি পৃষ্ঠা নির্ধারণ করুন",
     "manual_pages_label": "স্বতন্ত্র পৃষ্ঠা:",
     "manual_pages_placeholder": "যেমন: 1, 3, 5, 10",
     "manual_pages_help": "কমা দিয়ে আলাদা করে পৃষ্ঠা নম্বর লিখুন",
-
     "page_ranges_title": "পৃষ্ঠা পরিসর",
     "page_ranges_label": "পৃষ্ঠা পরিসর:",
     "page_ranges_placeholder": "যেমন: 1-3, 7-9, 15-20",
     "page_ranges_help": "\"1-5, 10-15\" বা মিশ্রভাবে: \"1, 3-5, 8\" লিখুন",
-
     "clear_selection": "নির্বাচন মুছুন",
-
     "ocr_language_options": "OCR ভাষা অপশন",
     "select_ocr_languages": "OCR ভাষা নির্বাচন করুন:",
     "search_language_placeholder": "ভাষা অনুসন্ধান করুন...",
     "ocr_language_help": "লেখা শনাক্তকরণের জন্য এক বা একাধিক ভাষা নির্বাচন করুন",
     "tesseract_note": "নোট: প্রতিটি ভাষার জন্য টেসার্যাক্ট একবার ইন্টারনেট সংযোগ ব্যবহার করে মডেল ডাউনলোড করে।",
-
     "process_with_ocr": "OCR দিয়ে প্রক্রিয়া করুন",
-
     "progress_title": "OCR দিয়ে পিডিএফ প্রক্রিয়াকরণ হচ্ছে",
     "progress_initializing": "শুরু হচ্ছে...",
     "progress_processing_page": "পৃষ্ঠা প্রক্রিয়াকরণ হচ্ছে",
@@ -393,120 +364,92 @@
     "large_file_warning": "বড় ফাইল শনাক্ত হয়েছে - উন্নত পারফরম্যান্সের জন্য ব্যাচে প্রক্রিয়া করা হচ্ছে",
     "cancel_ocr_processing": "OCR প্রক্রিয়া বাতিল করুন"
   },
-  "organizePDF":{
-  "app_title": "LocalPDF Studio - পিডিএফ সাজান",
-  "nav_back": "← ফিরে যান",
-  "tool_title": "পিডিএফ সাজান / পুনর্বিন্যাস করুন",
-
-  "select_pdf_button": "একটি পিডিএফ ফাইল নির্বাচন করতে ক্লিক করুন অথবা এখানে পিডিএফ ড্রপ করুন",
-  "remove_file_button": "×",
-
-  "how_to_organize_title": "কিভাবে সাজাবেন:",
-  "organize_drag_drop": "পৃষ্ঠা পুনর্বিন্যাস করতে ড্র্যাগ ও ড্রপ করুন",
-  "organize_rotate": "পৃষ্ঠা ৯০° ঘোরাতে রোটেশন বাটনে ক্লিক করুন",
-  "organize_duplicate": "একটি পৃষ্ঠা কপি করতে ডুপ্লিকেট বাটনে ক্লিক করুন",
-  "organize_delete": "একটি পৃষ্ঠা মুছতে ডিলিট বাটনে ক্লিক করুন",
-
-  "drag_pages_title": "পুনর্বিন্যাস করতে পৃষ্ঠা টানুন",
-  "reset_to_original": "মূল অবস্থায় ফিরিয়ে নিন",
-
-  "save_organized_pdf": "সাজানো পিডিএফ সংরক্ষণ করুন"
+  "organizePDF": {
+    "app_title": "LocalPDF Studio - পিডিএফ সাজান",
+    "nav_back": "← ফিরে যান",
+    "tool_title": "পিডিএফ সাজান / পুনর্বিন্যাস করুন",
+    "select_pdf_button": "একটি পিডিএফ ফাইল নির্বাচন করতে ক্লিক করুন অথবা এখানে পিডিএফ ড্রপ করুন",
+    "remove_file_button": "×",
+    "how_to_organize_title": "কিভাবে সাজাবেন:",
+    "organize_drag_drop": "পৃষ্ঠা পুনর্বিন্যাস করতে ড্র্যাগ ও ড্রপ করুন",
+    "organize_rotate": "পৃষ্ঠা ৯০° ঘোরাতে রোটেশন বাটনে ক্লিক করুন",
+    "organize_duplicate": "একটি পৃষ্ঠা কপি করতে ডুপ্লিকেট বাটনে ক্লিক করুন",
+    "organize_delete": "একটি পৃষ্ঠা মুছতে ডিলিট বাটনে ক্লিক করুন",
+    "drag_pages_title": "পুনর্বিন্যাস করতে পৃষ্ঠা টানুন",
+    "reset_to_original": "মূল অবস্থায় ফিরিয়ে নিন",
+    "save_organized_pdf": "সাজানো পিডিএফ সংরক্ষণ করুন"
   },
-  "pdftoImg":{
+  "pdftoImg": {
     "app_title": "LocalPDF Studio - পিডিএফ থেকে ছবি",
-  "nav_back": "← ফিরে যান",
-  "tool_title": "পিডিএফ থেকে ছবি",
-
-  "select_pdf_button": "একটি পিডিএফ ফাইল নির্বাচন করতে ক্লিক করুন অথবা এখানে পিডিএফ ড্রপ করুন",
-  "remove_file_button": "×",
-
-  "preview_title": "পিডিএফ প্রিভিউ",
-
-  "conversion_options_title": "রূপান্তর অপশন",
-
-  "image_quality_label": "ছবির মান:",
-  "quality_low": "নিম্ন (72 DPI) - ছোট ফাইল সাইজ",
-  "quality_medium": "মাঝারি (150 DPI) - ভারসাম্যপূর্ণ",
-  "quality_high": "উচ্চ (300 DPI) - সর্বোত্তম মান",
-  "quality_help": "উচ্চ DPI = ভালো মান কিন্তু বড় ফাইল সাইজ",
-
-  "image_format_label": "আউটপুট ফরম্যাট:",
-  "format_jpg": "JPG (ছোট সাইজ, ছবির জন্য ভালো)",
-  "format_png": "PNG (বড় সাইজ, লসলেস মান)",
-  "format_help": "সব ছবি একটি ZIP ফাইলে সংরক্ষণ করা হবে",
-
-  "include_page_numbers": "ফাইলনামে পৃষ্ঠা নম্বর যুক্ত করুন",
-  "page_number_example": "যেমন: document_page_001.jpg, document_page_002.jpg",
-
-  "convert_to_image": "ছবিতে রূপান্তর করুন"
+    "nav_back": "← ফিরে যান",
+    "tool_title": "পিডিএফ থেকে ছবি",
+    "select_pdf_button": "একটি পিডিএফ ফাইল নির্বাচন করতে ক্লিক করুন অথবা এখানে পিডিএফ ড্রপ করুন",
+    "remove_file_button": "×",
+    "preview_title": "পিডিএফ প্রিভিউ",
+    "conversion_options_title": "রূপান্তর অপশন",
+    "image_quality_label": "ছবির মান:",
+    "quality_low": "নিম্ন (72 DPI) - ছোট ফাইল সাইজ",
+    "quality_medium": "মাঝারি (150 DPI) - ভারসাম্যপূর্ণ",
+    "quality_high": "উচ্চ (300 DPI) - সর্বোত্তম মান",
+    "quality_help": "উচ্চ DPI = ভালো মান কিন্তু বড় ফাইল সাইজ",
+    "image_format_label": "আউটপুট ফরম্যাট:",
+    "format_jpg": "JPG (ছোট সাইজ, ছবির জন্য ভালো)",
+    "format_png": "PNG (বড় সাইজ, লসলেস মান)",
+    "format_help": "সব ছবি একটি ZIP ফাইলে সংরক্ষণ করা হবে",
+    "include_page_numbers": "ফাইলনামে পৃষ্ঠা নম্বর যুক্ত করুন",
+    "page_number_example": "যেমন: document_page_001.jpg, document_page_002.jpg",
+    "convert_to_image": "ছবিতে রূপান্তর করুন"
   },
-  "removepages":{
+  "removepages": {
     "app_title": "LocalPDF Studio - পৃষ্ঠা মুছুন",
-  "nav_back": "← ফিরে যান",
-  "tool_title": "পিডিএফ পৃষ্ঠা মুছুন",
-
-  "select_pdf_button": "একটি পিডিএফ ফাইল নির্বাচন করতে ক্লিক করুন অথবা এখানে পিডিএফ ড্রপ করুন",
-  "remove_file_button": "×",
-
-  "preview_title": "পিডিএফ প্রিভিউ - মুছে ফেলার জন্য পৃষ্ঠা নির্বাচন করুন",
-  "preview_no_pages_selected": "কোনো পৃষ্ঠা নির্বাচন করা হয়নি",
-  "clear_selection": "নির্বাচন মুছুন",
-
-  "removal_options_title": "মুছে ফেলার অপশন",
-
-  "quick_actions": "দ্রুত কার্যক্রম",
-  "select_even_pages": "জোড় পৃষ্ঠা নির্বাচন করুন",
-  "select_odd_pages": "বিজোড় পৃষ্ঠা নির্বাচন করুন",
-  "invert_selection": "নির্বাচন উল্টান",
-
-  "manual_pages_title": "ম্যানুয়ালি পৃষ্ঠা নির্ধারণ করুন",
-  "manual_pages_label": "স্বতন্ত্র পৃষ্ঠা:",
-  "manual_pages_placeholder": "যেমন: 1, 3, 5, 10",
-  "manual_pages_help": "কমা দিয়ে আলাদা করে পৃষ্ঠা নম্বর লিখুন",
-
-  "remove_page_ranges_title": "পৃষ্ঠা পরিসর মুছুন",
-  "page_ranges_label": "পৃষ্ঠা পরিসর:",
-  "page_ranges_placeholder": "যেমন: 1-3, 7-9, 15-20",
-  "page_ranges_help": "\"1-5, 10-15\" এর মতো লিখুন",
-
-  "pattern_removal_title": "প্যাটার্নভিত্তিক অপসারণ",
-  "remove_even_pages": "সব জোড় পৃষ্ঠা মুছুন",
-  "remove_odd_pages": "সব বিজোড় পৃষ্ঠা মুছুন",
-
-  "remove_every_nth_page": "প্রতি N-তম পৃষ্ঠা মুছুন:",
-  "start_from_page": "যে পৃষ্ঠা থেকে শুরু:",
-  "nth_page_example": "উদাহরণ: পৃষ্ঠা ৩ থেকে শুরু করে প্রতি ৩য় পৃষ্ঠা মুছে ফেললে ৩, ৬, ৯ ইত্যাদি মুছে যাবে।",
-
-  "preview_changes": "পরিবর্তনের প্রিভিউ দেখুন",
-  "remove_pages": "পৃষ্ঠা মুছুন"
+    "nav_back": "← ফিরে যান",
+    "tool_title": "পিডিএফ পৃষ্ঠা মুছুন",
+    "select_pdf_button": "একটি পিডিএফ ফাইল নির্বাচন করতে ক্লিক করুন অথবা এখানে পিডিএফ ড্রপ করুন",
+    "remove_file_button": "×",
+    "preview_title": "পিডিএফ প্রিভিউ - মুছে ফেলার জন্য পৃষ্ঠা নির্বাচন করুন",
+    "preview_no_pages_selected": "কোনো পৃষ্ঠা নির্বাচন করা হয়নি",
+    "clear_selection": "নির্বাচন মুছুন",
+    "removal_options_title": "মুছে ফেলার অপশন",
+    "quick_actions": "দ্রুত কার্যক্রম",
+    "select_even_pages": "জোড় পৃষ্ঠা নির্বাচন করুন",
+    "select_odd_pages": "বিজোড় পৃষ্ঠা নির্বাচন করুন",
+    "invert_selection": "নির্বাচন উল্টান",
+    "manual_pages_title": "ম্যানুয়ালি পৃষ্ঠা নির্ধারণ করুন",
+    "manual_pages_label": "স্বতন্ত্র পৃষ্ঠা:",
+    "manual_pages_placeholder": "যেমন: 1, 3, 5, 10",
+    "manual_pages_help": "কমা দিয়ে আলাদা করে পৃষ্ঠা নম্বর লিখুন",
+    "remove_page_ranges_title": "পৃষ্ঠা পরিসর মুছুন",
+    "page_ranges_label": "পৃষ্ঠা পরিসর:",
+    "page_ranges_placeholder": "যেমন: 1-3, 7-9, 15-20",
+    "page_ranges_help": "\"1-5, 10-15\" এর মতো লিখুন",
+    "pattern_removal_title": "প্যাটার্নভিত্তিক অপসারণ",
+    "remove_even_pages": "সব জোড় পৃষ্ঠা মুছুন",
+    "remove_odd_pages": "সব বিজোড় পৃষ্ঠা মুছুন",
+    "remove_every_nth_page": "প্রতি N-তম পৃষ্ঠা মুছুন:",
+    "start_from_page": "যে পৃষ্ঠা থেকে শুরু:",
+    "nth_page_example": "উদাহরণ: পৃষ্ঠা ৩ থেকে শুরু করে প্রতি ৩য় পৃষ্ঠা মুছে ফেললে ৩, ৬, ৯ ইত্যাদি মুছে যাবে।",
+    "preview_changes": "পরিবর্তনের প্রিভিউ দেখুন",
+    "remove_pages": "পৃষ্ঠা মুছুন"
   },
-  "splitpdf":{
+  "splitpdf": {
     "app_title": "LocalPDF Studio - পিডিএফ বিভক্ত করুন",
-  "nav_back": "← ফিরে যান",
-  "tool_title": "পিডিএফ বিভক্ত করুন",
-
-  "select_pdf_button": "একটি পিডিএফ ফাইল নির্বাচন করতে ক্লিক করুন অথবা এখানে পিডিএফ ড্রপ করুন",
-  "remove_file_button": "×",
-
-  "preview_title": "পিডিএফ প্রিভিউ",
-
-  "split_options_title": "বিভক্ত করার অপশন",
-
-  "split_by_page_ranges": "পৃষ্ঠা পরিসর অনুযায়ী বিভক্ত করুন",
-  "page_ranges_placeholder": "যেমন: 1-3, 5-7, 8-10",
-  "page_ranges_help": "\"1-3, 5-7\" অথবা একক পৃষ্ঠা \"1, 3, 5\" লিখুন",
-
-  "split_at_specific_pages": "নির্দিষ্ট পৃষ্ঠায় বিভক্ত করুন",
-  "split_pages_placeholder": "যেমন: 2, 5, 8 (এই পৃষ্ঠার পরে বিভক্ত হবে)",
-  "split_pages_help": "প্রতিটি নির্ধারিত পৃষ্ঠা নম্বরের পরে পিডিএফ বিভক্ত হবে",
-
-  "split_every_n_pages": "প্রতি N পৃষ্ঠা পর বিভক্ত করুন",
-  "page_interval_placeholder": "যেমন: 5",
-  "every_n_pages_help": "নির্দিষ্ট সংখ্যক পৃষ্ঠা দিয়ে আলাদা পিডিএফ তৈরি হবে",
-
-  "extract_all_pages": "সব পৃষ্ঠা আলাদা পিডিএফ হিসেবে বের করুন",
-  "extract_all_pages_help": "প্রতিটি পৃষ্ঠা আলাদা একটি পিডিএফ ফাইল হিসেবে সংরক্ষণ হবে",
-
-  "split_pdf_button": "পিডিএফ বিভক্ত করুন"
+    "nav_back": "← ফিরে যান",
+    "tool_title": "পিডিএফ বিভক্ত করুন",
+    "select_pdf_button": "একটি পিডিএফ ফাইল নির্বাচন করতে ক্লিক করুন অথবা এখানে পিডিএফ ড্রপ করুন",
+    "remove_file_button": "×",
+    "preview_title": "পিডিএফ প্রিভিউ",
+    "split_options_title": "বিভক্ত করার অপশন",
+    "split_by_page_ranges": "পৃষ্ঠা পরিসর অনুযায়ী বিভক্ত করুন",
+    "page_ranges_placeholder": "যেমন: 1-3, 5-7, 8-10",
+    "page_ranges_help": "\"1-3, 5-7\" অথবা একক পৃষ্ঠা \"1, 3, 5\" লিখুন",
+    "split_at_specific_pages": "নির্দিষ্ট পৃষ্ঠায় বিভক্ত করুন",
+    "split_pages_placeholder": "যেমন: 2, 5, 8 (এই পৃষ্ঠার পরে বিভক্ত হবে)",
+    "split_pages_help": "প্রতিটি নির্ধারিত পৃষ্ঠা নম্বরের পরে পিডিএফ বিভক্ত হবে",
+    "split_every_n_pages": "প্রতি N পৃষ্ঠা পর বিভক্ত করুন",
+    "page_interval_placeholder": "যেমন: 5",
+    "every_n_pages_help": "নির্দিষ্ট সংখ্যক পৃষ্ঠা দিয়ে আলাদা পিডিএফ তৈরি হবে",
+    "extract_all_pages": "সব পৃষ্ঠা আলাদা পিডিএফ হিসেবে বের করুন",
+    "extract_all_pages_help": "প্রতিটি পৃষ্ঠা আলাদা একটি পিডিএফ ফাইল হিসেবে সংরক্ষণ হবে",
+    "split_pdf_button": "পিডিএফ বিভক্ত করুন"
   }
 }
