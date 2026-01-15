@@ -21,7 +21,8 @@
     "tool-lock-unlock": "পিডিএফ লক/আনলক করুন",
     "tool-metadata": "মেটাডেটা দেখুন এবং সম্পাদনা করুন",
     "tool-extract-images": "ছবি বের করুন",
-    "tool-OCR": "ওসিআর পিডিএফ বা ছবি"
+    "tool-OCR": "ওসিআর পিডিএফ বা ছবি",
+    "tool-image-to-pdf": "ইমেজ থেকে পিডিএফ"
   },
   "error": {
     "empty-message": "কোন পিডিএফ খোলা নেই। শুরু করতে \"পিডিএফ রিডার খুলুন\" ক্লিক করুন!"
@@ -51,6 +52,13 @@
     "update-checker": "এখনও কোনও আপডেট চেক করা হয়নি।",
     "cancel-btn": "বাতিল",
     "save-changes-btn": "পরিবর্তন সংরক্ষণ করুন"
+  },
+  "search": {
+    "placeholder": "খোলা PDF খুঁজুন...",
+    "noResults": "মিলছে এমন PDF পাওয়া যায়নি",
+    "fileNotFound": "ফাইল পাওয়া যায়নি",
+    "opened": "খোলা হয়েছে",
+    "times": "বার"
   },
   "history-lang": {
     "history-cleared-title": "অনুসন্ধান ইতিহাস মুছে ফেলা হয়েছে",

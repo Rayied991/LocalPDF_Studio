@@ -15,6 +15,8 @@
  * - PDF Engine: PdfSharp + Mozilla PDF.js
 **/
 
+import i18n from "./i18n.js";
+
 
 // src/renderer/utils/searchBar.js
 
@@ -36,7 +38,7 @@ export class SearchBar {
         this.container.className = 'search-container';
         this.container.innerHTML = `
             <div class="search-input-wrapper">
-                <input type="text" id="pdf-search" placeholder="Search opened PDFs..." class="search-input">
+                <input type="text" id="pdf-search" placeholder="" class="search-input">
                 <span class="search-icon">🔍</span>
             </div>
             <div class="search-results hidden"></div>
@@ -46,6 +48,13 @@ export class SearchBar {
         this.results = this.container.querySelector('.search-results');
         const topBar = document.querySelector('.top-bar');
         topBar.appendChild(this.container);
+        
+        // Set initial placeholder
+        this.updatePlaceholder();
+    }
+    
+    updatePlaceholder() {
+        this.input.placeholder = i18n.t('search.placeholder');
     }
 
     setupEventListeners() {
@@ -87,7 +96,7 @@ export class SearchBar {
         this.results.innerHTML = '';
 
         if (results.length === 0) {
-            this.results.innerHTML = '<div class="search-no-results">No matching PDFs found</div>';
+            this.results.innerHTML = `<div class="search-no-results">${i18n.t('search.noResults')}</div>`;
             this.showResults();
             return;
         }
@@ -105,10 +114,10 @@ export class SearchBar {
                     <div class="search-result-title">${file.fileName}</div>
                     <div class="search-result-path">${file.filePath}</div>
                     <div class="search-result-meta">
-                        Opened ${file.openCount} times • ${new Date(file.lastOpened).toLocaleDateString()}
+                        ${i18n.t('search.opened')} ${file.openCount} ${i18n.t('search.times')} • ${new Date(file.lastOpened).toLocaleDateString()}
                     </div>
                 </div>
-                ${!isValid ? '<div class="file-missing-badge">File not found</div>' : ''}
+                ${!isValid ? `<div class="file-missing-badge">${i18n.t('search.fileNotFound')}</div>` : ''}
             `;
 
             if (isValid) {
@@ -198,6 +207,16 @@ export class SearchBar {
         if (!visible) {
             this.input.value = '';
             this.hideResults();
+        }
+    }
+    
+    // Called when language changes to update dynamic text
+    updateLanguage() {
+        this.updatePlaceholder();
+        // Re-display results with updated translations if search is active
+        if (this.isOpen && this.input.value.trim()) {
+            const results = this.searchIndexManager.search(this.input.value);
+            this.displayResults(results);
         }
     }
 }

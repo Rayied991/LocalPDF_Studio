@@ -21,7 +21,8 @@
     "tool-lock-unlock": "Lock/Unlock PDF",
     "tool-metadata": "View and Edit Metadata",
     "tool-extract-images": "Extract Images",
-    "tool-OCR": "OCR PDF or Image"
+    "tool-OCR": "OCR PDF or Image",
+    "tool-image-to-pdf": "Image to PDF"
   },
   "error": {
     "empty-message": "No PDFs open. Click \"Open PDF Reader\" to get started!"
@@ -51,6 +52,13 @@
     "update-checker": "No updates checked yet.",
     "cancel-btn": "Cancel",
     "save-changes-btn": "Save Changes"
+  },
+  "search": {
+    "placeholder": "Search opened PDFs...",
+    "noResults": "No matching PDFs found",
+    "fileNotFound": "File not found",
+    "opened": "Opened",
+    "times": "times"
   },
   "history-lang": {
     "history-cleared-title": "Search History Cleared",

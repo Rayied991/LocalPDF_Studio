@@ -21,7 +21,8 @@
     "tool-lock-unlock": "PDFをロック/ロック解除",
     "tool-metadata": "メタデータを表示・編集",
     "tool-extract-images": "画像を抽出",
-    "tool-OCR": "OCR PDFまたは画像"
+    "tool-OCR": "OCR PDFまたは画像",
+    "tool-image-to-pdf": "画像をPDFに変換"
   },
   "error": {
     "empty-message": "PDFが開かれていません。「PDFリーダーを開く」をクリックして開始してください！"
@@ -51,6 +52,13 @@
     "update-checker": "まだ更新は確認されていません。",
     "cancel-btn": "キャンセル",
     "save-changes-btn": "変更を保存"
+  },
+  "search": {
+    "placeholder": "開いたPDFを検索...",
+    "noResults": "一致するPDFが見つかりません",
+    "fileNotFound": "ファイルが見つかりません",
+    "opened": "開いた",
+    "times": "回"
   },
   "history-lang": {
     "history-cleared-title": "検索履歴がクリアされました",

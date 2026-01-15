@@ -345,9 +345,7 @@ window.addEventListener('DOMContentLoaded', async() => {
             searchIndexManager.clearHistory();
             if (customAlert) {
                 // customAlert.alert('Search History Cleared', 'All search history has been removed.');
-                customAlert.alert(
-                      i18n.t('history-cleared-title'), 
-                    i18n.t('history-cleared-msg')
+                customAlert.alert(i18n.t('history-lang.history-cleared-title'), i18n.t('history-lang.history-cleared-msg')
                 );
             }
         });
@@ -386,5 +384,6 @@ window.addEventListener('DOMContentLoaded', async() => {
     //  Handle language change in real-time (preview)
     languageSelect.addEventListener('change', async (e) => {
         await i18n.setLanguage(e.target.value);
+        searchBar.updateLanguage();
     });
 });

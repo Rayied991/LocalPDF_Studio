@@ -21,7 +21,8 @@
     "tool-lock-unlock": "锁定/解锁PDF",
     "tool-metadata": "查看和编辑元数据",
     "tool-extract-images": "提取图片",
-    "tool-OCR": "OCR辨識PDF或影像"
+    "tool-OCR": "OCR辨識PDF或影像",
+    "tool-image-to-pdf": "图片转 PDF"
   },
   "error": {
     "empty-message": "未打开PDF。点击\"打开PDF阅读器\"开始使用！"
@@ -51,6 +52,13 @@
     "update-checker": "尚未檢查任何更新。",
     "cancel-btn": "取消",
     "save-changes-btn": "保存更改"
+  },
+  "search": {
+    "placeholder": "搜索已打开的 PDF...",
+    "noResults": "未找到匹配的 PDF",
+    "fileNotFound": "文件未找到",
+    "opened": "已打开",
+    "times": "次"
   },
   "history-lang": {
     "history-cleared-title": "搜索历史已清除",
