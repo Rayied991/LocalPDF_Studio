@@ -117,6 +117,7 @@ async function getEndpoints() {
         removeImages: `${base}/PdfExtractImages/extract`,
         ghostscriptCheck: `${base}/Ghostscript/check`,
         imageToPdf: `${base}/ImageToPdf/convert`,
+        redact: `${base}/PdfRedact/redact`,
         // Add more as necessary
     };
 }

@@ -1,0 +1,106 @@
+<!-- src/renderer/tools/redactPdf/redactPdf.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LocalPDF Studio - Redact PDF</title>
+    <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
+    script-src 'self';
+    style-src 'self' 'unsafe-inline';
+    img-src 'self' data:;
+    connect-src 'self' http://localhost:*;">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <link rel="stylesheet" href="./redactPdf.css">
+    <link rel="stylesheet" href="../../styles/loading.css">
+</head>
+
+<body>
+    <div id="app">
+        <div class="top-bar">
+            <a href="../../index.html" class="top-btn">← Back</a>
+            <h1 class="tool-title">Redact PDF (Experimental)</h1>
+            <div class="toolbar">
+                <button id="select-pdf-btn" class="top-btn">
+                    <span class="btn-icon">📄</span> Select PDF
+                </button>
+                <button id="apply-redactions-btn" class="top-btn" disabled>
+                    <span class="btn-icon">✓</span> Apply Redactions
+                </button>
+                <button id="clear-redactions-btn" class="top-btn secondary" disabled>
+                    <span class="btn-icon">×</span> Clear All
+                </button>
+            </div>
+        </div>
+
+        <main class="tool-container">
+            <!-- Sidebar for page thumbnails -->
+            <aside class="sidebar">
+                <div class="sidebar-header">
+                    <h3>Pages</h3>
+                    <div class="page-count" id="page-count">0 pages</div>
+                </div>
+                <div class="thumbnail-list" id="thumbnail-list">
+                    <!-- Thumbnails will be inserted here -->
+                </div>
+            </aside>
+
+            <!-- Main canvas area -->
+            <div class="canvas-area">
+                <div class="canvas-controls">
+                    <div class="control-group">
+                        <label>Redaction Color:</label>
+                        <div class="color-options">
+                            <button class="color-btn active" data-color="#000000" style="background: #000000;"
+                                title="Black"></button>
+                            <button class="color-btn" data-color="#FF0000" style="background: #FF0000;"
+                                title="Red"></button>
+                            <button class="color-btn" data-color="#FFFFFF"
+                                style="background: #FFFFFF; border: 1px solid #34495e;" title="White"></button>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label>Zoom:</label>
+                        <div class="zoom-controls">
+                            <button id="zoom-out-btn" class="zoom-btn" disabled>−</button>
+                            <span id="zoom-level">100%</span>
+                            <button id="zoom-in-btn" class="zoom-btn" disabled>+</button>
+                            <button id="zoom-fit-btn" class="zoom-btn" disabled>Fit</button>
+                        </div>
+                    </div>
+                    <div class="control-group hint">
+                        💡 Ctrl+Scroll to zoom || Ctrl+0 to reset || Click on the redacted area to remove a specific redaction
+                    </div>
+                </div>
+
+                <div class="canvas-wrapper" id="canvas-wrapper">
+                    <div class="empty-canvas-state">
+                        <div class="empty-icon">📄</div>
+                        <p>Select a PDF to start redacting</p>
+                        <p class="empty-hint">Click "Select PDF" or drag & drop a PDF file here</p>
+                    </div>
+                </div>
+
+                <div class="canvas-footer">
+                    <div class="page-navigation">
+                        <button id="prev-page-btn" class="nav-btn" disabled>← Previous</button>
+                        <span class="page-info">
+                            <span>Page </span>
+                            <input type="number" id="page-input" min="1" value="1" disabled>
+                            <span> of </span>
+                            <span id="total-pages">0</span>
+                        </span>
+                        <button id="next-page-btn" class="nav-btn" disabled>Next →</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script type="module" src="./redactPdf_new.js"></script>
+</body>
+
+</html>
